@@ -9,13 +9,13 @@ BEGIN
     SELECT COUNT(*) INTO commanders_count
     FROM vgk_rescuers
     WHERE id_vgk = vgk_id
-        AND position = 'commander'
-        AND status = 'on_duty';
+        AND position = 'командир ВГК'
+        AND status IN ('on_shift', 'on_duty');
 
     SELECT COUNT(*) INTO active_count
     FROM vgk_rescuers
     WHERE id_vgk = vgk_id
-        AND status = 'on_duty';
+        AND status IN ('on_shift', 'on_duty');
 
     RETURN commanders_count = 1 AND active_count >= 2;
 END;
