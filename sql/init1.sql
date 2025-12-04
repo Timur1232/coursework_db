@@ -1,4 +1,4 @@
-CREATE TABLE equipment_types (
+CREATE TABLE IF NOT EXISTS equipment_types (
     type_name varchar(255) NOT NULL PRIMARY KEY,
     equipment_standards_url varchar(255) NOT NULL
 );
@@ -11,7 +11,7 @@ CREATE TYPE object_type_enum AS ENUM (
     'underwater_mining'
 );
 
-CREATE TABLE objects (
+CREATE TABLE IF NOT EXISTS objects (
     id_object integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     object_type object_type_enum NOT NULL,
     name varchar(255) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TYPE danger_level_enum AS ENUM (
     'critical'
 );
 
-CREATE TABLE accident_types (
+CREATE TABLE IF NOT EXISTS accident_types (
     accident_name varchar(255) NOT NULL PRIMARY KEY,
     danger_level danger_level_enum NOT NULL
 );
@@ -49,7 +49,7 @@ CREATE TYPE accident_status_enum AS ENUM (
     'investigating'
 );
 
-CREATE TABLE accidents (
+CREATE TABLE IF NOT EXISTS accidents (
     id_accident integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_object integer NOT NULL,
     accident_type varchar(255) NOT NULL,
@@ -59,18 +59,18 @@ CREATE TABLE accidents (
     first_estimate text NOT NULL,
     cause text NOT NULL,
 
-    CONSTRAINT accidents_id_object_objects_id_object_foreign FOREIGN KEY (id_object)
+    CONSTRAINT accidents_id_object_objects_id_object FOREIGN KEY (id_object)
         REFERENCES objects (id_object)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT accidents_id_accident_type_foreign FOREIGN KEY (accident_type)
+    CONSTRAINT accidents_id_accident_type FOREIGN KEY (accident_type)
         REFERENCES accident_types (accident_name)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
 
-CREATE TABLE applications_for_admission (
+CREATE TABLE IF NOT EXISTS applications_for_admission (
     id_application integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_object integer NOT NULL,
     passport_number varchar(20) NOT NULL UNIQUE,
@@ -82,8 +82,9 @@ CREATE TABLE applications_for_admission (
     email varchar(255) UNIQUE,
     status varchar(255) NOT NULL,
     birthday_date date NOT NULL,
+    home_address varchar(255) NOT NULL,
 
-    CONSTRAINT applications_for_admission_id_object_objects_id_object_foreign FOREIGN KEY (id_object) REFERENCES objects (id_object)
+    CONSTRAINT applications_for_admission_id_object_objects_id_object FOREIGN KEY (id_object) REFERENCES objects (id_object)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
@@ -104,13 +105,13 @@ CREATE TYPE document_type_enum AS ENUM (
     'medical_certificate',
     'education_diploma',
     'training_certificate',
-    'work_experience',
+    'work_book',
     'military_id',
     'passport_copy',
     'photo'
 );
 
-CREATE TABLE candidates_documents (
+CREATE TABLE IF NOT EXISTS candidates_documents (
     document_type document_type_enum NOT NULL,
     id_application integer NOT NULL,
     document_url varchar(255) NOT NULL,
@@ -122,13 +123,13 @@ CREATE TABLE candidates_documents (
         valid_until >= CURRENT_DATE
     ),
 
-    CONSTRAINT candidates_documents_id_application_applications_for_admission_id_application_foreign FOREIGN KEY (id_application) REFERENCES applications_for_admission (id_application)
+    CONSTRAINT candidates_documents_id_application_applications_for_admission_id_application FOREIGN KEY (id_application) REFERENCES applications_for_admission (id_application)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE candidates_medical_parameters (
-    id_application integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS candidates_medical_parameters (
+    id_application integer PRIMARY KEY,
     date date NOT NULL,
     expire_date date NOT NULL,
     health_group integer NOT NULL,
@@ -143,19 +144,20 @@ CREATE TABLE candidates_medical_parameters (
     CONSTRAINT height_check CHECK (height BETWEEN 0.00 AND 350.00),
     CONSTRAINT weight_check CHECK (weight BETWEEN 0.00 AND 250.00),
 
-    CONSTRAINT candidates_medical_parameters_id_application_applications_for_admission_id_application_foreign FOREIGN KEY (id_application) REFERENCES applications_for_admission (id_application)
+    CONSTRAINT candidates_medical_parameters_id_application_applications_for_admission_id_application FOREIGN KEY (id_application) REFERENCES applications_for_admission (id_application)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
 CREATE TYPE vgk_status_enum AS ENUM (
+    'ready',
     'disbanded',
     'on_departure',
     'on_shift',
     'temporarily_inactive'
 );
 
-CREATE TABLE vgk (
+CREATE TABLE IF NOT EXISTS vgk (
     id_vgk integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_object integer NOT NULL,
     status vgk_status_enum NOT NULL,
@@ -163,12 +165,12 @@ CREATE TABLE vgk (
 
     CONSTRAINT formation_date_check CHECK (formation_date <= current_date),
 
-    CONSTRAINT vgk_id_object_objects_id_object_foreign FOREIGN KEY (id_object) REFERENCES objects (id_object)
+    CONSTRAINT vgk_id_object_objects_id_object FOREIGN KEY (id_object) REFERENCES objects (id_object)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
 
-CREATE TABLE positions (
+CREATE TABLE IF NOT EXISTS positions (
     position_name varchar(255) NOT NULL PRIMARY KEY,
     salary decimal(10, 2) NOT NULL,
     min_experience_years integer DEFAULT 0,
@@ -187,17 +189,18 @@ CREATE TYPE rescuer_status_enum AS ENUM (
     'on_duty',
     'on_departure',
     'dismissed',
-    'on_vacation'
+    'on_vacation',
+    'inactive'
 );
 
-CREATE TABLE vgk_rescuers (
+CREATE TABLE IF NOT EXISTS vgk_rescuers (
     id_rescuer integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_vgk integer DEFAULT NULL,
     position varchar(255) DEFAULT NULL,
     first_name varchar(255) NOT NULL,
     second_name varchar(255) NOT NULL,
     surname varchar(255) DEFAULT NULL,
-    status rescuer_status_enum NOT NULL,
+    status rescuer_status_enum NOT NULL DEFAULT 'inactive',
     birth_date date NOT NULL,
     home_address varchar(255) NOT NULL,
     experience_years integer NOT NULL DEFAULT 0,
@@ -218,16 +221,16 @@ CREATE TABLE vgk_rescuers (
         NOT (status = 'dismissed' AND id_vgk IS NOT NULL)
     ),
 
-    CONSTRAINT vgk_rescuers_id_vgk_vgk_id_vgk_foreign FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
+    CONSTRAINT vgk_rescuers_id_vgk_vgk_id_vgk FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT position_foreign FOREIGN KEY (position) REFERENCES positions (position_name)
+    CONSTRAINT position FOREIGN KEY (position) REFERENCES positions (position_name)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
 
-CREATE TABLE vgk_rescuers_documents (
+CREATE TABLE IF NOT EXISTS vgk_rescuers_documents (
     document_type document_type_enum NOT NULL,
     id_rescuer integer NOT NULL,
     document_url varchar(255) NOT NULL,
@@ -239,12 +242,28 @@ CREATE TABLE vgk_rescuers_documents (
         valid_until >= current_date
     ),
 
-    CONSTRAINT vgk_rescuers_documents_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT vgk_rescuers_documents_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE vgk_shifts (
+CREATE TYPE vgk_location_status_enum AS ENUM (
+    'operational',
+    'malfunctioning'
+);
+
+CREATE TABLE IF NOT EXISTS vgk_locations (
+    id_vgk_location integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_responsible integer DEFAULT NULL,
+    address varchar(255) NOT NULL,
+    status vgk_location_status_enum NOT NULL,
+
+    CONSTRAINT vgk_locations_id_responsible_vgk_rescuers_id_rescuer FOREIGN KEY (id_responsible) REFERENCES vgk_rescuers (id_rescuer)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS vgk_shifts (
     shift_start timestamp NOT NULL,
     id_vgk integer NOT NULL,
     id_vgk_location integer NOT NULL,
@@ -262,11 +281,11 @@ CREATE TABLE vgk_shifts (
         shift_start <= current_timestamp
     ),
 
-    CONSTRAINT vgk_shifts_id_vgk_vgk_id_vgk_foreign FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
+    CONSTRAINT vgk_shifts_id_vgk_vgk_id_vgk FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT vgk_shifts_id_vgk_location_vgk_locations_id_vgk_location_foreign FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
+    CONSTRAINT vgk_shifts_id_vgk_location_vgk_locations_id_vgk_location FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -280,10 +299,9 @@ CREATE TYPE operation_status_enum AS ENUM (
     'failed'
 );
 
-CREATE TABLE accidents_response_operations (
+CREATE TABLE IF NOT EXISTS accidents_response_operations (
     id_operation integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_accident integer NOT NULL,
-    id_leader integer NOT NULL,
     start_date_time timestamp NOT NULL,
     end_date_time timestamp DEFAULT NULL,
     status operation_status_enum NOT NULL,
@@ -300,16 +318,12 @@ CREATE TABLE accidents_response_operations (
         NOT (status IN ('completed', 'failed') AND end_date_time IS NULL)
     ),
 
-    CONSTRAINT accidents_response_operations_id_leader_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_leader) REFERENCES vgk_rescuers (id_rescuer)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-
-    CONSTRAINT accidents_response_operations_id_accident_accidents_id_accident_foreign FOREIGN KEY (id_accident) REFERENCES accidents (id_accident)
+    CONSTRAINT accidents_response_operations_id_accident_accidents_id_accident FOREIGN KEY (id_accident) REFERENCES accidents (id_accident)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE operations_participations (
+CREATE TABLE IF NOT EXISTS operations_participations (
     id_vgk integer NOT NULL,
     id_operation integer NOT NULL,
     assigned_task varchar(255) NOT NULL,
@@ -320,16 +334,16 @@ CREATE TABLE operations_participations (
         length(trim(assigned_task)) > 0
     ),
 
-    CONSTRAINT operations_participations_id_vgk_vgk_id_vgk_foreign FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
+    CONSTRAINT operations_participations_id_vgk_vgk_id_vgk FOREIGN KEY (id_vgk) REFERENCES vgk (id_vgk)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT operations_participations_id_operation_accidents_response_operations_id_operation_foreign FOREIGN KEY (id_operation) REFERENCES accidents_response_operations (id_operation)
+    CONSTRAINT operations_participations_id_operation_accidents_response_operations_id_operation FOREIGN KEY (id_operation) REFERENCES accidents_response_operations (id_operation)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE operations_reports (
+CREATE TABLE IF NOT EXISTS operations_reports (
     id_report integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_operation integer NOT NULL,
     report_date_time timestamp NOT NULL,
@@ -343,12 +357,12 @@ CREATE TABLE operations_reports (
         length(trim(description)) > 0
     ),
 
-    CONSTRAINT operations_reports_id_participation_accidents_response_operations_id_operation_foreign FOREIGN KEY (id_operation) REFERENCES accidents_response_operations (id_operation)
+    CONSTRAINT operations_reports_id_participation_accidents_response_operations_id_operation FOREIGN KEY (id_operation) REFERENCES accidents_response_operations (id_operation)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE trainings (
+CREATE TABLE IF NOT EXISTS trainings (
     date date NOT NULL,
     id_object_location integer NOT NULL,
     id_instructor integer NOT NULL,
@@ -361,36 +375,37 @@ CREATE TABLE trainings (
         date <= current_date
     ),
 
-    CONSTRAINT trainings_id_object_location_objects_id_object_foreign FOREIGN KEY (id_object_location) REFERENCES objects (id_object)
+    CONSTRAINT trainings_id_object_location_objects_id_object FOREIGN KEY (id_object_location) REFERENCES objects (id_object)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT trainings_id_instructor_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_instructor) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT trainings_id_instructor_vgk_rescuers_id_rescuer FOREIGN KEY (id_instructor) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE trainings_participations (
+CREATE TABLE IF NOT EXISTS trainings_participations (
     date date NOT NULL,
+    id_object_location integer NOT NULL,
     id_rescuer integer NOT NULL,
     notes text DEFAULT NULL,
 
-    PRIMARY KEY (date, id_rescuer),
+    PRIMARY KEY (date, id_object_location, id_rescuer),
 
     CONSTRAINT date_check CHECK (
         date <= current_date
     ),
 
-    CONSTRAINT trainings_participations_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT trainings_participations_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT trainings_participations_date_trainings_date_foreign FOREIGN KEY (date) REFERENCES trainings (date)
+    CONSTRAINT trainings_participations_date_trainings_date FOREIGN KEY (date, id_object_location) REFERENCES trainings (date, id_object_location)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE certifications_passings (
+CREATE TABLE IF NOT EXISTS certifications_passings (
     date date NOT NULL,
     id_rescuer integer NOT NULL,
     result boolean NOT NULL,
@@ -402,12 +417,12 @@ CREATE TABLE certifications_passings (
         date <= current_date
     ),
 
-    CONSTRAINT certifications_passings_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT certifications_passings_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE vgk_rescuers_medical_parameters (
+CREATE TABLE IF NOT EXISTS vgk_rescuers_medical_parameters (
     date date NOT NULL,
     id_rescuer integer NOT NULL,
     expire_date date NOT NULL,
@@ -435,13 +450,13 @@ CREATE TABLE vgk_rescuers_medical_parameters (
         length(trim(conclusion)) > 0
     ),
 
-    CONSTRAINT vgk_rescuers_medical_parameters_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT vgk_rescuers_medical_parameters_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE vgk_service_room (
-    id_service_room integer NOT NULL,
+CREATE TABLE IF NOT EXISTS vgk_service_room (
+    id_service_room integer GENERATED ALWAYS AS IDENTITY,
     id_responsible integer DEFAULT NULL,
     purpose varchar(255) NOT NULL,
     address varchar(255) NOT NULL,
@@ -456,25 +471,7 @@ CREATE TABLE vgk_service_room (
         length(trim(address)) > 0
     ),
 
-    CONSTRAINT vgk_service_room_id_responsible_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_responsible) REFERENCES vgk_rescuers (id_rescuer)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
-CREATE TYPE vgk_location_status_enum AS ENUM (
-    'operational',
-    'malfunctioning'
-);
-
-CREATE TABLE vgk_locations (
-    id_vgk_location integer NOT NULL,
-    id_responsible integer DEFAULT NULL,
-    address varchar(255) NOT NULL,
-    status vgk_location_status_enum NOT NULL,
-
-    PRIMARY KEY (id_vgk_location),
-
-    CONSTRAINT vgk_locations_id_responsible_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_responsible) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT vgk_service_room_id_responsible_vgk_rescuers_id_rescuer FOREIGN KEY (id_responsible) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -482,11 +479,12 @@ CREATE TABLE vgk_locations (
 CREATE TYPE equipment_status_enum AS ENUM (
     'operational',
     'in_use',
+    'needs_repair_service',
     'under_repair',
     'written_off'
 );
 
-CREATE TABLE equipment (
+CREATE TABLE IF NOT EXISTS equipment (
     inventory_number integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_vgk_location integer DEFAULT NULL,
     equipment_type varchar(255) NOT NULL,
@@ -498,11 +496,11 @@ CREATE TABLE equipment (
         last_check_date <= current_date
     ),
 
-    CONSTRAINT equipment_id_vgk_location_vgk_locations_id_vgk_location_foreign FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
+    CONSTRAINT equipment_id_vgk_location_vgk_locations_id_vgk_location FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT equipment_equipment_type_equipment_types_type_name_foreign FOREIGN KEY (equipment_type) REFERENCES equipment_types (type_name)
+    CONSTRAINT equipment_equipment_type_equipment_types_type_name FOREIGN KEY (equipment_type) REFERENCES equipment_types (type_name)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -514,8 +512,8 @@ CREATE TYPE transport_status_enum AS ENUM (
     'written_off'
 );
 
-CREATE TABLE transport (
-    transport_number integer NOT NULL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS transport (
+    transport_number integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_vgk_location integer DEFAULT NULL,
     model varchar(255) NOT NULL,
     type varchar(255) NOT NULL,
@@ -536,12 +534,12 @@ CREATE TABLE transport (
         last_check_date BETWEEN manufacture_date AND current_date
     ),
 
-    CONSTRAINT transport_id_vgk_location_vgk_locations_id_vgk_location_foreign FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
+    CONSTRAINT transport_id_vgk_location_vgk_locations_id_vgk_location FOREIGN KEY (id_vgk_location) REFERENCES vgk_locations (id_vgk_location)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE equipment_usage_history (
+CREATE TABLE IF NOT EXISTS equipment_usage_history (
     inventory_number integer NOT NULL,
     id_rescuer integer NOT NULL,
     issue_date date NOT NULL,
@@ -562,16 +560,16 @@ CREATE TABLE equipment_usage_history (
         length(trim(purpose)) > 0
     ),
 
-    CONSTRAINT equipment_usage_history_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT equipment_usage_history_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT equipment_usage_history_inventory_number_equipment_inventory_number_foreign FOREIGN KEY (inventory_number) REFERENCES equipment (inventory_number)
+    CONSTRAINT equipment_usage_history_inventory_number_equipment_inventory_number FOREIGN KEY (inventory_number) REFERENCES equipment (inventory_number)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE transport_usage_history (
+CREATE TABLE IF NOT EXISTS transport_usage_history (
     transport_number integer NOT NULL,
     id_rescuer integer NOT NULL,
     departure_date date NOT NULL,
@@ -592,11 +590,11 @@ CREATE TABLE transport_usage_history (
         length(trim(purpose)) > 0
     ),
 
-    CONSTRAINT transport_usage_history_id_rescuer_vgk_rescuers_id_rescuer_foreign FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
+    CONSTRAINT transport_usage_history_id_rescuer_vgk_rescuers_id_rescuer FOREIGN KEY (id_rescuer) REFERENCES vgk_rescuers (id_rescuer)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT transport_usage_history_transport_number_transport_transport_number_foreign FOREIGN KEY (transport_number) REFERENCES transport (transport_number)
+    CONSTRAINT transport_usage_history_transport_number_transport_transport_number FOREIGN KEY (transport_number) REFERENCES transport (transport_number)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -608,7 +606,7 @@ CREATE TYPE service_status_enum AS ENUM (
     'irreparable'
 );
 
-CREATE TABLE equipment_service_history (
+CREATE TABLE IF NOT EXISTS equipment_service_history (
     inventory_number integer NOT NULL,
     id_service_room integer NOT NULL,
     reason varchar(255) NOT NULL,
@@ -627,16 +625,16 @@ CREATE TABLE equipment_service_history (
         length(trim(reason)) > 0
     ),
 
-    CONSTRAINT equipment_service_history_inventory_number_equipment_inventory_number_foreign FOREIGN KEY (inventory_number) REFERENCES equipment (inventory_number)
+    CONSTRAINT equipment_service_history_inventory_number_equipment_inventory_number FOREIGN KEY (inventory_number) REFERENCES equipment (inventory_number)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT equipment_service_history_id_service_room_vgk_service_room_id_service_room_foreign FOREIGN KEY (id_service_room) REFERENCES vgk_service_room (id_service_room)
+    CONSTRAINT equipment_service_history_id_service_room_vgk_service_room_id_service_room FOREIGN KEY (id_service_room) REFERENCES vgk_service_room (id_service_room)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE transport_service_history (
+CREATE TABLE IF NOT EXISTS transport_service_history (
     transport_number integer NOT NULL,
     id_service_room integer NOT NULL,
     reason varchar(255) NOT NULL,
@@ -655,11 +653,11 @@ CREATE TABLE transport_service_history (
         length(trim(reason)) > 0
     ),
 
-    CONSTRAINT transport_service_history_id_service_room_vgk_service_room_id_service_room_foreign FOREIGN KEY (id_service_room) REFERENCES vgk_service_room (id_service_room)
+    CONSTRAINT transport_service_history_id_service_room_vgk_service_room_id_service_room FOREIGN KEY (id_service_room) REFERENCES vgk_service_room (id_service_room)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT transport_service_history_transport_number_transport_transport_number_foreign FOREIGN KEY (transport_number) REFERENCES transport (transport_number)
+    CONSTRAINT transport_service_history_transport_number_transport_transport_number FOREIGN KEY (transport_number) REFERENCES transport (transport_number)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
