@@ -23,7 +23,7 @@ BEGIN
     END IF;
 
     UPDATE vgk_rescuers
-    SET status = NEW.status::varchar::rescuer_status_enum
+    SET status = NEW.status
     WHERE id_vgk = NEW.id_vgk;
 
     RETURN NEW;

@@ -185,15 +185,6 @@ CREATE TABLE IF NOT EXISTS positions (
     )
 );
 
-CREATE TYPE rescuer_status_enum AS ENUM (
-    'on_duty',
-    'on_departure',
-    'on_shift',
-    'dismissed',
-    'on_vacation',
-    'inactive'
-);
-
 CREATE TABLE IF NOT EXISTS vgk_rescuers (
     id_rescuer integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_vgk integer DEFAULT NULL,
@@ -201,7 +192,7 @@ CREATE TABLE IF NOT EXISTS vgk_rescuers (
     first_name varchar(255) NOT NULL,
     second_name varchar(255) NOT NULL,
     surname varchar(255) DEFAULT NULL,
-    status rescuer_status_enum NOT NULL DEFAULT 'inactive',
+    status vgk_status_enum NOT NULL DEFAULT 'inactive',
     birth_date date NOT NULL,
     home_address varchar(255) NOT NULL,
     experience_years integer NOT NULL DEFAULT 0,

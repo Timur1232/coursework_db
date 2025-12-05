@@ -1,0 +1,561 @@
+package views
+
+import (
+	"fmt"
+	"github.com/Timur1232/coursework_db/internal/db"
+	"time"
+)
+
+templ Page(component templ.Component) {
+	<html lang="ru">
+		<head>
+			<title></title>
+			<meta charset="UTF=8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+		</head>
+		<body>
+			@component
+		</body>
+	</html>
+}
+
+func DateToString(t *time.Time) string {
+	y, m, d := t.Date()
+	return fmt.Sprintf("%02d.%02d.%04d", d, m, y)
+}
+
+func TimestampToString(t *time.Time) string {
+	y, m, d := t.Date()
+	h, min := t.Hour(), t.Minute()
+	return fmt.Sprintf("%02d.%02d.%04d %02d:%02d", y, m, d, h, min)
+}
+
+templ TableListEquipmentTypes(equipmentTypes []db.EquipmentTypes) {
+	<tr>
+		<th>Тип оборудования</th>
+		<th>Ссылка на стандарты</th>
+	</tr>
+	for _, item := range equipmentTypes {
+		<tr>
+			<td>{ item.TypeName }</td>
+			<td>{ item.EquipmentStandardsUrl }</td>
+		</tr>
+	}
+}
+
+templ TableListObjects(objects []db.Objects) {
+	<tr>
+		<th>ID объекта</th>
+		<th>Тип объекта</th>
+		<th>Название</th>
+		<th>Адрес</th>
+		<th>Телефон</th>
+		<th>Email</th>
+		<th>ФИО директора</th>
+	</tr>
+	for _, item := range objects {
+		<tr>
+			<td>{ item.IdObject }</td>
+			<td>{ item.ObjectType }</td>
+			<td>{ item.Name }</td>
+			<td>{ item.Address }</td>
+			<td>{ item.Phone }</td>
+			<td>{ item.Email }</td>
+			<td>{ item.DirectorFullName }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidentTypes(accidentTypes []db.AccidentTypes) {
+	<tr>
+		<th>Тип аварии</th>
+		<th>Уровень опасности</th>
+	</tr>
+	for _, item := range accidentTypes {
+		<tr>
+			<td>{ item.AccidentName }</td>
+			<td>{ item.DangerLevel }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidents(accidents []db.Accidents) {
+	<tr>
+		<th>ID аварии</th>
+		<th>ID объекта</th>
+		<th>Тип аварии</th>
+		<th>Дата начала</th>
+		<th>Статус</th>
+		<th>Описание</th>
+		<th>Первоначальная оценка</th>
+		<th>Причина</th>
+	</tr>
+	for _, item := range accidents {
+		<tr>
+			<td>{ item.IdAccident }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.AccidentType }</td>
+			<td>{ TimestampToString(&item.BeginDateTime) }</td>
+			<td>{ item.Status }</td>
+			<td>{ item.Description }</td>
+			<td>{ item.FirstEstimate }</td>
+			<td>{ item.Cause }</td>
+		</tr>
+	}
+}
+
+templ TableListApplicationsForAdmission(applicationsForAdmission []db.ApplicationsForAdmission) {
+	<tr>
+		<th>ID заявки</th>
+		<th>ID объекта</th>
+		<th>Номер паспорта</th>
+		<th>Имя</th>
+		<th>Фамилия</th>
+		<th>Отчество</th>
+		<th>Дата выдачи</th>
+		<th>Телефон</th>
+		<th>Email</th>
+		<th>Статус</th>
+		<th>Дата рождения</th>
+		<th>Домашний адрес</th>
+	</tr>
+	for _, item := range applicationsForAdmission {
+		<tr>
+			<td>{ item.IdApplication }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.PassportNumber }</td>
+			<td>{ item.FirstName }</td>
+			<td>{ item.LastName }</td>
+			<td>{ item.Surname }</td>
+			<td>{ DateToString(&item.IssueDate) }</td>
+			<td>{ item.Phone }</td>
+			<td>{ item.Email }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.BirthdayDate) }</td>
+			<td>{ item.HomeAddress }</td>
+		</tr>
+	}
+}
+
+templ TableListCandidatesDocuments(candidatesDocuments []db.CandidatesDocuments) {
+	<tr>
+		<th>Тип документа</th>
+		<th>ID заявки</th>
+		<th>Ссылка на документ</th>
+		<th>Действителен до</th>
+	</tr>
+	for _, item := range candidatesDocuments {
+		<tr>
+			<td>{ item.DocumentType }</td>
+			<td>{ item.IdApplication }</td>
+			<td>{ item.DocumentUrl }</td>
+			<td>{ DateToString(&item.ValidUntil) }</td>
+		</tr>
+	}
+}
+
+templ TableListCandidatesMedicalParameters(candidatesMedicalParameters []db.CandidatesMedicalParameters) {
+	<tr>
+		<th>ID заявки</th>
+		<th>Дата осмотра</th>
+		<th>Дата окончания</th>
+		<th>Группа здоровья</th>
+		<th>Рост</th>
+		<th>Вес</th>
+		<th>Примечание</th>
+	</tr>
+	for _, item := range candidatesMedicalParameters {
+		<tr>
+			<td>{ item.IdApplication }</td>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ DateToString(&item.ExpireDate) }</td>
+			<td>{ item.HealthGroup }</td>
+			<td>{ item.Height }</td>
+			<td>{ item.Weight }</td>
+			<td>{ item.Note }</td>
+		</tr>
+	}
+}
+
+templ TableListVgk(vgk []db.Vgk) {
+	<tr>
+		<th>ID ВГК</th>
+		<th>ID объекта</th>
+		<th>Статус</th>
+		<th>Дата формирования</th>
+	</tr>
+	for _, item := range vgk {
+		<tr>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.FormationDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListPositions(positions []db.Positions) {
+	<tr>
+		<th>Должность</th>
+		<th>Зарплата</th>
+		<th>Минимальный опыт (лет)</th>
+		<th>Обязанности</th>
+	</tr>
+	for _, item := range positions {
+		<tr>
+			<td>{ item.PositionName }</td>
+			<td>{ item.Salary }</td>
+			<td>{ item.MinExperienceYears }</td>
+			<td>{ item.Responsibilities }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuers(vgkRescuers []db.VgkRescuers) {
+	<tr>
+		<th>ID спасателя</th>
+		<th>ID ВГК</th>
+		<th>Должность</th>
+		<th>Имя</th>
+		<th>Фамилия</th>
+		<th>Отчество</th>
+		<th>Статус</th>
+		<th>Дата рождения</th>
+		<th>Домашний адрес</th>
+		<th>Опыт (лет)</th>
+	</tr>
+	for _, item := range vgkRescuers {
+		<tr>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.Position }</td>
+			<td>{ item.FirstName }</td>
+			<td>{ item.SecondName }</td>
+			<td>{ item.Surname }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.BirthDate) }</td>
+			<td>{ item.HomeAddress }</td>
+			<td>{ item.ExperienceYears }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuersDocuments(vgkRescuersDocuments []db.VgkRescuersDocuments) {
+	<tr>
+		<th>Тип документа</th>
+		<th>ID спасателя</th>
+		<th>Ссылка на документ</th>
+		<th>Действителен до</th>
+	</tr>
+	for _, item := range vgkRescuersDocuments {
+		<tr>
+			<td>{ item.DocumentType }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.DocumentUrl }</td>
+			<td>{ DateToString(&item.ValidUntil) }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkLocations(vgkLocations []db.VgkLocations) {
+	<tr>
+		<th>ID локации ВГК</th>
+		<th>ID ответственного</th>
+		<th>Адрес</th>
+		<th>Статус</th>
+	</tr>
+	for _, item := range vgkLocations {
+		<tr>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ item.IdResponsible }</td>
+			<td>{ item.Address }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkShifts(vgkShifts []db.VgkShifts) {
+	<tr>
+		<th>Начало смены</th>
+		<th>ID ВГК</th>
+		<th>ID локации</th>
+		<th>Конец смены</th>
+	</tr>
+	for _, item := range vgkShifts {
+		<tr>
+			<td>{ TimestampToString(&item.ShiftStart) }</td>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ TimestampToString(&item.ShiftEnd) }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidentsResponseOperations(accidentsResponseOperations []db.AccidentsResponseOperations) {
+	<tr>
+		<th>ID операции</th>
+		<th>ID аварии</th>
+		<th>Дата начала</th>
+		<th>Дата окончания</th>
+		<th>Статус</th>
+	</tr>
+	for _, item := range accidentsResponseOperations {
+		<tr>
+			<td>{ item.IdOperation }</td>
+			<td>{ item.IdAccident }</td>
+			<td>{ TimestampToString(&item.StartDateTime) }</td>
+			<td>{ TimestampToString(&item.EndDateTime) }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListOperationsParticipations(operationsParticipations []db.OperationsParticipations) {
+	<tr>
+		<th>ID ВГК</th>
+		<th>ID операции</th>
+		<th>Назначенная задача</th>
+	</tr>
+	for _, item := range operationsParticipations {
+		<tr>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdOperation }</td>
+			<td>{ item.AssignedTask }</td>
+		</tr>
+	}
+}
+
+templ TableListOperationsReports(operationsReports []db.OperationsReports) {
+	<tr>
+		<th>ID отчета</th>
+		<th>ID операции</th>
+		<th>Дата отчета</th>
+		<th>Описание</th>
+	</tr>
+	for _, item := range operationsReports {
+		<tr>
+			<td>{ item.IdReport }</td>
+			<td>{ item.IdOperation }</td>
+			<td>{ TimestampToString(&item.ReportDateTime) }</td>
+			<td>{ item.Description }</td>
+		</tr>
+	}
+}
+
+templ TableListTrainings(trainings []db.Trainings) {
+	<tr>
+		<th>Дата</th>
+		<th>ID объекта</th>
+		<th>ID инструктора</th>
+		<th>Тема</th>
+		<th>Описание</th>
+	</tr>
+	for _, item := range trainings {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdObjectLocation }</td>
+			<td>{ item.IdInstructor }</td>
+			<td>{ item.Topic }</td>
+			<td>{ item.Description }</td>
+		</tr>
+	}
+}
+
+templ TableListTrainingsParticipations(trainingsParticipations []db.TrainingsParticipations) {
+	<tr>
+		<th>Дата</th>
+		<th>ID объекта</th>
+		<th>ID спасателя</th>
+		<th>Примечания</th>
+	</tr>
+	for _, item := range trainingsParticipations {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdObjectLocation }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.Notes }</td>
+		</tr>
+	}
+}
+
+templ TableListCertificationsPassings(certificationsPassings []db.CertificationsPassings) {
+	<tr>
+		<th>Дата</th>
+		<th>ID спасателя</th>
+		<th>Результат</th>
+		<th>Тема</th>
+	</tr>
+	for _, item := range certificationsPassings {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.Result }</td>
+			<td>{ item.Topic }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuersMedicalParameters(vgkRescuersMedicalParameters []db.VgkRescuersMedicalParameters) {
+	<tr>
+		<th>Дата</th>
+		<th>ID спасателя</th>
+		<th>Действителен до</th>
+		<th>Группа здоровья</th>
+		<th>Рост</th>
+		<th>Вес</th>
+		<th>Заключение</th>
+		<th>Примечание</th>
+	</tr>
+	for _, item := range vgkRescuersMedicalParameters {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.ExpireDate) }</td>
+			<td>{ item.HealthGroup }</td>
+			<td>{ item.Height }</td>
+			<td>{ item.Weight }</td>
+			<td>{ item.Conclusion }</td>
+			<td>{ item.Note }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkServiceRoom(vgkServiceRoom []db.VgkServiceRoom) {
+	<tr>
+		<th>ID сервисного помещения</th>
+		<th>ID ответственного</th>
+		<th>Назначение</th>
+		<th>Адрес</th>
+	</tr>
+	for _, item := range vgkServiceRoom {
+		<tr>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.IdResponsible }</td>
+			<td>{ item.Purpose }</td>
+			<td>{ item.Address }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipment(equipment []db.Equipment) {
+	<tr>
+		<th>Инвентарный номер</th>
+		<th>ID локации ВГК</th>
+		<th>Тип оборудования</th>
+		<th>Название</th>
+		<th>Статус</th>
+		<th>Дата последней проверки</th>
+	</tr>
+	for _, item := range equipment {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ item.EquipmentType }</td>
+			<td>{ item.Name }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.LastCheckDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListTransport(transport []db.Transport) {
+	<tr>
+		<th>Номер транспорта</th>
+		<th>ID локации ВГК</th>
+		<th>Модель</th>
+		<th>Тип</th>
+		<th>Статус</th>
+		<th>Дата производства</th>
+		<th>Пробег</th>
+		<th>Дата последней проверки</th>
+	</tr>
+	for _, item := range transport {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ item.Model }</td>
+			<td>{ item.Type }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.ManufactureDate) }</td>
+			<td>{ item.Mileage }</td>
+			<td>{ DateToString(&item.LastCheckDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentUsageHistory(equipmentUsageHistory []db.EquipmentUsageHistory) {
+	<tr>
+		<th>Инвентарный номер</th>
+		<th>ID спасателя</th>
+		<th>Дата выдачи</th>
+		<th>Дата возврата</th>
+		<th>Цель использования</th>
+	</tr>
+	for _, item := range equipmentUsageHistory {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.IssueDate) }</td>
+			<td>{ DateToString(&item.ReturnDate) }</td>
+			<td>{ item.Purpose }</td>
+		</tr>
+	}
+}
+
+templ TableListTransportUsageHistory(transportUsageHistory []db.TransportUsageHistory) {
+	<tr>
+		<th>Номер транспорта</th>
+		<th>ID спасателя</th>
+		<th>Дата отправления</th>
+		<th>Дата возврата</th>
+		<th>Цель использования</th>
+	</tr>
+	for _, item := range transportUsageHistory {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.DepartureDate) }</td>
+			<td>{ DateToString(&item.ReturnDate) }</td>
+			<td>{ item.Purpose }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentServiceHistory(equipmentServiceHistory []db.EquipmentServiceHistory) {
+	<tr>
+		<th>Инвентарный номер</th>
+		<th>ID сервисного помещения</th>
+		<th>Причина</th>
+		<th>Дата обслуживания</th>
+		<th>Статус</th>
+	</tr>
+	for _, item := range equipmentServiceHistory {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.Reason }</td>
+			<td>{ DateToString(&item.ServeDate) }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListTransportServiceHistory(transportServiceHistory []db.TransportServiceHistory) {
+	<tr>
+		<th>Номер транспорта</th>
+		<th>ID сервисного помещения</th>
+		<th>Причина</th>
+		<th>Дата обслуживания</th>
+		<th>Статус</th>
+	</tr>
+	for _, item := range transportServiceHistory {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.Reason }</td>
+			<td>{ DateToString(&item.ServeDate) }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
