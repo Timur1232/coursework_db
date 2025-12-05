@@ -16,13 +16,15 @@ import (
 var DB *pgx.Conn
 
 const (
+	user     = "app"
+	password = "app"
 	host     = "127.0.0.1"
 	port     = 5432
-	database = "t"
+	database = "coursework"
 )
 
 func getConnString() string {
-	return fmt.Sprintf("postgres://postgres:postgres@%s:%d/%s", host, port, database)
+	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s", user, password, host, port, database)
 }
 
 func RenderPage(c echo.Context, component templ.Component) error {

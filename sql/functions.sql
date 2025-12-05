@@ -156,3 +156,4 @@ BEGIN
     RAISE NOTICE 'Обновлено % единиц транспорта', updated_count;
 END;
 $$ LANGUAGE plpgsql;
+
