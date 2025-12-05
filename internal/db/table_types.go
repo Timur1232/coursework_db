@@ -1,10 +1,17 @@
 package db
 
-import "time"
+import (
+	"context"
+	"time"
+
+	"github.com/jackc/pgx/v5"
+)
+
+// ======================[types]====================== //
 
 type EquipmentTypes struct {
-	TypeName              string
-	EquipmentStandardsUrl string
+	TypeName              string `db:"type_name"`
+	EquipmentStandardsUrl string `db:"equipment_standards_url"`
 }
 
 type ObjectType string
@@ -18,13 +25,13 @@ const (
 )
 
 type Objects struct {
-	IdObject         uint64
-	ObjectType       ObjectType
-	Name             string
-	Address          string
-	Phone            string
-	Email            string
-	DirectorFullName string
+	IdObject         uint64     `db:"id_object"`
+	ObjectType       ObjectType `db:"object_type"`
+	Name             string     `db:"name"`
+	Address          string     `db:"address"`
+	Phone            string     `db:"phone"`
+	Email            string     `db:"email"`
+	DirectorFullName string     `db:"director_full_name"`
 }
 
 type DangerLevel string
@@ -37,8 +44,8 @@ const (
 )
 
 type AccidentTypes struct {
-	AccidentName string
-	DangerLevel  DangerLevel
+	AccidentName string      `db:"accident_name"`
+	DangerLevel  DangerLevel `db:"danger_level"`
 }
 
 type AccidentStatus string
@@ -52,29 +59,29 @@ const (
 )
 
 type Accidents struct {
-	IdAccident    uint64
-	IdObject      uint64
-	AccidentType  string
-	BeginDateTime time.Time
-	Status        AccidentStatus
-	Description   string
-	FirstEstimate string
-	Cause         string
+	IdAccident    uint64         `db:"id_accident"`
+	IdObject      uint64         `db:"id_object"`
+	AccidentType  string         `db:"accident_type"`
+	BeginDateTime time.Time      `db:"begin_date_time"`
+	Status        AccidentStatus `db:"status"`
+	Description   string         `db:"description"`
+	FirstEstimate string         `db:"first_estimate"`
+	Cause         string         `db:"cause"`
 }
 
 type ApplicationsForAdmission struct {
-	IdApplication  uint64
-	IdObject       uint64
-	PassportNumber string
-	FirstName      string
-	LastName       string
-	Surname        string
-	IssueDate      time.Time
-	Phone          string
-	Email          string
-	Status         string
-	BirthdayDate   time.Time
-	HomeAddress    string
+	IdApplication  uint64    `db:"id_application"`
+	IdObject       uint64    `db:"id_object"`
+	PassportNumber string    `db:"passport_number"`
+	FirstName      string    `db:"first_name"`
+	LastName       string    `db:"last_name"`
+	Surname        string    `db:"surname"`
+	IssueDate      time.Time `db:"issue_date"`
+	Phone          string    `db:"phone"`
+	Email          string    `db:"email"`
+	Status         string    `db:"status"`
+	BirthdayDate   time.Time `db:"birthday_date"`
+	HomeAddress    string    `db:"home_address"`
 }
 
 type DocumentType string
@@ -90,20 +97,20 @@ const (
 )
 
 type CandidatesDocuments struct {
-	DocumentType  DocumentType
-	IdApplication uint64
-	DocumentUrl   string
-	ValidUntil    time.Time
+	DocumentType  DocumentType `db:"document_type"`
+	IdApplication uint64       `db:"id_application"`
+	DocumentUrl   string       `db:"document_url"`
+	ValidUntil    time.Time    `db:"valid_until"`
 }
 
 type CandidatesMedicalParameters struct {
-	IdApplication uint64
-	Date          time.Time
-	ExpireDate    time.Time
-	HealthGroup   string
-	Height        float32
-	Weight        float32
-	Note          string
+	IdApplication uint64    `db:"id_application"`
+	Date          time.Time `db:"date"`
+	ExpireDate    time.Time `db:"expire_date"`
+	HealthGroup   string    `db:"health_group"`
+	Height        float32   `db:"height"`
+	Weight        float32   `db:"weight"`
+	Note          string    `db:"note"`
 }
 
 type VgkStatus string
@@ -117,37 +124,37 @@ const (
 )
 
 type Vgk struct {
-	IdVgk         uint64
-	IdObject      uint64
-	Status        VgkStatus
-	FormationDate time.Time
+	IdVgk         uint64    `db:"id_vgk"`
+	IdObject      uint64    `db:"id_object"`
+	Status        VgkStatus `db:"status"`
+	FormationDate time.Time `db:"formation_date"`
 }
 
 type Positions struct {
-	PositionName       string
-	Salary             float32
-	MinExperienceYears uint
-	Responsibilities   string
+	PositionName       string  `db:"position_name"`
+	Salary             float32 `db:"salary"`
+	MinExperienceYears uint    `db:"min_experience_years"`
+	Responsibilities   string  `db:"responsibilities"`
 }
 
 type VgkRescuers struct {
-	IdRescuer       uint64
-	IdVgk           uint64
-	Position        string
-	FirstName       string
-	SecondName      string
-	Surname         string
-	Status          VgkStatus
-	BirthDate       time.Time
-	HomeAddress     string
-	ExperienceYears uint
+	IdRescuer       uint64    `db:"id_rescuer"`
+	IdVgk           uint64    `db:"id_vgk"`
+	Position        string    `db:"position"`
+	FirstName       string    `db:"first_name"`
+	SecondName      string    `db:"second_name"`
+	Surname         string    `db:"surname"`
+	Status          VgkStatus `db:"status"`
+	BirthDate       time.Time `db:"birth_date"`
+	HomeAddress     string    `db:"home_address"`
+	ExperienceYears uint      `db:"experience_years"`
 }
 
 type VgkRescuersDocuments struct {
-	DocumentType string
-	IdRescuer    uint64
-	DocumentUrl  string
-	ValidUntil   time.Time
+	DocumentType string    `db:"document_type"`
+	IdRescuer    uint64    `db:"id_rescuer"`
+	DocumentUrl  string    `db:"document_url"`
+	ValidUntil   time.Time `db:"valid_until"`
 }
 
 type VgkLocationStatus string
@@ -158,17 +165,17 @@ const (
 )
 
 type VgkLocations struct {
-	IdVgkLocation uint64
-	IdResponsible uint64
-	Address       string
-	Status        VgkLocationStatus
+	IdVgkLocation uint64            `db:"id_vgk_location"`
+	IdResponsible uint64            `db:"id_responsible"`
+	Address       string            `db:"address"`
+	Status        VgkLocationStatus `db:"status"`
 }
 
 type VgkShifts struct {
-	ShiftStart    time.Time
-	IdVgk         uint64
-	IdVgkLocation uint64
-	ShiftEnd      time.Time
+	ShiftStart    time.Time `db:"shift_start"`
+	IdVgk         uint64    `db:"id_vgk"`
+	IdVgkLocation uint64    `db:"id_vgk_location"`
+	ShiftEnd      time.Time `db:"shift_end"`
 }
 
 type OperationStatus string
@@ -183,64 +190,64 @@ const (
 )
 
 type AccidentsResponseOperations struct {
-	IdOperation   uint64
-	IdAccident    uint64
-	StartDateTime time.Time
-	EndDateTime   time.Time
-	Status        OperationStatus
+	IdOperation   uint64          `db:"id_operation"`
+	IdAccident    uint64          `db:"id_accident"`
+	StartDateTime time.Time       `db:"start_date_time"`
+	EndDateTime   time.Time       `db:"end_date_time"`
+	Status        OperationStatus `db:"status"`
 }
 
 type OperationsParticipations struct {
-	IdVgk        uint64
-	IdOperation  uint64
-	AssignedTask string
+	IdVgk        uint64 `db:"id_vgk"`
+	IdOperation  uint64 `db:"id_operation"`
+	AssignedTask string `db:"assigned_task"`
 }
 
 type OperationsReports struct {
-	IdReport       uint64
-	IdOperation    uint64
-	ReportDateTime time.Time
-	Description    string
+	IdReport       uint64    `db:"id_report"`
+	IdOperation    uint64    `db:"id_operation"`
+	ReportDateTime time.Time `db:"report_date_time"`
+	Description    string    `db:"description"`
 }
 
 type Trainings struct {
-	Date             time.Time
-	IdObjectLocation uint64
-	IdInstructor     uint64
-	Topic            string
-	Description      string
+	Date             time.Time `db:"date"`
+	IdObjectLocation uint64    `db:"id_object_location"`
+	IdInstructor     uint64    `db:"id_instructor"`
+	Topic            string    `db:"topic"`
+	Description      string    `db:"description"`
 }
 
 type TrainingsParticipations struct {
-	Date             time.Time
-	IdObjectLocation uint64
-	IdRescuer        uint64
-	Notes            string
+	Date             time.Time `db:"date"`
+	IdObjectLocation uint64    `db:"id_object_location"`
+	IdRescuer        uint64    `db:"id_rescuer"`
+	Notes            string    `db:"notes"`
 }
 
 type CertificationsPassings struct {
-	Date      time.Time
-	IdRescuer uint64
-	Result    bool
-	Topic     string
+	Date      time.Time `db:"date"`
+	IdRescuer uint64    `db:"id_rescuer"`
+	Result    bool      `db:"result"`
+	Topic     string    `db:"topic"`
 }
 
 type VgkRescuersMedicalParameters struct {
-	Date        time.Time
-	IdRescuer   uint64
-	ExpireDate  time.Time
-	HealthGroup uint
-	Height      float32
-	Weight      float32
-	Conclusion  string
-	Note        string
+	Date        time.Time `db:"date"`
+	IdRescuer   uint64    `db:"id_rescuer"`
+	ExpireDate  time.Time `db:"expire_date"`
+	HealthGroup uint      `db:"health_group"`
+	Height      float32   `db:"height"`
+	Weight      float32   `db:"weight"`
+	Conclusion  string    `db:"conclusion"`
+	Note        string    `db:"note"`
 }
 
 type VgkServiceRoom struct {
-	IdServiceRoom uint64
-	IdResponsible uint64
-	Purpose       string
-	Address       string
+	IdServiceRoom uint64 `db:"id_service_room"`
+	IdResponsible uint64 `db:"id_responsible"`
+	Purpose       string `db:"purpose"`
+	Address       string `db:"address"`
 }
 
 type EquipmentStatus string
@@ -254,39 +261,39 @@ const (
 )
 
 type Equipment struct {
-	InventoryNumber uint64
-	IdVgkLocation   uint64
-	EquipmentType   string
-	Name            string
-	Status          EquipmentStatus
-	LastCheckDate   time.Time
+	InventoryNumber uint64          `db:"inventory_number"`
+	IdVgkLocation   uint64          `db:"id_vgk_location"`
+	EquipmentType   string          `db:"equipment_type"`
+	Name            string          `db:"name"`
+	Status          EquipmentStatus `db:"status"`
+	LastCheckDate   time.Time       `db:"last_check_date"`
 }
 
 type Transport struct {
-	TransportNumber uint64
-	IdVgkLocation   uint64
-	Model           string
-	Type            string
-	Status          EquipmentStatus
-	ManufactureDate time.Time
-	Mileage         float32
-	LastCheckDate   time.Time
+	TransportNumber uint64          `db:"transport_number"`
+	IdVgkLocation   uint64          `db:"id_vgk_location"`
+	Model           string          `db:"model"`
+	Type            string          `db:"type"`
+	Status          EquipmentStatus `db:"status"`
+	ManufactureDate time.Time       `db:"manufacture_date"`
+	Mileage         float32         `db:"mileage"`
+	LastCheckDate   time.Time       `db:"last_check_date"`
 }
 
 type EquipmentUsageHistory struct {
-	InventoryNumber uint64
-	IdRescuer       uint64
-	IssueDate       time.Time
-	ReturnDate      time.Time
-	Purpose         string
+	InventoryNumber uint64    `db:"inventory_number"`
+	IdRescuer       uint64    `db:"id_rescuer"`
+	IssueDate       time.Time `db:"issue_date"`
+	ReturnDate      time.Time `db:"return_date"`
+	Purpose         string    `db:"purpose"`
 }
 
 type TransportUsageHistory struct {
-	TransportNumber uint64
-	IdRescuer       uint64
-	DepartureDate   time.Time
-	ReturnDate      time.Time
-	Purpose         string
+	TransportNumber uint64    `db:"transport_number"`
+	IdRescuer       uint64    `db:"id_rescuer"`
+	DepartureDate   time.Time `db:"departure_date"`
+	ReturnDate      time.Time `db:"return_date"`
+	Purpose         string    `db:"purpose"`
 }
 
 type ServiceStatus string
@@ -299,17 +306,74 @@ const (
 )
 
 type EquipmentServiceHistory struct {
-	InventoryNumber uint64
-	IdServiceRoom   uint64
-	Reason          string
-	ServeDate       time.Time
-	Status          ServiceStatus
+	InventoryNumber uint64        `db:"inventory_number"`
+	IdServiceRoom   uint64        `db:"id_service_room"`
+	Reason          string        `db:"reason"`
+	ServeDate       time.Time     `db:"serve_date"`
+	Status          ServiceStatus `db:"status"`
 }
 
 type TransportServiceHistory struct {
-	TransportNumber uint64
-	IdServiceRoom   uint64
-	Reason          string
-	ServeDate       time.Time
-	Status          ServiceStatus
+	TransportNumber uint64        `db:"transport_number"`
+	IdServiceRoom   uint64        `db:"id_service_room"`
+	Reason          string        `db:"reason"`
+	ServeDate       time.Time     `db:"serve_date"`
+	Status          ServiceStatus `db:"status"`
 }
+
+// ======================[funcs]====================== //
+
+func Query[T any](conn *pgx.Conn, ctx context.Context, sql string, args ...any) ([]T, error) {
+	rows, err := conn.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	result, err := pgx.CollectRows(rows, pgx.RowToStructByName[T])
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+/*func QueryRowEquipmentTypes(conn *pgx.Conn, ctx context.Context, sql string, args ...any) (*EquipmentTypes, error) {
+	row := conn.QueryRow(ctx, sql, args...)
+
+	var result EquipmentTypes
+	err := row.Scan(&result.TypeName, &result.EquipmentStandardsUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}*/
+
+// EquipmentTypes
+// Objects
+// AccidentTypes
+// Accidents
+// ApplicationsForAdmission
+// CandidatesDocuments
+// CandidatesMedicalParameters
+// Vgk
+// Positions
+// VgkRescuers
+// VgkRescuersDocuments
+// VgkLocations
+// VgkShifts
+// AccidentsResponseOperations
+// OperationsParticipations
+// OperationsReports
+// Trainings
+// TrainingsParticipations
+// CertificationsPassings
+// VgkRescuersMedicalParameters
+// VgkServiceRoom
+// Equipment
+// Transport
+// EquipmentUsageHistory
+// TransportUsageHistory
+// EquipmentServiceHistory
+// TransportServiceHistory

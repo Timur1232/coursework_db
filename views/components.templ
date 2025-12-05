@@ -20,6 +20,14 @@ templ Page(component templ.Component) {
 	</html>
 }
 
+templ Table(list templ.Component) {
+    <table>
+        <tbody>
+            @list
+        </tbody>
+    </table>
+}
+
 func DateToString(t *time.Time) string {
 	y, m, d := t.Date()
 	return fmt.Sprintf("%02d.%02d.%04d", d, m, y)
