@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -70,18 +71,18 @@ type Accidents struct {
 }
 
 type ApplicationsForAdmission struct {
-	IdApplication  uint64    `db:"id_application"`
-	IdObject       uint64    `db:"id_object"`
-	PassportNumber string    `db:"passport_number"`
-	FirstName      string    `db:"first_name"`
-	LastName       string    `db:"last_name"`
-	Surname        string    `db:"surname"`
-	IssueDate      time.Time `db:"issue_date"`
-	Phone          string    `db:"phone"`
-	Email          string    `db:"email"`
-	Status         string    `db:"status"`
-	BirthdayDate   time.Time `db:"birthday_date"`
-	HomeAddress    string    `db:"home_address"`
+	IdApplication  uint64         `db:"id_application"`
+	IdObject       uint64         `db:"id_object"`
+	PassportNumber string         `db:"passport_number"`
+	FirstName      string         `db:"first_name"`
+	LastName       string         `db:"last_name"`
+	Surname        sql.NullString `db:"surname"`
+	IssueDate      time.Time      `db:"issue_date"`
+	Phone          string         `db:"phone"`
+	Email          string         `db:"email"`
+	Status         string         `db:"status"`
+	BirthdayDate   time.Time      `db:"birthday_date"`
+	HomeAddress    string         `db:"home_address"`
 }
 
 type DocumentType string
@@ -138,16 +139,16 @@ type Positions struct {
 }
 
 type VgkRescuers struct {
-	IdRescuer       uint64    `db:"id_rescuer"`
-	IdVgk           uint64    `db:"id_vgk"`
-	Position        string    `db:"position"`
-	FirstName       string    `db:"first_name"`
-	SecondName      string    `db:"second_name"`
-	Surname         string    `db:"surname"`
-	Status          VgkStatus `db:"status"`
-	BirthDate       time.Time `db:"birth_date"`
-	HomeAddress     string    `db:"home_address"`
-	ExperienceYears uint      `db:"experience_years"`
+	IdRescuer       uint64         `db:"id_rescuer"`
+	IdVgk           sql.NullInt64  `db:"id_vgk"`
+	Position        sql.NullString `db:"position"`
+	FirstName       string         `db:"first_name"`
+	SecondName      string         `db:"second_name"`
+	Surname         sql.NullString `db:"surname"`
+	Status          VgkStatus      `db:"status"`
+	BirthDate       time.Time      `db:"birth_date"`
+	HomeAddress     string         `db:"home_address"`
+	ExperienceYears uint           `db:"experience_years"`
 }
 
 type VgkRescuersDocuments struct {
@@ -166,7 +167,7 @@ const (
 
 type VgkLocations struct {
 	IdVgkLocation uint64            `db:"id_vgk_location"`
-	IdResponsible uint64            `db:"id_responsible"`
+	IdResponsible sql.NullInt64     `db:"id_responsible"`
 	Address       string            `db:"address"`
 	Status        VgkLocationStatus `db:"status"`
 }
@@ -193,7 +194,7 @@ type AccidentsResponseOperations struct {
 	IdOperation   uint64          `db:"id_operation"`
 	IdAccident    uint64          `db:"id_accident"`
 	StartDateTime time.Time       `db:"start_date_time"`
-	EndDateTime   time.Time       `db:"end_date_time"`
+	EndDateTime   sql.NullTime    `db:"end_date_time"`
 	Status        OperationStatus `db:"status"`
 }
 
@@ -211,18 +212,18 @@ type OperationsReports struct {
 }
 
 type Trainings struct {
-	Date             time.Time `db:"date"`
-	IdObjectLocation uint64    `db:"id_object_location"`
-	IdInstructor     uint64    `db:"id_instructor"`
-	Topic            string    `db:"topic"`
-	Description      string    `db:"description"`
+	Date             time.Time      `db:"date"`
+	IdObjectLocation uint64         `db:"id_object_location"`
+	IdInstructor     uint64         `db:"id_instructor"`
+	Topic            string         `db:"topic"`
+	Description      sql.NullString `db:"description"`
 }
 
 type TrainingsParticipations struct {
-	Date             time.Time `db:"date"`
-	IdObjectLocation uint64    `db:"id_object_location"`
-	IdRescuer        uint64    `db:"id_rescuer"`
-	Notes            string    `db:"notes"`
+	Date             time.Time      `db:"date"`
+	IdObjectLocation uint64         `db:"id_object_location"`
+	IdRescuer        uint64         `db:"id_rescuer"`
+	Notes            sql.NullString `db:"notes"`
 }
 
 type CertificationsPassings struct {
@@ -233,21 +234,21 @@ type CertificationsPassings struct {
 }
 
 type VgkRescuersMedicalParameters struct {
-	Date        time.Time `db:"date"`
-	IdRescuer   uint64    `db:"id_rescuer"`
-	ExpireDate  time.Time `db:"expire_date"`
-	HealthGroup uint      `db:"health_group"`
-	Height      float32   `db:"height"`
-	Weight      float32   `db:"weight"`
-	Conclusion  string    `db:"conclusion"`
-	Note        string    `db:"note"`
+	Date        time.Time      `db:"date"`
+	IdRescuer   uint64         `db:"id_rescuer"`
+	ExpireDate  time.Time      `db:"expire_date"`
+	HealthGroup uint           `db:"health_group"`
+	Height      float32        `db:"height"`
+	Weight      float32        `db:"weight"`
+	Conclusion  string         `db:"conclusion"`
+	Note        sql.NullString `db:"note"`
 }
 
 type VgkServiceRoom struct {
-	IdServiceRoom uint64 `db:"id_service_room"`
-	IdResponsible uint64 `db:"id_responsible"`
-	Purpose       string `db:"purpose"`
-	Address       string `db:"address"`
+	IdServiceRoom uint64        `db:"id_service_room"`
+	IdResponsible sql.NullInt64 `db:"id_responsible"`
+	Purpose       string        `db:"purpose"`
+	Address       string        `db:"address"`
 }
 
 type EquipmentStatus string
@@ -262,7 +263,7 @@ const (
 
 type Equipment struct {
 	InventoryNumber uint64          `db:"inventory_number"`
-	IdVgkLocation   uint64          `db:"id_vgk_location"`
+	IdVgkLocation   sql.NullInt64   `db:"id_vgk_location"`
 	EquipmentType   string          `db:"equipment_type"`
 	Name            string          `db:"name"`
 	Status          EquipmentStatus `db:"status"`
@@ -271,7 +272,7 @@ type Equipment struct {
 
 type Transport struct {
 	TransportNumber uint64          `db:"transport_number"`
-	IdVgkLocation   uint64          `db:"id_vgk_location"`
+	IdVgkLocation   sql.NullInt64   `db:"id_vgk_location"`
 	Model           string          `db:"model"`
 	Type            string          `db:"type"`
 	Status          EquipmentStatus `db:"status"`
