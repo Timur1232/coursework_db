@@ -42,7 +42,7 @@ func Layout(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><link rel=\"stylesheet\" href=\"/static/styles/style.css\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script><script src=\"https://unpkg.com/hyperscript.org@0.9.12\"></script></head><body>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><link rel=\"stylesheet\" href=\"/static/styles/style.css\"><link rel=\"icon\" href=\"/static/favicon.ico\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script><script src=\"https://unpkg.com/hyperscript.org@0.9.12\"></script></head><body hx-boost>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,15 +58,7 @@ func Layout(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</main>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = Footer().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</main></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -95,36 +87,7 @@ func Header() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<header class=\"header\"><div class=\"header-container\"><!-- Логотип и название --><div class=\"header-brand\"><a href=\"/\" class=\"logo-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\"body\" hx-swap=\"outerHTML\"><div class=\"logo\"><svg class=\"logo-icon\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\"></path></svg> <span class=\"logo-text\">Спасательная Служба</span></div></a></div><!-- Основная навигация --><nav class=\"header-nav\"><ul class=\"nav-list\"><li class=\"nav-item\"><a href=\"/\" class=\"nav-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname === '/'}\"><svg class=\"nav-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path> <polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg> <span>Главная</span></a></li><li class=\"nav-item\"><a href=\"/profile\" class=\"nav-link\" hx-get=\"/profile\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/profile')}\"><svg class=\"nav-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"></path> <circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg> <span>Личный кабинет</span></a></li><li class=\"nav-item\"><a href=\"/admin\" class=\"nav-link\" hx-get=\"/admin\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/admin')}\"><svg class=\"nav-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"></rect> <rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"></rect> <rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"></rect> <rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"></rect></svg> <span>Панель администратора</span></a></li></ul></nav><!-- Кнопка выхода и пользователь --><div class=\"header-user\"><div class=\"user-info\"><div class=\"user-avatar\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"8\" r=\"5\"></circle> <path d=\"M20 21a8 8 0 0 0-16 0\"></path></svg></div><div class=\"user-details\"><span class=\"user-name\">Иван Иванов</span> <span class=\"user-role\">Администратор</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-confirm=\"Вы уверены, что хотите выйти?\" hx-target=\"body\" hx-swap=\"outerHTML\" hx-push-url=\"/login\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4\"></path> <polyline points=\"16 17 21 12 16 7\"></polyline> <line x1=\"21\" y1=\"12\" x2=\"9\" y2=\"12\"></line></svg> <span>Выйти</span></button></div></div></header>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		return nil
-	})
-}
-
-func Footer() templ.Component {
-	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
-			return templ_7745c5c3_CtxErr
-		}
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-		if !templ_7745c5c3_IsBuffer {
-			defer func() {
-				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err == nil {
-					templ_7745c5c3_Err = templ_7745c5c3_BufErr
-				}
-			}()
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<footer class=\"footer\"><div class=\"footer-container\"><div class=\"footer-content\"><div class=\"footer-info\"><div class=\"footer-logo\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\"></path></svg> <span>Спасательная Служба</span></div><p class=\"footer-text\">Система управления спасательными операциями</p></div><div class=\"footer-links\"><div class=\"footer-section\"><h4 class=\"footer-heading\">Система</h4><a href=\"/about\" class=\"footer-link\" hx-get=\"/about\" hx-push-url=\"true\" hx-target=\".main-content\">О системе</a> <a href=\"/docs\" class=\"footer-link\" hx-get=\"/docs\" hx-push-url=\"true\" hx-target=\".main-content\">Документация</a> <a href=\"/contacts\" class=\"footer-link\" hx-get=\"/contacts\" hx-push-url=\"true\" hx-target=\".main-content\">Контакты</a></div><div class=\"footer-section\"><h4 class=\"footer-heading\">Поддержка</h4><a href=\"/support\" class=\"footer-link\" hx-get=\"/support\" hx-push-url=\"true\" hx-target=\".main-content\">Техподдержка</a> <a href=\"/faq\" class=\"footer-link\" hx-get=\"/faq\" hx-push-url=\"true\" hx-target=\".main-content\">FAQ</a> <a href=\"/updates\" class=\"footer-link\" hx-get=\"/updates\" hx-push-url=\"true\" hx-target=\".main-content\">Обновления</a></div></div></div><div class=\"footer-bottom\"><p class=\"footer-copyright\">© 2024 Спасательная Служба. Все права защищены.</p><div class=\"footer-meta\"><span class=\"footer-version\">Версия 1.0.0</span> <span class=\"footer-status\">Статус: <span class=\"status-active\">Работает</span></span></div></div></div></footer>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<header class=\"header\"><div class=\"header-container\"><div class=\"header-brand\"><a href=\"/\" class=\"logo-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\"body\" hx-swap=\"outerHTML\"><div class=\"logo\"><span class=\"logo-text\">Спасательная Служба</span></div></a></div><nav class=\"header-nav\"><ul class=\"nav-list\"><li class=\"nav-item\"><a href=\"/\" class=\"nav-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname === '/'}\"><span>Главная</span></a></li><li class=\"nav-item\"><a href=\"/profile\" class=\"nav-link\" hx-get=\"/profile\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/profile')}\"><span>Личный кабинет</span></a></li><li class=\"nav-item\"><a href=\"/admin\" class=\"nav-link\" hx-get=\"/admin\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/admin')}\"><span>Панель администратора</span></a></li></ul></nav><div class=\"header-user\"><div class=\"user-info\"><div class=\"user-details\"><span class=\"user-name\">Тимур Баймурадов</span> <span class=\"user-role\">Администратор</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-confirm=\"Вы уверены, что хотите выйти?\" hx-target=\"body\" hx-swap=\"outerHTML\" hx-push-url=\"/login\"><span>Выйти</span></button></div></div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

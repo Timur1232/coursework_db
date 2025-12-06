@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/Timur1232/coursework_db/internal/db"
 	"github.com/Timur1232/coursework_db/internal/handlers"
@@ -54,7 +55,7 @@ func main() {
 	e.Static("/static", "static")
 
 	e.GET("/admin", func(c echo.Context) error {
-		return c.NoContent(501)
+		return c.Redirect(http.StatusPermanentRedirect, "/admin/vgk")
 	})
 
 	e.GET("/admin/vgk", func(c echo.Context) error { return handlers.AdminPanel(c, "vgk", views.TableListVgk, views.SortVgk) })

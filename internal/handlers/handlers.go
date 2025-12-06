@@ -38,6 +38,9 @@ func AdminPanel[T any](c echo.Context, tableName string, listComp func([]T) temp
 	list := listComp(res)
 	sort := sortComp()
 	admin := views.AdminPanel(tableName, 1, pageSize, pageSize >= count, list, sort)
+	if c.Request().Header.Get("HX-Request") == "true" {
+		return RenderPage(c, admin)
+	}
 	page := views.Layout("Горноспасательная служба", admin)
 	return RenderPage(c, page)
 }

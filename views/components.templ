@@ -33,21 +33,6 @@ const (
 	AdminPathTransportServiceHistory      = AdminPathBase + "/transport_service_history"
 )
 
-templ Page(component templ.Component) {
-	<html lang="ru">
-		<head>
-			<title></title>
-			<meta charset="UTF=8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-			<link rel="stylesheet" href="/static/styles/style.css"/>
-		</head>
-		<body>
-			@component
-		</body>
-	</html>
-}
-
 templ Table(listComponent templ.Component, page int, currentTable string, lastPage bool) {
 	<table class="data-table">
 		<tbody>
@@ -92,208 +77,208 @@ templ AdminPanelNavigation() {
 				<a
 					href={ AdminPathEquipmentTypes }
 					hx-get={ AdminPathEquipmentTypes }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Типы оборудования</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathObjects }
 					hx-get={ AdminPathObjects }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Объекты</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathAccidentTypes }
 					hx-get={ AdminPathAccidentTypes }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Типы аварий</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathAccidents }
 					hx-get={ AdminPathAccidents }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Аварии</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathApplicationsForAdmission }
 					hx-get={ AdminPathApplicationsForAdmission }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Заявки на допуск</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathCandidatesDocuments }
 					hx-get={ AdminPathCandidatesDocuments }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Документы кандидатов</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathCandidatesMedicalParameters }
 					hx-get={ AdminPathCandidatesMedicalParameters }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Медпараметры кандидатов</a>
 			</li>
-			<li><a href={ AdminPathVgk } hx-get={ AdminPathVgk } hx-target="#admin-panel" hx-swap="outerHTML">ВГК</a></li>
+			<li><a href={ AdminPathVgk } hx-get={ AdminPathVgk } hx-target=".main-content" hx-swap="innerHTML">ВГК</a></li>
 			<li>
 				<a
 					href={ AdminPathPositions }
 					hx-get={ AdminPathPositions }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Должности</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkRescuers }
 					hx-get={ AdminPathVgkRescuers }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Спасатели ВГК</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkRescuersDocuments }
 					hx-get={ AdminPathVgkRescuersDocuments }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Документы спасателей</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkLocations }
 					hx-get={ AdminPathVgkLocations }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Локации ВГК</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkShifts }
 					hx-get={ AdminPathVgkShifts }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Смены ВГК</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathAccidentsResponseOperations }
 					hx-get={ AdminPathAccidentsResponseOperations }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Операции по авариям</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathOperationsParticipations }
 					hx-get={ AdminPathOperationsParticipations }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Участия в операциях</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathOperationsReports }
 					hx-get={ AdminPathOperationsReports }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Отчеты операций</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathTrainings }
 					hx-get={ AdminPathTrainings }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Тренировки</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathTrainingsParticipations }
 					hx-get={ AdminPathTrainingsParticipations }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Участия в тренировках</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathCertificationsPassings }
 					hx-get={ AdminPathCertificationsPassings }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Аттестации</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkRescuersMedicalParameters }
 					hx-get={ AdminPathVgkRescuersMedicalParameters }
-					hx-target="#admin-panel"
+					hx-target=".main-content"
 				>Медпараметры спасателей</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathVgkServiceRoom }
 					hx-get={ AdminPathVgkServiceRoom }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Сервисные помещения</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathEquipment }
 					hx-get={ AdminPathEquipment }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Оборудование</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathTransport }
 					hx-get={ AdminPathTransport }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>Транспорт</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathEquipmentUsageHistory }
 					hx-get={ AdminPathEquipmentUsageHistory }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>История использования оборудования</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathTransportUsageHistory }
 					hx-get={ AdminPathTransportUsageHistory }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>История использования транспорта</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathEquipmentServiceHistory }
 					hx-get={ AdminPathEquipmentServiceHistory }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>История обслуживания оборудования</a>
 			</li>
 			<li>
 				<a
 					href={ AdminPathTransportServiceHistory }
 					hx-get={ AdminPathTransportServiceHistory }
-					hx-target="#admin-panel"
-					hx-swap="outerHTML"
+					hx-target=".main-content"
+					hx-swap="innerHTML"
 				>История обслуживания транспорта</a>
 			</li>
 		</ul>
