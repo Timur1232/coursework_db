@@ -298,3 +298,40 @@ templ LogoutNotification() {
 		</div>
 	</div>
 }
+
+templ NotAuthorizedNotification() {
+	<div class="logout-notification-overlay" id="logout-notification">
+		<div class="logout-notification-modal">
+			<div class="logout-notification-icon">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="48"
+					height="48"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="12" y1="8" x2="12" y2="12"></line>
+					<line x1="12" y1="16" x2="12.01" y2="16"></line>
+				</svg>
+			</div>
+			<h2 class="logout-notification-title">Недостаточно прав</h2>
+			<p class="logout-notification-text">
+				У вас недостаточно прав для доступа к этой странице. Обратитесь к администратору.
+			</p>
+			<button
+				class="logout-notification-button"
+				hx-get="/"
+				hx-target="main"
+				hx-swap="innerHTML"
+				hx-push-url="true"
+			>
+				ОК
+			</button>
+		</div>
+	</div>
+}

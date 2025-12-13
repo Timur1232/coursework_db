@@ -20,8 +20,10 @@ func TimestampToString(t *time.Time) string {
 templ TableListUsers(data any) {
 	{{ users := data.([]db.Users) }}
 	<tr>
-		<th>Тип оборудования</th>
-		<th>Ссылка на стандарты</th>
+		<th>ID пользователя</th>
+		<th>Логин</th>
+		<th>Пароль</th>
+		<th>Роль</th>
 	</tr>
 	for _, item := range users {
 		<tr>

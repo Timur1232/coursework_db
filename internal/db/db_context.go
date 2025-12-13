@@ -8,4 +8,5 @@ import (
 type DBContext struct {
 	echo.Context
 	DB *pgx.Conn
+	User *Users
 }

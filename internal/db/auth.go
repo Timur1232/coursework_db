@@ -18,20 +18,22 @@ func (user *Users) TranslateRole() string {
 }
 
 func FindUserByLogin(DB *pgx.Conn, login string) (*Users, error) {
-	userRow := DB.QueryRow(context.Background(), "SELECT * FROM users WHERE login = $1", login)
+	userRow := DB.QueryRow(context.Background(), "SELECT id_user, login, password, role FROM users WHERE login = $1", login)
 
 	var user Users
-	if err := userRow.Scan(&user); err != nil {
+	err := userRow.Scan(&user.IdUser, &user.Login, &user.Password, &user.Role)
+	if err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
 func GetUser(DB *pgx.Conn, id uint64) (*Users, error) {
-	userRow := DB.QueryRow(context.Background(), "SELECT * FROM users WHERE id_user = $1", id)
+	userRow := DB.QueryRow(context.Background(), "SELECT id_user, login, password, role FROM users WHERE id_user = $1", id)
 
 	var user Users
-	if err := userRow.Scan(&user); err != nil {
+	err := userRow.Scan(&user.IdUser, &user.Login, &user.Password, &user.Role)
+	if err != nil {
 		return nil, err
 	}
 	return &user, nil
