@@ -11,14 +11,25 @@ import (
 
 func HomePage(c echo.Context) error {
 	user := c.(*db.DBContext).User
-	query := "SELECT * FROM accidents ORDER BY begin_date_time DESC LIMIT 10"
-	accidents, err := db.Query[db.Accidents](c.(*db.DBContext).DB, context.Background(), query)
+	DB := c.(*db.DBContext).DB
+	pageSize := 10
+
+	query := "SELECT * FROM accidents ORDER BY begin_date_time DESC LIMIT $1"
+	accidents, err := db.Query[db.Accidents](DB, context.Background(), query, pageSize)
 	if err != nil {
 		return err
 	}
 	accidentsList := accidents.([]db.Accidents)
 
-	home := views.HomePage(accidentsList)
+	query = "SELECT COUNT(*) FROM accidents"
+	var count int
+	if err = DB.QueryRow(context.Background(), query).Scan(&count); err != nil {
+		return err
+	}
+
+	hasNext := pageSize < count
+
+	home := views.HomePage(accidentsList, hasNext)
 	if c.Request().Header.Get("HX-Request") == "true" {
 		return RenderPage(c, home)
 	}
@@ -27,6 +38,8 @@ func HomePage(c echo.Context) error {
 }
 
 func GetAccidents(c echo.Context) error {
+	DB := c.(*db.DBContext).DB
+
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	if page < 1 {
 		page = 1
@@ -35,18 +48,30 @@ func GetAccidents(c echo.Context) error {
 	offset := (page - 1) * pageSize
 
 	query := "SELECT * FROM accidents ORDER BY begin_date_time DESC LIMIT $1 OFFSET $2"
-	accidents, err := db.Query[db.Accidents](c.(*db.DBContext).DB, context.Background(), query, pageSize, offset)
+	accidents, err := db.Query[db.Accidents](DB, context.Background(), query, pageSize, offset)
 	if err != nil {
 		return err
 	}
 	accidentsList := accidents.([]db.Accidents)
 
-	hasNext := len(accidentsList) == pageSize
+	query = "SELECT COUNT(*) FROM accidents"
+	var count int
+	if err = DB.QueryRow(context.Background(), query).Scan(&count); err != nil {
+		return err
+	}
 
-	return RenderPage(c, views.HomeAccidents(page, accidentsList, hasNext))
+	hasNext := page*pageSize < count
+
+	if page == 1 {
+		return RenderPage(c, views.HomeAccidents(page, accidentsList, hasNext))
+	}
+
+	return RenderPage(c, views.AccidentsRows(accidentsList))
 }
 
 func GetObjects(c echo.Context) error {
+	DB := c.(*db.DBContext).DB
+
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	if page < 1 {
 		page = 1
@@ -55,13 +80,23 @@ func GetObjects(c echo.Context) error {
 	offset := (page - 1) * pageSize
 
 	query := "SELECT * FROM objects ORDER BY name LIMIT $1 OFFSET $2"
-	objects, err := db.Query[db.Objects](c.(*db.DBContext).DB, context.Background(), query, pageSize, offset)
+	objects, err := db.Query[db.Objects](DB, context.Background(), query, pageSize, offset)
 	if err != nil {
 		return err
 	}
 	objectsList := objects.([]db.Objects)
 
-	hasNext := len(objectsList) == pageSize
+	query = "SELECT COUNT(*) FROM objects"
+	var count int
+	if err = DB.QueryRow(context.Background(), query).Scan(&count); err != nil {
+		return err
+	}
 
-	return RenderPage(c, views.HomeObjects(page, objectsList, hasNext))
+	hasNext := page*pageSize < count
+
+	if page == 1 {
+		return RenderPage(c, views.HomeObjects(page, objectsList, hasNext))
+	}
+
+	return RenderPage(c, views.ObjectsRows(objectsList))
 }

@@ -64,20 +64,6 @@ templ LoginForm() {
 							hx-include="[name='username']"
 							placeholder="Введите пароль"
 						/>
-						<button type="button" class="password-toggle" onclick="togglePassword('login-password')">
-							<svg
-								class="eye-icon"
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-								<circle cx="12" cy="12" r="3"></circle>
-							</svg>
-						</button>
 					</div>
 					<div id="login-password-error" class="form-error"></div>
 				</div>
@@ -172,20 +158,6 @@ templ RegisterForm() {
 							hx-include="[name='username']"
 							placeholder="Придумайте пароль"
 						/>
-						<button type="button" class="password-toggle" onclick="togglePassword('register-password')">
-							<svg
-								class="eye-icon"
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-								<circle cx="12" cy="12" r="3"></circle>
-							</svg>
-						</button>
 					</div>
 					<div class="password-hints">
 						<div class="hint">Минимум 6 символов</div>
@@ -209,20 +181,6 @@ templ RegisterForm() {
 							hx-include="[name='username'],[name='password']"
 							placeholder="Повторите пароль"
 						/>
-						<button type="button" class="password-toggle" onclick="togglePassword('register-password-confirm')">
-							<svg
-								class="eye-icon"
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-								<circle cx="12" cy="12" r="3"></circle>
-							</svg>
-						</button>
 					</div>
 					<div id="register-password-confirm-error" class="form-error"></div>
 				</div>

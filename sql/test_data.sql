@@ -606,3 +606,13 @@ INSERT INTO transport_service_history (transport_number, id_service_room, reason
 
 
 SELECT update_vgk_rescuers_status();
+
+INSERT INTO users (login, password, role) values
+('admin', 'admin', 'admin'),
+('candidate', '123', 'candidate'),
+('rescuer', '123', 'rescuer'),
+('operator', '123', 'operator'),
+('guest', '123', 'guest');
+
+UPDATE applications_for_admission SET id_user = 2 WHERE id_application = 9;
+UPDATE vgk_rescuers SET id_user = 3 WHERE id_rescuer = 21;

@@ -1,156 +1,164 @@
 package views
 
 import (
-    "fmt"
-    "github.com/Timur1232/coursework_db/internal/db"
+	"fmt"
+	"github.com/Timur1232/coursework_db/internal/db"
 )
 
-templ HomePage(accidents []db.Accidents) {
-	<script>
-        function setActiveTab(clickedButton) {
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            clickedButton.classList.add('active');
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Загружаем первую страницу аварий при загрузке
-            setTimeout(() => {
-                const activeTab = document.querySelector('.tab-button.active');
-                if (activeTab) {
-                    htmx.trigger(activeTab, 'click');
-                }
-            }, 100);
-        });
-    </script>
+templ HomePage(accidents []db.Accidents, hasNext bool) {
 	<div class="home-page">
-		<div class="tabs">
-			<button
-				class="tab-button active"
-				hx-get="/api/home/accidents?page=1"
-				hx-target="#data-container"
-				hx-swap="innerHTML"
-				onclick="setActiveTab(this)"
-			>
-				Аварии
-			</button>
-			<button
-				class="tab-button"
-				hx-get="/api/home/objects?page=1"
-				hx-target="#data-container"
-				hx-swap="innerHTML"
-				onclick="setActiveTab(this)"
-			>
-				Объекты
-			</button>
+		<div class="home-header">
+			<h1>Горноспасательная служба</h1>
+			<p class="home-subtitle">Мониторинг аварий и объектов</p>
+		</div>
+		<div class="tabs-container">
+			<div class="tabs">
+				<button
+					class="tab-button active"
+					hx-get="/api/home/accidents?page=1"
+					hx-target="#data-container"
+					hx-swap="innerHTML"
+					_="on click add .active to me remove .active from .tab-button"
+				>
+					<span class="tab-text">Аварии</span>
+				</button>
+				<button
+					class="tab-button"
+					hx-get="/api/home/objects?page=1"
+					hx-target="#data-container"
+					hx-swap="innerHTML"
+					_="on click add .active to me remove .active from .tab-button"
+				>
+					<span class="tab-text">Объекты</span>
+				</button>
+			</div>
 		</div>
 		<div id="data-container">
-			@HomeAccidents(1, accidents, false)
+			@HomeAccidents(1, accidents, hasNext)
 		</div>
 	</div>
 }
 
 templ HomeAccidents(page int, accidents []db.Accidents, hasNext bool) {
-	<div id="accidents-container">
-		<div class="cards-grid">
-			for _, accident := range accidents {
-				@AccidentCard(accident)
-			}
+	<div id="accidents-container" class="data-container">
+		<div class="table-header">
+			<h2>Список аварий</h2>
+		</div>
+		<div class="table-responsive">
+			<table class="data-table">
+				<thead>
+					<tr>
+						<th>Тип</th>
+						<th>Объект</th>
+						<th>Дата начала</th>
+						<th>Статус</th>
+						<th>Причина</th>
+					</tr>
+				</thead>
+				<tbody id="accidents-table-body">
+					@AccidentsRows(accidents)
+				</tbody>
+			</table>
 		</div>
 		if hasNext {
 			<div
-				class="load-more-trigger"
+				class="load-more"
 				hx-get={ fmt.Sprintf("/api/home/accidents?page=%d", page+1) }
 				hx-trigger="intersect once"
 				hx-swap="beforeend"
-				hx-target="#accidents-container .cards-grid"
-			></div>
+				hx-target="#accidents-table-body"
+				hx-indicator="#loading-indicator"
+			>
+				<div class="loading-indicator" id="loading-indicator">
+					<div class="spinner"></div>
+					<span>Загрузка...</span>
+				</div>
+			</div>
 		}
-	</div>
-}
-
-templ AccidentCard(accident db.Accidents) {
-	<div class="card accident-card">
-		<div class="card-header">
-			<h3 class="card-title">{ accident.AccidentType }</h3>
-			<span class={ fmt.Sprintf("status-badge status-%s", accident.Status) }>
-				{ string(accident.Status) }
-			</span>
-		</div>
-		<div class="card-content">
-			<div class="card-row">
-				<span class="label">Объект:</span>
-				<span class="value">{ accident.IdObject }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Дата начала:</span>
-				<span class="value">{ accident.BeginDateTime.Format("02.01.2006 15:04") }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Причина:</span>
-				<span class="value">{ accident.Cause }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Описание:</span>
-				<span class="value multiline">{ accident.Description }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Первоначальная оценка:</span>
-				<span class="value multiline">{ accident.FirstEstimate }</span>
-			</div>
-		</div>
-		<div class="card-footer">
-			<span class="card-id">ID: { accident.IdAccident }</span>
-		</div>
 	</div>
 }
 
 templ HomeObjects(page int, objects []db.Objects, hasNext bool) {
-	<div id="objects-container">
-		<div class="cards-grid">
-			for _, object := range objects {
-				@ObjectCard(object)
-			}
+	<div id="objects-container" class="data-container">
+		<div class="table-header">
+			<h2>Список объектов</h2>
+		</div>
+		<div class="table-responsive">
+			<table class="data-table">
+				<thead>
+					<tr>
+						<th>Название</th>
+						<th>Тип</th>
+						<th>Адрес</th>
+						<th>Телефон</th>
+						<th>Директор</th>
+					</tr>
+				</thead>
+				<tbody id="objects-table-body">
+					@ObjectsRows(objects)
+				</tbody>
+			</table>
 		</div>
 		if hasNext {
 			<div
-				class="load-more-trigger"
+				class="load-more"
 				hx-get={ fmt.Sprintf("/api/home/objects?page=%d", page+1) }
 				hx-trigger="intersect once"
 				hx-swap="beforeend"
-				hx-target="#objects-container .cards-grid"
-			></div>
+				hx-target="#objects-table-body"
+				hx-indicator="#loading-indicator"
+			>
+				<div class="loading-indicator" id="loading-indicator">
+					<div class="spinner"></div>
+					<span>Загрузка...</span>
+				</div>
+			</div>
 		}
 	</div>
 }
 
-templ ObjectCard(object db.Objects) {
-	<div class="card object-card">
-		<div class="card-header">
-			<h3 class="card-title">{ object.Name }</h3>
-			<span class="type-badge">{ string(object.ObjectType) }</span>
-		</div>
-		<div class="card-content">
-			<div class="card-row">
-				<span class="label">Адрес:</span>
-				<span class="value">{ object.Address }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Телефон:</span>
-				<span class="value">{ object.Phone }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Email:</span>
-				<span class="value">{ object.Email }</span>
-			</div>
-			<div class="card-row">
-				<span class="label">Директор:</span>
-				<span class="value">{ object.DirectorFullName }</span>
-			</div>
-		</div>
-		<div class="card-footer">
-			<span class="card-id">ID: { object.IdObject }</span>
-		</div>
-	</div>
+templ AccidentsRows(accidents []db.Accidents) {
+	for _, accident := range accidents {
+		<tr class="data-row">
+			<td>
+				<div class="cell-main">{ accident.AccidentType }</div>
+			</td>
+			<td>
+				<div class="cell-secondary">Объект #{ accident.IdObject }</div>
+			</td>
+			<td>
+				<div class="cell-date">{ TimestampToString(&accident.BeginDateTime) }</div>
+			</td>
+			<td>
+				<span class={ fmt.Sprintf("status-badge status-%s", accident.Status) }>
+					{ string(accident.Status) }
+				</span>
+			</td>
+			<td>
+				<div class="cell-text">{ accident.Cause }</div>
+			</td>
+		</tr>
+	}
+}
+
+templ ObjectsRows(objects []db.Objects) {
+	for _, object := range objects {
+		<tr class="data-row">
+			<td>
+				<div class="cell-main">{ object.Name }</div>
+			</td>
+			<td>
+				<span class="type-badge">{ string(object.ObjectType) }</span>
+			</td>
+			<td>
+				<div class="cell-secondary">{ object.Address }</div>
+			</td>
+			<td>
+				<div class="cell-text">{ object.Phone }</div>
+			</td>
+			<td>
+				<div class="cell-text">{ object.DirectorFullName }</div>
+			</td>
+		</tr>
+	}
 }

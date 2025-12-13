@@ -154,6 +154,8 @@ func main() {
 
 	e.GET("/profile", handlers.Profile, AuthRequired)
 
+	e.POST("/profile/cancel-application", handlers.CancelApplication, AuthRequiredCandidate)
+
 	e.Logger.Fatal(e.Start(":42069"))
 
 }

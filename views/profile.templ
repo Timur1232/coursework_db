@@ -1,6 +1,10 @@
 package views
 
-import "github.com/Timur1232/coursework_db/internal/db"
+import (
+    "github.com/Timur1232/coursework_db/internal/db"
+
+    "fmt"
+)
 
 templ ProfilePage(user *db.Users) {
 	<div class="profile-page">
@@ -17,6 +21,339 @@ templ ProfilePage(user *db.Users) {
 				<div class="info-row">
 					<span class="label">Роль:</span>
 					<span class="value">{ user.TranslateRole() }</span>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ ProfileGuest(user *db.Users) {
+	<div class="profile-page">
+		<h1>Личный кабинет</h1>
+		<div class="profile-card">
+			<div class="profile-header">
+				<h2>Вы не авторизованы</h2>
+			</div>
+			<div class="profile-content">
+				<p>Для доступа к полному функционалу системы необходимо войти или зарегистрироваться.</p>
+				<div class="profile-actions">
+					<a href="/login" class="btn btn-primary">Войти</a>
+					<a href="/register" class="btn btn-secondary">Зарегистрироваться</a>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ ProfileBasic(user *db.Users) {
+	<div class="profile-page">
+		<h1>Личный кабинет</h1>
+		<div class="profile-card">
+			<div class="profile-header">
+				<h2>Профиль пользователя</h2>
+			</div>
+			<div class="profile-info">
+				<div class="info-row">
+					<span class="label">Логин:</span>
+					<span class="value">{ user.Login }</span>
+				</div>
+				<div class="info-row">
+					<span class="label">Роль:</span>
+					<span class="value">{ user.TranslateRole() }</span>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ ProfileCandidate(user *db.Users, application *db.ApplicationsForAdmission, documents []db.CandidatesDocuments, medicalParams *db.CandidatesMedicalParameters) {
+	<div class="profile-page">
+		<h1>Личный кабинет кандидата</h1>
+		
+		<div class="profile-section">
+			<div class="section-header">
+				<h2>Ваше заявление</h2>
+				<span class="status-badge">{ application.Status }</span>
+			</div>
+			<div class="info-grid">
+				<div class="info-item">
+					<span class="label">ФИО:</span>
+					<span class="value">{ application.LastName } { application.FirstName } { application.Surname.String }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Паспорт:</span>
+					<span class="value">{ application.PassportNumber }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Дата рождения:</span>
+					<span class="value">{ DateToString(&application.BirthdayDate) }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Телефон:</span>
+					<span class="value">{ application.Phone }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Email:</span>
+					<span class="value">{ application.Email }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Адрес:</span>
+					<span class="value">{ application.HomeAddress }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Дата подачи:</span>
+					<span class="value">{ DateToString(&application.IssueDate) }</span>
+				</div>
+			</div>
+		</div>
+		
+		if medicalParams != nil {
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Медицинские параметры</h2>
+					<span class="date-badge">Действительно до: { DateToString(&medicalParams.ExpireDate) }</span>
+				</div>
+				<div class="info-grid">
+					<div class="info-item">
+						<span class="label">Группа здоровья:</span>
+						<span class="value">{ medicalParams.HealthGroup }</span>
+					</div>
+					<div class="info-item">
+						<span class="label">Рост:</span>
+						<span class="value">{ fmt.Sprintf("%.1f см", medicalParams.Height) }</span>
+					</div>
+					<div class="info-item">
+						<span class="label">Вес:</span>
+						<span class="value">{ fmt.Sprintf("%.1f кг", medicalParams.Weight) }</span>
+					</div>
+					<div class="info-item full-width">
+						<span class="label">Примечание:</span>
+						<span class="value">{ medicalParams.Note }</span>
+					</div>
+				</div>
+			</div>
+		}
+		
+		if len(documents) > 0 {
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Документы</h2>
+				</div>
+				<table class="documents-table">
+					<thead>
+						<tr>
+							<th>Тип документа</th>
+							<th>Действителен до</th>
+							<th>Ссылка</th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, doc := range documents {
+							<tr>
+								<td>{ doc.DocumentType }</td>
+								<td>{ DateToString(&doc.ValidUntil) }</td>
+								<td>
+									<a href={ doc.DocumentUrl } target="_blank" class="doc-link">
+										Просмотреть
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+		
+		<div class="profile-section">
+			<div class="section-header">
+				<h2>Действия</h2>
+			</div>
+			<div class="profile-actions">
+				<button
+					hx-post={ "/profile/cancel-application" }
+					hx-confirm="Вы уверены, что хотите отменить заявление? Это действие невозможно отменить."
+					hx-target=".profile-page"
+					hx-swap="outerHTML"
+					class="btn btn-danger"
+				>
+					Отменить заявление
+				</button>
+			</div>
+		</div>
+	</div>
+}
+
+templ ProfileRescuer(user *db.Users, rescuer *db.VgkRescuers, documents []db.VgkRescuersDocuments, medicalParams []db.VgkRescuersMedicalParameters, vgk *db.Vgk, team []db.VgkRescuers) {
+	<div class="profile-page">
+		<h1>Личный кабинет спасателя</h1>
+		
+		<div class="profile-section">
+			<div class="section-header">
+				<h2>Личная информация</h2>
+				<span class={ fmt.Sprintf("status-badge status-%s", rescuer.Status) }>
+					{ string(rescuer.Status) }
+				</span>
+			</div>
+			<div class="info-grid">
+				<div class="info-item">
+					<span class="label">ФИО:</span>
+					<span class="value">{ rescuer.SecondName } { rescuer.FirstName } { rescuer.Surname.String }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Должность:</span>
+					<span class="value">{ rescuer.Position.String }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Дата рождения:</span>
+					<span class="value">{ DateToString(&rescuer.BirthDate) }</span>
+				</div>
+				<div class="info-item">
+					<span class="label">Опыт:</span>
+					<span class="value">{ rescuer.ExperienceYears } лет</span>
+				</div>
+				<div class="info-item full-width">
+					<span class="label">Адрес:</span>
+					<span class="value">{ rescuer.HomeAddress }</span>
+				</div>
+			</div>
+		</div>
+		
+		if len(medicalParams) > 0 {
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Последние медосмотры</h2>
+				</div>
+				<table class="medical-table">
+					<thead>
+						<tr>
+							<th>Дата</th>
+							<th>Действителен до</th>
+							<th>Группа здоровья</th>
+							<th>Рост/Вес</th>
+							<th>Заключение</th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, param := range medicalParams {
+							<tr>
+								<td>{ DateToString(&param.Date) }</td>
+								<td>{ DateToString(&param.ExpireDate) }</td>
+								<td><span class="badge">{ param.HealthGroup }</span></td>
+								<td>{ fmt.Sprintf("%.1f см / %.1f кг", param.Height, param.Weight) }</td>
+								<td>{ param.Conclusion }</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+		
+		if len(documents) > 0 {
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Документы</h2>
+				</div>
+				<table class="documents-table">
+					<thead>
+						<tr>
+							<th>Тип документа</th>
+							<th>Действителен до</th>
+							<th>Ссылка</th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, doc := range documents {
+							<tr>
+								<td>{ doc.DocumentType }</td>
+								<td>{ DateToString(&doc.ValidUntil) }</td>
+								<td>
+									<a href={ doc.DocumentUrl } target="_blank" class="doc-link">
+										Просмотреть
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+		
+		if vgk != nil && len(team) > 0 {
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Моя команда (ВГК #{ vgk.IdVgk })</h2>
+					<span class="date-badge">Сформирована: { DateToString(&vgk.FormationDate) }</span>
+				</div>
+				<table class="team-table">
+					<thead>
+						<tr>
+							<th>ФИО</th>
+							<th>Должность</th>
+							<th>Статус</th>
+							<th>Опыт</th>
+						</tr>
+					</thead>
+					<tbody>
+						for _, member := range team {
+							<tr>
+								<td>{ member.SecondName } { member.FirstName } { member.Surname.String }</td>
+								<td>{ member.Position.String }</td>
+								<td>
+									<span class={ fmt.Sprintf("badge status-%s", member.Status) }>
+										{ string(member.Status) }
+									</span>
+								</td>
+								<td>{ member.ExperienceYears } лет</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		}
+	</div>
+}
+
+templ ProfileOperator(user *db.Users) {
+	<div class="profile-page">
+		<h1>Личный кабинет оператора</h1>
+		<div class="profile-card">
+			<div class="profile-header">
+				<h2>Операторская панель</h2>
+			</div>
+			<div class="profile-content">
+				<p>Вы вошли как оператор системы мониторинга.</p>
+				<div class="info-row">
+					<span class="label">Логин:</span>
+					<span class="value">{ user.Login }</span>
+				</div>
+				<div class="info-row">
+					<span class="label">Роль:</span>
+					<span class="value">{ user.TranslateRole() }</span>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ ProfileAdmin(user *db.Users) {
+	<div class="profile-page">
+		<h1>Личный кабинет администратора</h1>
+		<div class="profile-card">
+			<div class="profile-header">
+				<h2>Административная панель</h2>
+			</div>
+			<div class="profile-content">
+				<p>Вы вошли как администратор системы. У вас есть полный доступ ко всем функциям.</p>
+				<div class="info-row">
+					<span class="label">Логин:</span>
+					<span class="value">{ user.Login }</span>
+				</div>
+				<div class="info-row">
+					<span class="label">Роль:</span>
+					<span class="value">{ user.TranslateRole() }</span>
+				</div>
+				<div class="profile-actions">
+					<a href="/admin" class="btn btn-primary">Перейти в панель админа</a>
 				</div>
 			</div>
 		</div>
