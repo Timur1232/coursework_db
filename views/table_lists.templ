@@ -17,7 +17,24 @@ func TimestampToString(t *time.Time) string {
 	return fmt.Sprintf("%02d.%02d.%04d %02d:%02d", y, m, d, h, min)
 }
 
-templ TableListEquipmentTypes(equipmentTypes []db.EquipmentTypes) {
+templ TableListUsers(data any) {
+	{{ users := data.([]db.Users) }}
+	<tr>
+		<th>Тип оборудования</th>
+		<th>Ссылка на стандарты</th>
+	</tr>
+	for _, item := range users {
+		<tr>
+			<td>{ item.IdUser }</td>
+			<td>{ item.Login }</td>
+			<td>{ item.Password }</td>
+			<td>{ item.Role }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentTypes(data any) {
+	{{ equipmentTypes := data.([]db.EquipmentTypes) }}
 	<tr>
 		<th>Тип оборудования</th>
 		<th>Ссылка на стандарты</th>
@@ -30,7 +47,8 @@ templ TableListEquipmentTypes(equipmentTypes []db.EquipmentTypes) {
 	}
 }
 
-templ TableListObjects(objects []db.Objects) {
+templ TableListObjects(data any) {
+	{{ objects := data.([]db.Objects) }}
 	<tr>
 		<th>ID объекта</th>
 		<th>Тип объекта</th>
@@ -53,7 +71,8 @@ templ TableListObjects(objects []db.Objects) {
 	}
 }
 
-templ TableListAccidentTypes(accidentTypes []db.AccidentTypes) {
+templ TableListAccidentTypes(data any) {
+	{{ accidentTypes := data.([]db.AccidentTypes) }}
 	<tr>
 		<th>Тип аварии</th>
 		<th>Уровень опасности</th>
@@ -66,7 +85,8 @@ templ TableListAccidentTypes(accidentTypes []db.AccidentTypes) {
 	}
 }
 
-templ TableListAccidents(accidents []db.Accidents) {
+templ TableListAccidents(data any) {
+	{{ accidents := data.([]db.Accidents) }}
 	<tr>
 		<th>ID аварии</th>
 		<th>ID объекта</th>
@@ -91,7 +111,8 @@ templ TableListAccidents(accidents []db.Accidents) {
 	}
 }
 
-templ TableListApplicationsForAdmission(applicationsForAdmission []db.ApplicationsForAdmission) {
+templ TableListApplicationsForAdmission(data any) {
+	{{ applicationsForAdmission := data.([]db.ApplicationsForAdmission) }}
 	<tr>
 		<th>ID заявки</th>
 		<th>ID объекта</th>
@@ -124,7 +145,8 @@ templ TableListApplicationsForAdmission(applicationsForAdmission []db.Applicatio
 	}
 }
 
-templ TableListCandidatesDocuments(candidatesDocuments []db.CandidatesDocuments) {
+templ TableListCandidatesDocuments(data any) {
+	{{ candidatesDocuments := data.([]db.CandidatesDocuments) }}
 	<tr>
 		<th>Тип документа</th>
 		<th>ID заявки</th>
@@ -141,7 +163,8 @@ templ TableListCandidatesDocuments(candidatesDocuments []db.CandidatesDocuments)
 	}
 }
 
-templ TableListCandidatesMedicalParameters(candidatesMedicalParameters []db.CandidatesMedicalParameters) {
+templ TableListCandidatesMedicalParameters(data any) {
+	{{ candidatesMedicalParameters := data.([]db.CandidatesMedicalParameters) }}
 	<tr>
 		<th>ID заявки</th>
 		<th>Дата осмотра</th>
@@ -164,7 +187,8 @@ templ TableListCandidatesMedicalParameters(candidatesMedicalParameters []db.Cand
 	}
 }
 
-templ TableListVgk(vgk []db.Vgk) {
+templ TableListVgk(data any) {
+	{{ vgk := data.([]db.Vgk) }}
 	<tr>
 		<th>ID ВГК</th>
 		<th>ID объекта</th>
@@ -181,7 +205,8 @@ templ TableListVgk(vgk []db.Vgk) {
 	}
 }
 
-templ TableListPositions(positions []db.Positions) {
+templ TableListPositions(data any) {
+	{{ positions := data.([]db.Positions) }}
 	<tr>
 		<th>Должность</th>
 		<th>Зарплата</th>
@@ -198,7 +223,8 @@ templ TableListPositions(positions []db.Positions) {
 	}
 }
 
-templ TableListVgkRescuers(vgkRescuers []db.VgkRescuers) {
+templ TableListVgkRescuers(data any) {
+	{{ vgkRescuers := data.([]db.VgkRescuers) }}
 	<tr>
 		<th>ID спасателя</th>
 		<th>ID ВГК</th>
@@ -227,7 +253,8 @@ templ TableListVgkRescuers(vgkRescuers []db.VgkRescuers) {
 	}
 }
 
-templ TableListVgkRescuersDocuments(vgkRescuersDocuments []db.VgkRescuersDocuments) {
+templ TableListVgkRescuersDocuments(data any) {
+	{{ vgkRescuersDocuments := data.([]db.VgkRescuersDocuments) }}
 	<tr>
 		<th>Тип документа</th>
 		<th>ID спасателя</th>
@@ -244,7 +271,8 @@ templ TableListVgkRescuersDocuments(vgkRescuersDocuments []db.VgkRescuersDocumen
 	}
 }
 
-templ TableListVgkLocations(vgkLocations []db.VgkLocations) {
+templ TableListVgkLocations(data any) {
+	{{ vgkLocations := data.([]db.VgkLocations) }}
 	<tr>
 		<th>ID локации ВГК</th>
 		<th>ID ответственного</th>
@@ -261,7 +289,8 @@ templ TableListVgkLocations(vgkLocations []db.VgkLocations) {
 	}
 }
 
-templ TableListVgkShifts(vgkShifts []db.VgkShifts) {
+templ TableListVgkShifts(data any) {
+	{{ vgkShifts := data.([]db.VgkShifts) }}
 	<tr>
 		<th>Начало смены</th>
 		<th>ID ВГК</th>
@@ -278,7 +307,8 @@ templ TableListVgkShifts(vgkShifts []db.VgkShifts) {
 	}
 }
 
-templ TableListAccidentsResponseOperations(accidentsResponseOperations []db.AccidentsResponseOperations) {
+templ TableListAccidentsResponseOperations(data any) {
+	{{ accidentsResponseOperations := data.([]db.AccidentsResponseOperations) }}
 	<tr>
 		<th>ID операции</th>
 		<th>ID аварии</th>
@@ -301,7 +331,8 @@ templ TableListAccidentsResponseOperations(accidentsResponseOperations []db.Acci
 	}
 }
 
-templ TableListOperationsParticipations(operationsParticipations []db.OperationsParticipations) {
+templ TableListOperationsParticipations(data any) {
+	{{ operationsParticipations := data.([]db.OperationsParticipations) }}
 	<tr>
 		<th>ID ВГК</th>
 		<th>ID операции</th>
@@ -316,7 +347,8 @@ templ TableListOperationsParticipations(operationsParticipations []db.Operations
 	}
 }
 
-templ TableListOperationsReports(operationsReports []db.OperationsReports) {
+templ TableListOperationsReports(data any) {
+	{{ operationsReports := data.([]db.OperationsReports) }}
 	<tr>
 		<th>ID отчета</th>
 		<th>ID операции</th>
@@ -333,7 +365,8 @@ templ TableListOperationsReports(operationsReports []db.OperationsReports) {
 	}
 }
 
-templ TableListTrainings(trainings []db.Trainings) {
+templ TableListTrainings(data any) {
+	{{ trainings := data.([]db.Trainings) }}
 	<tr>
 		<th>Дата</th>
 		<th>ID объекта</th>
@@ -352,7 +385,8 @@ templ TableListTrainings(trainings []db.Trainings) {
 	}
 }
 
-templ TableListTrainingsParticipations(trainingsParticipations []db.TrainingsParticipations) {
+templ TableListTrainingsParticipations(data any) {
+	{{ trainingsParticipations := data.([]db.TrainingsParticipations) }}
 	<tr>
 		<th>Дата</th>
 		<th>ID объекта</th>
@@ -369,7 +403,8 @@ templ TableListTrainingsParticipations(trainingsParticipations []db.TrainingsPar
 	}
 }
 
-templ TableListCertificationsPassings(certificationsPassings []db.CertificationsPassings) {
+templ TableListCertificationsPassings(data any) {
+	{{ certificationsPassings := data.([]db.CertificationsPassings) }}
 	<tr>
 		<th>Дата</th>
 		<th>ID спасателя</th>
@@ -386,7 +421,8 @@ templ TableListCertificationsPassings(certificationsPassings []db.Certifications
 	}
 }
 
-templ TableListVgkRescuersMedicalParameters(vgkRescuersMedicalParameters []db.VgkRescuersMedicalParameters) {
+templ TableListVgkRescuersMedicalParameters(data any) {
+	{{ vgkRescuersMedicalParameters := data.([]db.VgkRescuersMedicalParameters) }}
 	<tr>
 		<th>Дата</th>
 		<th>ID спасателя</th>
@@ -411,7 +447,8 @@ templ TableListVgkRescuersMedicalParameters(vgkRescuersMedicalParameters []db.Vg
 	}
 }
 
-templ TableListVgkServiceRoom(vgkServiceRoom []db.VgkServiceRoom) {
+templ TableListVgkServiceRoom(data any) {
+	{{ vgkServiceRoom := data.([]db.VgkServiceRoom) }}
 	<tr>
 		<th>ID сервисного помещения</th>
 		<th>ID ответственного</th>
@@ -428,7 +465,8 @@ templ TableListVgkServiceRoom(vgkServiceRoom []db.VgkServiceRoom) {
 	}
 }
 
-templ TableListEquipment(equipment []db.Equipment) {
+templ TableListEquipment(data any) {
+	{{ equipment := data.([]db.Equipment) }}
 	<tr>
 		<th>Инвентарный номер</th>
 		<th>ID локации ВГК</th>
@@ -449,7 +487,8 @@ templ TableListEquipment(equipment []db.Equipment) {
 	}
 }
 
-templ TableListTransport(transport []db.Transport) {
+templ TableListTransport(data any) {
+	{{ transport := data.([]db.Transport) }}
 	<tr>
 		<th>Номер транспорта</th>
 		<th>ID локации ВГК</th>
@@ -474,7 +513,8 @@ templ TableListTransport(transport []db.Transport) {
 	}
 }
 
-templ TableListEquipmentUsageHistory(equipmentUsageHistory []db.EquipmentUsageHistory) {
+templ TableListEquipmentUsageHistory(data any) {
+	{{ equipmentUsageHistory := data.([]db.EquipmentUsageHistory) }}
 	<tr>
 		<th>Инвентарный номер</th>
 		<th>ID спасателя</th>
@@ -493,7 +533,8 @@ templ TableListEquipmentUsageHistory(equipmentUsageHistory []db.EquipmentUsageHi
 	}
 }
 
-templ TableListTransportUsageHistory(transportUsageHistory []db.TransportUsageHistory) {
+templ TableListTransportUsageHistory(data any) {
+	{{ transportUsageHistory := data.([]db.TransportUsageHistory) }}
 	<tr>
 		<th>Номер транспорта</th>
 		<th>ID спасателя</th>
@@ -512,7 +553,8 @@ templ TableListTransportUsageHistory(transportUsageHistory []db.TransportUsageHi
 	}
 }
 
-templ TableListEquipmentServiceHistory(equipmentServiceHistory []db.EquipmentServiceHistory) {
+templ TableListEquipmentServiceHistory(data any) {
+	{{ equipmentServiceHistory := data.([]db.EquipmentServiceHistory) }}
 	<tr>
 		<th>Инвентарный номер</th>
 		<th>ID сервисного помещения</th>
@@ -531,7 +573,8 @@ templ TableListEquipmentServiceHistory(equipmentServiceHistory []db.EquipmentSer
 	}
 }
 
-templ TableListTransportServiceHistory(transportServiceHistory []db.TransportServiceHistory) {
+templ TableListTransportServiceHistory(data any) {
+	{{ transportServiceHistory := data.([]db.TransportServiceHistory) }}
 	<tr>
 		<th>Номер транспорта</th>
 		<th>ID сервисного помещения</th>

@@ -1,6 +1,10 @@
 package views
 
-templ Layout(title string, content templ.Component) {
+import (
+    "github.com/Timur1232/coursework_db/internal/db"
+)
+
+templ Layout(title string, content templ.Component, user *db.Users) {
 	<!DOCTYPE html>
 	<html lang="ru">
 		<head>
@@ -12,8 +16,8 @@ templ Layout(title string, content templ.Component) {
 			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
 			<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 		</head>
-		<body hx-boost>
-			@Header()
+		<body>
+			@Header(user)
 			<main class="main-content">
 				@content
 			</main>
@@ -21,7 +25,7 @@ templ Layout(title string, content templ.Component) {
 	</html>
 }
 
-templ Header() {
+templ Header(user *db.Users) {
 	<header class="header">
 		<div class="header-container">
 			<div class="header-brand">
@@ -65,7 +69,7 @@ templ Header() {
 							class="nav-link"
 							hx-get="/admin"
 							hx-push-url="true"
-							hx-target=".main-content"
+							hx-target="main"
 							hx-swap="innerHTML"
 							:class="{'active': window.location.pathname.startsWith('/admin')}"
 						>
@@ -74,24 +78,28 @@ templ Header() {
 					</li>
 				</ul>
 			</nav>
-			<div class="header-user">
+            if user != nil {
+			<div id="header-user" class="header-user">
 				<div class="user-info">
 					<div class="user-details">
-						<span class="user-name">Тимур Баймурадов</span>
-						<span class="user-role">Администратор</span>
+						<span class="user-name">{ user.Login }</span>
+						<span class="user-role">{ user.TranslateRole() }</span>
 					</div>
 				</div>
 				<button
 					class="logout-btn"
 					hx-post="/logout"
 					hx-confirm="Вы уверены, что хотите выйти?"
-					hx-target="body"
-					hx-swap="outerHTML"
+					hx-target="main"
+					hx-swap="innerHTML"
 					hx-push-url="/login"
 				>
 					<span>Выйти</span>
 				</button>
 			</div>
+            } else {
+                @NotAuthorized(false)
+            }
 		</div>
 	</header>
 }

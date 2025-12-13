@@ -157,3 +157,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- =====================[обновление статуса членов ВГК]===================== --
+
+CREATE OR REPLACE FUNCTION update_vgk_rescuers_status()
+RETURNS void AS $$
+DECLARE
+    vgk_record RECORD;
+BEGIN
+    FOR vgk_record IN
+        SELECT id_vgk, status FROM vgk
+    LOOP
+        IF vgk_record.status IN ('inactive', 'dismissed') THEN
+            UPDATE vgk_rescuers
+            SET status = 'inactive'
+            WHERE id_vgk = vgk_record.id_vgk AND status IN ('on_duty', 'on_shift');
+        END IF;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;

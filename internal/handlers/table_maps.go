@@ -1,0 +1,103 @@
+package handlers
+
+import (
+	"context"
+
+	"github.com/Timur1232/coursework_db/internal/db"
+	"github.com/Timur1232/coursework_db/views"
+	"github.com/a-h/templ"
+	"github.com/jackc/pgx/v5"
+)
+
+var TablesComponents map[string]func(any) templ.Component = map[string]func(any) templ.Component{
+	"users":                           views.TableListUsers,
+	"equipment_types":                 views.TableListEquipmentTypes,
+	"objects":                         views.TableListObjects,
+	"accident_types":                  views.TableListAccidentTypes,
+	"accidents":                       views.TableListAccidents,
+	"applications_for_admission":      views.TableListApplicationsForAdmission,
+	"candidates_documents":            views.TableListCandidatesDocuments,
+	"candidates_medical_parameters":   views.TableListCandidatesMedicalParameters,
+	"vgk":                             views.TableListVgk,
+	"positions":                       views.TableListPositions,
+	"vgk_rescuers":                    views.TableListVgkRescuers,
+	"vgk_rescuers_documents":          views.TableListVgkRescuersDocuments,
+	"vgk_locations":                   views.TableListVgkLocations,
+	"vgk_shifts":                      views.TableListVgkShifts,
+	"accidents_response_operations":   views.TableListAccidentsResponseOperations,
+	"operations_participations":       views.TableListOperationsParticipations,
+	"operations_reports":              views.TableListOperationsReports,
+	"trainings":                       views.TableListTrainings,
+	"trainings_participations":        views.TableListTrainingsParticipations,
+	"certifications_passings":         views.TableListCertificationsPassings,
+	"vgk_rescuers_medical_parameters": views.TableListVgkRescuersMedicalParameters,
+	"vgk_service_room":                views.TableListVgkServiceRoom,
+	"equipment":                       views.TableListEquipment,
+	"transport":                       views.TableListTransport,
+	"equipment_usage_history":         views.TableListEquipmentUsageHistory,
+	"transport_usage_history":         views.TableListTransportUsageHistory,
+	"equipment_service_history":       views.TableListEquipmentServiceHistory,
+	"transport_service_history":       views.TableListTransportServiceHistory,
+}
+
+var TablesSortComponents map[string]func() templ.Component = map[string]func() templ.Component{
+	"users":                           views.SortUsers,
+	"equipment_types":                 views.SortEquipmentTypes,
+	"objects":                         views.SortObjects,
+	"accident_types":                  views.SortAccidentTypes,
+	"accidents":                       views.SortAccidents,
+	"applications_for_admission":      views.SortApplicationsForAdmission,
+	"candidates_documents":            views.SortCandidatesDocuments,
+	"candidates_medical_parameters":   views.SortCandidatesMedicalParameters,
+	"vgk":                             views.SortVgk,
+	"positions":                       views.SortPositions,
+	"vgk_rescuers":                    views.SortVgkRescuers,
+	"vgk_rescuers_documents":          views.SortVgkRescuersDocuments,
+	"vgk_locations":                   views.SortVgkLocations,
+	"vgk_shifts":                      views.SortVgkShifts,
+	"accidents_response_operations":   views.SortAccidentsResponseOperations,
+	"operations_participations":       views.SortOperationsParticipations,
+	"operations_reports":              views.SortOperationsReports,
+	"trainings":                       views.SortTrainings,
+	"trainings_participations":        views.SortTrainingsParticipations,
+	"certifications_passings":         views.SortCertificationsPassings,
+	"vgk_rescuers_medical_parameters": views.SortVgkRescuersMedicalParameters,
+	"vgk_service_room":                views.SortVgkServiceRoom,
+	"equipment":                       views.SortEquipment,
+	"transport":                       views.SortTransport,
+	"equipment_usage_history":         views.SortEquipmentUsageHistory,
+	"transport_usage_history":         views.SortTransportUsageHistory,
+	"equipment_service_history":       views.SortEquipmentServiceHistory,
+	"transport_service_history":       views.SortTransportServiceHistory,
+}
+
+var TableQueries map[string]func(*pgx.Conn, context.Context, string, ...any) (any, error) = map[string]func(*pgx.Conn, context.Context, string, ...any) (any, error){
+	"users":                           db.Query[db.Users],
+	"equipment_types":                 db.Query[db.EquipmentTypes],
+	"objects":                         db.Query[db.Objects],
+	"accident_types":                  db.Query[db.AccidentTypes],
+	"accidents":                       db.Query[db.Accidents],
+	"applications_for_admission":      db.Query[db.ApplicationsForAdmission],
+	"candidates_documents":            db.Query[db.CandidatesDocuments],
+	"candidates_medical_parameters":   db.Query[db.CandidatesMedicalParameters],
+	"vgk":                             db.Query[db.Vgk],
+	"positions":                       db.Query[db.Positions],
+	"vgk_rescuers":                    db.Query[db.VgkRescuers],
+	"vgk_rescuers_documents":          db.Query[db.VgkRescuersDocuments],
+	"vgk_locations":                   db.Query[db.VgkLocations],
+	"vgk_shifts":                      db.Query[db.VgkShifts],
+	"accidents_response_operations":   db.Query[db.AccidentsResponseOperations],
+	"operations_participations":       db.Query[db.OperationsParticipations],
+	"operations_reports":              db.Query[db.OperationsReports],
+	"trainings":                       db.Query[db.Trainings],
+	"trainings_participations":        db.Query[db.TrainingsParticipations],
+	"certifications_passings":         db.Query[db.CertificationsPassings],
+	"vgk_rescuers_medical_parameters": db.Query[db.VgkRescuersMedicalParameters],
+	"vgk_service_room":                db.Query[db.VgkServiceRoom],
+	"equipment":                       db.Query[db.Equipment],
+	"transport":                       db.Query[db.Transport],
+	"equipment_usage_history":         db.Query[db.EquipmentUsageHistory],
+	"transport_usage_history":         db.Query[db.TransportUsageHistory],
+	"equipment_service_history":       db.Query[db.EquipmentServiceHistory],
+	"transport_service_history":       db.Query[db.TransportServiceHistory],
+}

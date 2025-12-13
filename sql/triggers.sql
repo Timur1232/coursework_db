@@ -52,6 +52,11 @@ BEGIN
         FROM vgk
         WHERE id_vgk = vgk_id;
 
+        IF vgk_status = 'dismissed' THEN
+            NEW.status := 'inactive';
+            RETURN NEW;
+        END IF;
+
         is_ready := check_vgk_readiness(vgk_id);
 
         IF is_ready AND vgk_status = 'inactive' THEN
@@ -62,6 +67,7 @@ BEGIN
             UPDATE vgk
             SET status = 'inactive'
             WHERE id_vgk = vgk_id;
+            NEW.status := 'inactive';
         END IF;
     END IF;
 
@@ -70,7 +76,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE TRIGGER trg_update_vgk_after_rescuer_insert
-AFTER INSERT ON vgk_rescuers
+BEFORE INSERT ON vgk_rescuers
 FOR EACH ROW
 EXECUTE FUNCTION update_vgk_status();
 

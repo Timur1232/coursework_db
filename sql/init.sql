@@ -83,6 +83,11 @@ CREATE TABLE IF NOT EXISTS applications_for_admission (
     status varchar(255) NOT NULL,
     birthday_date date NOT NULL,
     home_address varchar(255) NOT NULL,
+    id_user integer DEFAULT NULL,
+
+    CONSTRAINT applications_for_admission__id_user FOREIGN KEY (id_user) REFERENCES users (id_user)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
 
     CONSTRAINT applications_for_admission__id_object FOREIGN KEY (id_object) REFERENCES objects (id_object)
         ON UPDATE CASCADE
@@ -196,6 +201,11 @@ CREATE TABLE IF NOT EXISTS vgk_rescuers (
     birth_date date NOT NULL,
     home_address varchar(255) NOT NULL,
     experience_years integer NOT NULL DEFAULT 0,
+    id_user integer DEFAULT NULL,
+
+    CONSTRAINT applications_for_admission__id_user FOREIGN KEY (id_user) REFERENCES users (id_user)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
 
     CONSTRAINT birth_date_check CHECK (
         birth_date <= current_date - interval '18 years'

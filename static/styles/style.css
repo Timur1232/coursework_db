@@ -324,31 +324,37 @@ body {
     }
 }
 
-/* Основная структура с навигацией справа */
+/* Переработанная структура панели админа */
 .admin-panel {
     display: flex;
     min-height: 100vh;
     gap: 2rem;
     padding: 1rem;
     box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .admin-panel > nav {
     order: 2;
-    width: 250px;
-    min-width: 250px;
+    width: 300px;
+    min-width: 300px;
     background-color: #f8f9fa;
     border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     height: fit-content;
     position: sticky;
     top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .admin-panel > div:not(nav) {
     flex: 1;
     order: 1;
+    min-width: 0; /* Для корректной работы с overflow */
 }
 
 /* Навигация */
@@ -371,6 +377,9 @@ body {
     border-radius: 6px;
     border: 1px solid #dee2e6;
     transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .admin-nav a:hover {
@@ -379,9 +388,17 @@ body {
     color: #007bff;
 }
 
-.admin-nav a[href]:active {
+.admin-nav a.active {
     background-color: #007bff;
     color: white;
+    border-color: #007bff;
+}
+
+/* Основной контент панели админа */
+.admin-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 /* Поиск и сортировка */
@@ -390,6 +407,10 @@ body {
     gap: 1rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .search-box {
@@ -405,12 +426,14 @@ body {
     border: 1px solid #dee2e6;
     border-radius: 6px;
     font-size: 1rem;
+    min-width: 200px;
 }
 
 .sort-box {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 /* Кнопки */
@@ -423,6 +446,7 @@ button {
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.2s ease;
+    white-space: nowrap;
 }
 
 button:hover {
@@ -435,20 +459,31 @@ button[disabled] {
     cursor: not-allowed;
 }
 
+/* Контейнер для таблицы с горизонтальным скроллом */
+.table-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+    min-height: 400px;
+}
+
 /* Таблица */
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1rem 0;
     background-color: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    min-width: 800px; /* Минимальная ширина таблицы */
 }
 
 .data-table thead {
     background-color: #2c3e50;
     color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .data-table th {
@@ -458,6 +493,8 @@ button[disabled] {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 2px solid #1a252f;
 }
 
 .data-table tbody tr {
@@ -477,6 +514,12 @@ button[disabled] {
     padding: 1rem;
     color: #333;
     font-size: 0.95rem;
+    white-space: nowrap;
+    border-right: 1px solid #f0f0f0;
+}
+
+.data-table td:last-child {
+    border-right: none;
 }
 
 .data-table tbody tr:nth-child(even) {
@@ -493,15 +536,18 @@ button[disabled] {
     align-items: center;
     gap: 1rem;
     margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
+    padding: 1.5rem;
+    background-color: white;
     border-radius: 8px;
     justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
 }
 
 .pagination span {
     color: #666;
     padding: 0.5rem 1rem;
+    white-space: nowrap;
 }
 
 .pagination button {
@@ -509,12 +555,10 @@ button[disabled] {
     min-width: 120px;
 }
 
-/* Контейнеры */
+/* Контейнер для таблицы и пагинации */
 .table-container {
-    background-color: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
 }
 
 /* Основные стили для страницы */
@@ -530,12 +574,15 @@ body {
 @media (max-width: 1024px) {
     .admin-panel {
         flex-direction: column;
+        gap: 1.5rem;
     }
 
     .admin-panel > nav {
         order: 1;
         width: 100%;
+        min-width: 100%;
         position: static;
+        max-height: none;
     }
 
     .admin-panel > div:not(nav) {
@@ -553,16 +600,42 @@ body {
     }
 
     .sort-box {
-        flex-wrap: wrap;
+        width: 100%;
+        justify-content: flex-start;
     }
 
     .data-table {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        min-width: 600px;
     }
 
     .data-table th,
     .data-table td {
         padding: 0.75rem 0.5rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .pagination button {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-panel {
+        padding: 0.5rem;
+    }
+    
+    .search-sort-container {
+        padding: 1rem;
+    }
+    
+    .search-box input[type="text"] {
+        min-width: 150px;
     }
 }
 
@@ -632,6 +705,7 @@ body {
 }
 
 .form-input {
+    width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -854,7 +928,7 @@ body {
     display: none !important;
 }
 
-/* Адаптивность */
+/* Адаптивность для auth */
 @media (max-width: 640px) {
     .auth-container {
         padding: 1.5rem;
@@ -884,5 +958,367 @@ body {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.75rem;
+    }
+}
+
+/* Стили для уведомления о выходе */
+.logout-notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.logout-notification-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease;
+}
+
+.logout-notification-icon {
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+.logout-notification-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+}
+
+.logout-notification-text {
+    color: #6b7280;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.logout-notification-button {
+    padding: 0.75rem 2rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 120px;
+}
+
+.logout-notification-button:hover {
+    background: #2563eb;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .logout-notification-modal {
+        padding: 1.5rem;
+        width: 95%;
+    }
+    
+    .logout-notification-title {
+        font-size: 1.25rem;
+    }
+    
+    .logout-notification-text {
+        font-size: 0.95rem;
+    }
+}
+
+/* Стили для главной страницы */
+.home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+.tab-button {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    color: #374151;
+    background-color: #f9fafb;
+}
+
+.tab-button.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accident-card .card-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.object-card .card-header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.status-badge,
+.type-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+.status-reported {
+    background: #3b82f6;
+    color: white;
+}
+
+.status-in_progress {
+    background: #f59e0b;
+    color: white;
+}
+
+.status-contained {
+    background: #10b981;
+    color: white;
+}
+
+.status-resolved {
+    background: #6366f1;
+    color: white;
+}
+
+.status-investigating {
+    background: #8b5cf6;
+    color: white;
+}
+
+.type-badge {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-row {
+    display: flex;
+    margin-bottom: 0.75rem;
+    align-items: flex-start;
+}
+
+.card-row:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    font-weight: 500;
+    color: #4b5563;
+    min-width: 120px;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+}
+
+.value {
+    color: #1f2937;
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.value.multiline {
+    white-space: pre-line;
+    word-break: break-word;
+}
+
+.card-footer {
+    padding: 1rem 1.5rem;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+
+.card-id {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-family: monospace;
+}
+
+.load-more-trigger {
+    height: 20px;
+    margin: 2rem 0;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+.loading-spinner::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1rem;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .tab-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .card-row {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .label {
+        min-width: auto;
+        font-size: 0.8rem;
+    }
+    
+    .value {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabs {
+        flex-direction: column;
+        gap: 0.25rem;
+        border-bottom: none;
+    }
+    
+    .tab-button {
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        text-align: left;
+    }
+    
+    .tab-button.active {
+        border-color: #3b82f6;
+        background-color: #eff6ff;
     }
 }

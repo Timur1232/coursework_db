@@ -8,7 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func SortEquipmentTypes() templ.Component {
+func SortUsers() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +29,36 @@ func SortEquipmentTypes() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"type_name\" checked> Тип оборудования</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"equipment_standards_url\"> Ссылка на стандарты</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_user\" checked> ID пользователя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"login\"> Логин</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"password\"> Пароль</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"role\"> Роль</label><br></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func SortEquipmentTypes() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"type_name\" checked> Тип оборудования</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"equipment_standards_url\"> Ссылка на стандарты</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,12 +82,12 @@ func SortObjects() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_object\" checked> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"object_type\"> Тип объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"director_full_name\"> ФИО директора</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\" checked> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"object_type\"> Тип объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"director_full_name\"> ФИО директора</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -82,12 +111,12 @@ func SortAccidentTypes() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var3 == nil {
-			templ_7745c5c3_Var3 = templ.NopComponent
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"accident_name\" checked> Тип аварии</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"danger_level\"> Уровень опасности</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"accident_name\" checked> Тип аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"danger_level\"> Уровень опасности</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -111,12 +140,12 @@ func SortAccidents() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_accident\" checked> ID аварии</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"accident_type\"> Тип аварии</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"begin_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"description\"> Описание</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"first_estimate\"> Первоначальная оценка</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"cause\"> Причина</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_accident\" checked> ID аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"accident_type\"> Тип аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"begin_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_estimate\"> Первоначальная оценка</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"cause\"> Причина</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -140,12 +169,12 @@ func SortApplicationsForAdmission() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var5 == nil {
-			templ_7745c5c3_Var5 = templ.NopComponent
+		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var6 == nil {
+			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"passport_number\"> Номер паспорта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"last_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"birthday_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"home_address\"> Домашний адрес</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"passport_number\"> Номер паспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"birthday_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"home_address\"> Домашний адрес</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -169,12 +198,12 @@ func SortCandidatesDocuments() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_application\"> ID заявки</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"valid_until\"> Действителен до</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\"> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"valid_until\"> Действителен до</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -198,12 +227,12 @@ func SortCandidatesMedicalParameters() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var7 == nil {
-			templ_7745c5c3_Var7 = templ.NopComponent
+		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var8 == nil {
+			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"date\"> Дата осмотра</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"expire_date\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"note\"> Примечание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"date\"> Дата осмотра</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"expire_date\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"note\"> Примечание</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -227,12 +256,12 @@ func SortVgk() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var8 == nil {
-			templ_7745c5c3_Var8 = templ.NopComponent
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"formation_date\"> Дата формирования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"formation_date\"> Дата формирования</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -256,12 +285,12 @@ func SortPositions() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var9 == nil {
-			templ_7745c5c3_Var9 = templ.NopComponent
+		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var10 == nil {
+			templ_7745c5c3_Var10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"position_name\" checked> Должность</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"salary\"> Зарплата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"min_experience_years\"> Минимальный опыт (лет)</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"responsibilities\"> Обязанности</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"position_name\" checked> Должность</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"salary\"> Зарплата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"min_experience_years\"> Минимальный опыт (лет)</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"responsibilities\"> Обязанности</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -285,12 +314,12 @@ func SortVgkRescuers() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var10 == nil {
-			templ_7745c5c3_Var10 = templ.NopComponent
+		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var11 == nil {
+			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\" checked> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"position\"> Должность</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"second_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"birth_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"home_address\"> Домашний адрес</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"experience_years\"> Опыт (лет)</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\" checked> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"position\"> Должность</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"second_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"birth_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"home_address\"> Домашний адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"experience_years\"> Опыт (лет)</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -314,12 +343,12 @@ func SortVgkRescuersDocuments() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var11 == nil {
-			templ_7745c5c3_Var11 = templ.NopComponent
+		templ_7745c5c3_Var12 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var12 == nil {
+			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"valid_until\"> Действителен до</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"valid_until\"> Действителен до</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -343,12 +372,12 @@ func SortVgkLocations() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var12 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var12 == nil {
-			templ_7745c5c3_Var12 = templ.NopComponent
+		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var13 == nil {
+			templ_7745c5c3_Var13 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk_location\" checked> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\" checked> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -372,12 +401,12 @@ func SortVgkShifts() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var13 == nil {
-			templ_7745c5c3_Var13 = templ.NopComponent
+		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var14 == nil {
+			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"shift_start\" checked> Начало смены</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk_location\"> ID локации</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"shift_end\"> Конец смены</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"shift_start\" checked> Начало смены</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"shift_end\"> Конец смены</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -401,12 +430,12 @@ func SortAccidentsResponseOperations() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var14 == nil {
-			templ_7745c5c3_Var14 = templ.NopComponent
+		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var15 == nil {
+			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_operation\" checked> ID операции</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_accident\"> ID аварии</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"start_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"end_date_time\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\" checked> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_accident\"> ID аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"start_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"end_date_time\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -430,12 +459,12 @@ func SortOperationsParticipations() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var15 == nil {
-			templ_7745c5c3_Var15 = templ.NopComponent
+		templ_7745c5c3_Var16 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var16 == nil {
+			templ_7745c5c3_Var16 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"assigned_task\"> Назначенная задача</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"assigned_task\"> Назначенная задача</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -459,12 +488,12 @@ func SortOperationsReports() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var16 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var16 == nil {
-			templ_7745c5c3_Var16 = templ.NopComponent
+		templ_7745c5c3_Var17 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var17 == nil {
+			templ_7745c5c3_Var17 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_report\" checked> ID отчета</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"report_date_time\"> Дата отчета</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"description\"> Описание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_report\" checked> ID отчета</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"report_date_time\"> Дата отчета</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -488,12 +517,12 @@ func SortTrainings() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var17 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var17 == nil {
-			templ_7745c5c3_Var17 = templ.NopComponent
+		templ_7745c5c3_Var18 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var18 == nil {
+			templ_7745c5c3_Var18 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_instructor\"> ID инструктора</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"topic\"> Тема</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"description\"> Описание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_instructor\"> ID инструктора</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"topic\"> Тема</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -517,12 +546,12 @@ func SortTrainingsParticipations() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var18 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var18 == nil {
-			templ_7745c5c3_Var18 = templ.NopComponent
+		templ_7745c5c3_Var19 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var19 == nil {
+			templ_7745c5c3_Var19 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"notes\"> Примечания</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"notes\"> Примечания</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -546,12 +575,12 @@ func SortCertificationsPassings() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var19 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var19 == nil {
-			templ_7745c5c3_Var19 = templ.NopComponent
+		templ_7745c5c3_Var20 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var20 == nil {
+			templ_7745c5c3_Var20 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"result\"> Результат</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"topic\"> Тема</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"result\"> Результат</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"topic\"> Тема</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -575,12 +604,12 @@ func SortVgkRescuersMedicalParameters() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var20 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var20 == nil {
-			templ_7745c5c3_Var20 = templ.NopComponent
+		templ_7745c5c3_Var21 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var21 == nil {
+			templ_7745c5c3_Var21 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"expire_date\"> Действителен до</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"conclusion\"> Заключение</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"note\"> Примечание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"expire_date\"> Действителен до</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"conclusion\"> Заключение</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"note\"> Примечание</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -604,12 +633,12 @@ func SortVgkServiceRoom() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var21 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var21 == nil {
-			templ_7745c5c3_Var21 = templ.NopComponent
+		templ_7745c5c3_Var22 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var22 == nil {
+			templ_7745c5c3_Var22 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"id_service_room\" checked> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"purpose\"> Назначение</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"address\"> Адрес</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\" checked> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Назначение</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -633,12 +662,12 @@ func SortEquipment() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var22 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var22 == nil {
-			templ_7745c5c3_Var22 = templ.NopComponent
+		templ_7745c5c3_Var23 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var23 == nil {
+			templ_7745c5c3_Var23 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"equipment_type\"> Тип оборудования</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"last_check_date\"> Дата последней проверки</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"equipment_type\"> Тип оборудования</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_check_date\"> Дата последней проверки</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -662,12 +691,12 @@ func SortTransport() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var23 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var23 == nil {
-			templ_7745c5c3_Var23 = templ.NopComponent
+		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var24 == nil {
+			templ_7745c5c3_Var24 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"model\"> Модель</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"type\"> Тип</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"manufacture_date\"> Дата производства</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"mileage\"> Пробег</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"last_check_date\"> Дата последней проверки</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"model\"> Модель</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"type\"> Тип</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"manufacture_date\"> Дата производства</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"mileage\"> Пробег</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_check_date\"> Дата последней проверки</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -691,12 +720,12 @@ func SortEquipmentUsageHistory() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var24 == nil {
-			templ_7745c5c3_Var24 = templ.NopComponent
+		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var25 == nil {
+			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"purpose\"> Цель использования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Цель использования</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -720,12 +749,12 @@ func SortTransportUsageHistory() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var25 == nil {
-			templ_7745c5c3_Var25 = templ.NopComponent
+		templ_7745c5c3_Var26 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var26 == nil {
+			templ_7745c5c3_Var26 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"departure_date\"> Дата отправления</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"purpose\"> Цель использования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"departure_date\"> Дата отправления</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Цель использования</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -749,12 +778,12 @@ func SortEquipmentServiceHistory() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var26 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var26 == nil {
-			templ_7745c5c3_Var26 = templ.NopComponent
+		templ_7745c5c3_Var27 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var27 == nil {
+			templ_7745c5c3_Var27 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -778,12 +807,12 @@ func SortTransportServiceHistory() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var27 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var27 == nil {
-			templ_7745c5c3_Var27 = templ.NopComponent
+		templ_7745c5c3_Var28 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var28 == nil {
+			templ_7745c5c3_Var28 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<div><label><input type=\"radio\" name=\"sort_column\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sort_column\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

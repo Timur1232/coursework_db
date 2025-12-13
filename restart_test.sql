@@ -3,6 +3,7 @@ drop database coursework;
 create database coursework;
 \c coursework
 
+\i sql/users.sql
 \i sql/init.sql
 \i sql/functions.sql
 \i sql/triggers.sql

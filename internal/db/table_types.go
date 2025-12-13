@@ -10,6 +10,23 @@ import (
 
 // ======================[types]====================== //
 
+type Role string
+
+const (
+	Role_Guest     Role = "guest"
+	Role_Candidate Role = "candidate"
+	Role_Rescuer   Role = "rescuer"
+	Role_Operator  Role = "operator"
+	Role_Admin     Role = "admin"
+)
+
+type Users struct {
+	IdUser   uint64 `db:"id_user"`
+	Login    string `db:"login"`
+	Password string `db:"password"`
+	Role     Role   `db:"role"`
+}
+
 type EquipmentTypes struct {
 	TypeName              string `db:"type_name"`
 	EquipmentStandardsUrl string `db:"equipment_standards_url"`
@@ -83,6 +100,7 @@ type ApplicationsForAdmission struct {
 	Status         string         `db:"status"`
 	BirthdayDate   time.Time      `db:"birthday_date"`
 	HomeAddress    string         `db:"home_address"`
+	IdUser         sql.NullInt64  `db:"id_user"`
 }
 
 type DocumentType string
@@ -149,6 +167,7 @@ type VgkRescuers struct {
 	BirthDate       time.Time      `db:"birth_date"`
 	HomeAddress     string         `db:"home_address"`
 	ExperienceYears uint           `db:"experience_years"`
+	IdUser          sql.NullInt64  `db:"id_user"`
 }
 
 type VgkRescuersDocuments struct {
@@ -324,7 +343,7 @@ type TransportServiceHistory struct {
 
 // ======================[funcs]====================== //
 
-func Query[T any](conn *pgx.Conn, ctx context.Context, sql string, args ...any) ([]T, error) {
+func Query[T any](conn *pgx.Conn, ctx context.Context, sql string, args ...any) (any, error) {
 	rows, err := conn.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err

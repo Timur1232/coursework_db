@@ -8,7 +8,11 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Layout(title string, content templ.Component) templ.Component {
+import (
+	"github.com/Timur1232/coursework_db/internal/db"
+)
+
+func Layout(title string, content templ.Component, user *db.Users) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,17 +40,17 @@ func Layout(title string, content templ.Component) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layout.templ`, Line: 9, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `layout.templ`, Line: 13, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><link rel=\"stylesheet\" href=\"/static/styles/style.css\"><link rel=\"icon\" href=\"/static/favicon.ico\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script><script src=\"https://unpkg.com/hyperscript.org@0.9.12\"></script></head><body hx-boost>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><link rel=\"stylesheet\" href=\"/static/styles/style.css\"><link rel=\"icon\" href=\"/static/favicon.ico\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script><script src=\"https://unpkg.com/hyperscript.org@0.9.12\"></script></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Header().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Header(user).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -66,7 +70,7 @@ func Layout(title string, content templ.Component) templ.Component {
 	})
 }
 
-func Header() templ.Component {
+func Header(user *db.Users) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -87,7 +91,48 @@ func Header() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<header class=\"header\"><div class=\"header-container\"><div class=\"header-brand\"><a href=\"/\" class=\"logo-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\"body\" hx-swap=\"outerHTML\"><div class=\"logo\"><span class=\"logo-text\">Спасательная Служба</span></div></a></div><nav class=\"header-nav\"><ul class=\"nav-list\"><li class=\"nav-item\"><a href=\"/\" class=\"nav-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname === '/'}\"><span>Главная</span></a></li><li class=\"nav-item\"><a href=\"/profile\" class=\"nav-link\" hx-get=\"/profile\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/profile')}\"><span>Личный кабинет</span></a></li><li class=\"nav-item\"><a href=\"/admin\" class=\"nav-link\" hx-get=\"/admin\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/admin')}\"><span>Панель администратора</span></a></li></ul></nav><div class=\"header-user\"><div class=\"user-info\"><div class=\"user-details\"><span class=\"user-name\">Тимур Баймурадов</span> <span class=\"user-role\">Администратор</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-confirm=\"Вы уверены, что хотите выйти?\" hx-target=\"body\" hx-swap=\"outerHTML\" hx-push-url=\"/login\"><span>Выйти</span></button></div></div></header>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<header class=\"header\"><div class=\"header-container\"><div class=\"header-brand\"><a href=\"/\" class=\"logo-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\"body\" hx-swap=\"outerHTML\"><div class=\"logo\"><span class=\"logo-text\">Спасательная Служба</span></div></a></div><nav class=\"header-nav\"><ul class=\"nav-list\"><li class=\"nav-item\"><a href=\"/\" class=\"nav-link\" hx-get=\"/\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname === '/'}\"><span>Главная</span></a></li><li class=\"nav-item\"><a href=\"/profile\" class=\"nav-link\" hx-get=\"/profile\" hx-push-url=\"true\" hx-target=\".main-content\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/profile')}\"><span>Личный кабинет</span></a></li><li class=\"nav-item\"><a href=\"/admin\" class=\"nav-link\" hx-get=\"/admin\" hx-push-url=\"true\" hx-target=\"main\" hx-swap=\"innerHTML\" :class=\"{'active': window.location.pathname.startsWith('/admin')}\"><span>Панель администратора</span></a></li></ul></nav>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if user != nil {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div id=\"header-user\" class=\"header-user\"><div class=\"user-info\"><div class=\"user-details\"><span class=\"user-name\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Login)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `layout.templ`, Line: 85, Col: 42}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span> <span class=\"user-role\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.TranslateRole())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `layout.templ`, Line: 86, Col: 52}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-confirm=\"Вы уверены, что хотите выйти?\" hx-target=\"main\" hx-swap=\"innerHTML\" hx-push-url=\"/login\"><span>Выйти</span></button></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = NotAuthorized(false).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

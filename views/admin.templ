@@ -1,0 +1,336 @@
+package views
+
+import "strconv"
+
+templ Table(listComponent templ.Component, page int, currentTable string, lastPage bool) {
+    <div class="table-scroll-container">
+        <table class="data-table">
+            <tbody>
+                @listComponent
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        if page > 1 {
+            <button
+                hx-get={ "/api/admin/" + currentTable + "/" + strconv.Itoa(page-1) }
+                hx-target="#table-container"
+                hx-include="[name='sortColumn']"
+            >
+                Предыдущая страница
+            </button>
+        } else {
+            <span>
+                Предыдущая страница
+            </span>
+        }
+        <span>Страница { page }</span>
+        if !lastPage {
+            <button
+                hx-get={ "/api/admin/" + currentTable + "/" + strconv.Itoa(page+1) }
+                hx-target="#table-container"
+                hx-include="[name='sortColumn']"
+            >
+                Следующая страница
+            </button>
+        } else {
+            <span>
+                Следующая страница
+            </span>
+        }
+    </div>
+}
+
+templ AdminPanelNavigation() {
+    <nav class="admin-nav">
+        <ul>
+            <li>
+                <a
+                    href="/admin/users"
+                    hx-get="/admin/users"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Пользователи</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/equipment_types"
+                    hx-get="/admin/equipment_types"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Типы оборудования</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/objects"
+                    hx-get="/admin/objects"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Объекты</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/accident_types"
+                    hx-get="/admin/accident_types"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Типы аварий</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/accidents"
+                    hx-get="/admin/accidents"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Аварии</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/applications_for_admission"
+                    hx-get="/admin/applications_for_admission"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Заявки на допуск</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/candidates_documents"
+                    hx-get="/admin/candidates_documents"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Документы кандидатов</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/candidates_medical_parameters"
+                    hx-get="/admin/candidates_medical_parameters"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Медпараметры кандидатов</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk"
+                    hx-get="/admin/vgk"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >ВГК</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/positions"
+                    hx-get="/admin/positions"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Должности</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_rescuers"
+                    hx-get="/admin/vgk_rescuers"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Спасатели ВГК</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_rescuers_documents"
+                    hx-get="/admin/vgk_rescuers_documents"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Документы спасателей</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_locations"
+                    hx-get="/admin/vgk_locations"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Локации ВГК</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_shifts"
+                    hx-get="/admin/vgk_shifts"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Смены ВГК</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/accidents_response_operations"
+                    hx-get="/admin/accidents_response_operations"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Операции по авариям</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/operations_participations"
+                    hx-get="/admin/operations_participations"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Участия в операциях</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/operations_reports"
+                    hx-get="/admin/operations_reports"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Отчеты операций</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/trainings"
+                    hx-get="/admin/trainings"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Тренировки</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/trainings_participations"
+                    hx-get="/admin/trainings_participations"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Участия в тренировках</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/certifications_passings"
+                    hx-get="/admin/certifications_passings"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Аттестации</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_rescuers_medical_parameters"
+                    hx-get="/admin/vgk_rescuers_medical_parameters"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Медпараметры спасателей</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/vgk_service_room"
+                    hx-get="/admin/vgk_service_room"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Сервисные помещения</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/equipment"
+                    hx-get="/admin/equipment"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Оборудование</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/transport"
+                    hx-get="/admin/transport"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >Транспорт</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/equipment_usage_history"
+                    hx-get="/admin/equipment_usage_history"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >История использования оборудования</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/transport_usage_history"
+                    hx-get="/admin/transport_usage_history"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >История использования транспорта</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/equipment_service_history"
+                    hx-get="/admin/equipment_service_history"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >История обслуживания оборудования</a>
+            </li>
+            <li>
+                <a
+                    href="/admin/transport_service_history"
+                    hx-get="/admin/transport_service_history"
+                    hx-target="#admin-panel"
+                    hx-swap="innerHTML"
+                    hx-push-url="true"
+                >История обслуживания транспорта</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+templ AdminPanel(currentTable string, page int, pageSize int, lastPage bool, listComponent templ.Component,
+    sortComponent templ.Component) {
+    <div id="admin-panel" class="admin-panel">
+        <div id="admin-main-content" class="admin-main-content">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <input type="text" name="search" placeholder="Поиск..."/>
+                    <button
+                        hx-get={ "/api/admin/" + currentTable + "/" + strconv.Itoa(page) }
+                        hx-target="#table-container"
+                        hx-include="[name='search']"
+                        hx-include="[name='sortColumn']"
+                    >
+                        Найти
+                    </button>
+                </div>
+                <div class="sort-box">
+                    @sortComponent
+                    <button
+                        hx-get={ "/api/admin/" + currentTable + "/" + strconv.Itoa(page) }
+                        hx-target="#table-container"
+                        hx-include="[name='sortColumn']"
+                    >
+                        Применить сортировку
+                    </button>
+                </div>
+            </div>
+            <div id="table-container" class="table-container">
+                @Table(listComponent, page, currentTable, lastPage)
+            </div>
+        </div>
+        @AdminPanelNavigation()
+    </div>
+}
