@@ -87,6 +87,6 @@ func PostLogout(c echo.Context) error {
 	cookie.MaxAge = -1
 	c.SetCookie(cookie)
 
-	c.Response().Header().Set("HX-Redirect", "/login")
-	return c.NoContent(http.StatusOK)
+	afterLogout := views.LogoutNotification()
+	return RenderPage(c, afterLogout)
 }

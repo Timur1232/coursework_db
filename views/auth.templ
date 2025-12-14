@@ -210,17 +210,17 @@ templ RegisterForm() {
 }
 
 templ NotAuthorized(oob bool) {
-	<div id="header-user" class="header-user" hx-swap-oob?={ oob }>
+	<div id="header-user" class="header-user" hx-swap-oob={ oob }>
 		<div class="user-info">
 			<div class="user-details">
 				<span class="user-name">Не авторизован</span>
 			</div>
 		</div>
+		<button hx-get="/login" hx-target="main">Вход</button>
 	</div>
 }
 
 templ LogoutNotification() {
-    @NotAuthorized(true)
 	<div class="logout-notification-overlay" id="logout-notification">
 		<div class="logout-notification-modal">
 			<div class="logout-notification-icon">
@@ -255,6 +255,7 @@ templ LogoutNotification() {
 			</button>
 		</div>
 	</div>
+	@NotAuthorized(true)
 }
 
 templ NotAuthorizedNotification() {
@@ -281,13 +282,7 @@ templ NotAuthorizedNotification() {
 			<p class="logout-notification-text">
 				У вас недостаточно прав для доступа к этой странице. Обратитесь к администратору.
 			</p>
-			<button
-				class="logout-notification-button"
-				hx-get="/"
-				hx-target="main"
-				hx-swap="innerHTML"
-				hx-push-url="true"
-			>
+			<button class="logout-notification-button" hx-get="/" hx-target="main" hx-swap="innerHTML" hx-push-url="true">
 				ОК
 			</button>
 		</div>
