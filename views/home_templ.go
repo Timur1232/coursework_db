@@ -52,7 +52,7 @@ func HomePage(accidents []db.Accidents, hasNext bool, hxReq bool) templ.Componen
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div id=\"load-more\" class=\"load-more\"><div class=\"loading-indicator\" id=\"loading-indicator\"><div class=\"spinner\"></div><span>Загрузка...</span></div></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div id=\"load-more\" class=\"load-more\"><div class=\"loading-indicator htmx-indicator\" id=\"loading-indicator\"><div class=\"spinner\"></div><span>Загрузка...</span></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
