@@ -1,0 +1,596 @@
+package views
+
+import (
+	"fmt"
+	"github.com/Timur1232/coursework_db/internal/db"
+	"time"
+)
+
+func DateToString(t *time.Time) string {
+	y, m, d := t.Date()
+	return fmt.Sprintf("%02d.%02d.%04d", d, m, y)
+}
+
+func TimestampToString(t *time.Time) string {
+	y, m, d := t.Date()
+	h, min := t.Hour(), t.Minute()
+	return fmt.Sprintf("%02d.%02d.%04d %02d:%02d", y, m, d, h, min)
+}
+
+templ TableListUsers(data any, page int) {
+	{{ users := data.([]db.Users) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/users/%d?sortColumn=id_user", page) }>ID пользователя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/users/%d?sortColumn=login", page) }>Логин</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/users/%d?sortColumn=password", page) }>Пароль</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/users/%d?sortColumn=role", page) }>Роль</th>
+	</tr>
+	for _, item := range users {
+		<tr>
+			<td>{ item.IdUser }</td>
+			<td>{ item.Login }</td>
+			<td>{ item.Password }</td>
+			<td>{ item.Role }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentTypes(data any, page int) {
+	{{ equipmentTypes := data.([]db.EquipmentTypes) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_types/%d?sortColumn=type_name", page) }>Тип оборудования</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_types/%d?sortColumn=equipment_standards_url", page) }>Ссылка на стандарты</th>
+	</tr>
+	for _, item := range equipmentTypes {
+		<tr>
+			<td>{ item.TypeName }</td>
+			<td>{ item.EquipmentStandardsUrl }</td>
+		</tr>
+	}
+}
+
+templ TableListObjects(data any, page int) {
+	{{ objects := data.([]db.Objects) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=id_object", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=object_type", page) }>Тип объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=name", page) }>Название</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=address", page) }>Адрес</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=phone", page) }>Телефон</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=email", page) }>Email</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/objects/%d?sortColumn=director_full_name", page) }>ФИО директора</th>
+	</tr>
+	for _, item := range objects {
+		<tr>
+			<td>{ item.IdObject }</td>
+			<td>{ item.ObjectType }</td>
+			<td>{ item.Name }</td>
+			<td>{ item.Address }</td>
+			<td>{ item.Phone }</td>
+			<td>{ item.Email }</td>
+			<td>{ item.DirectorFullName }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidentTypes(data any, page int) {
+	{{ accidentTypes := data.([]db.AccidentTypes) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/accident_types/%d?sortColumn=accident_name", page) }>Тип аварии</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accident_types/%d?sortColumn=danger_level", page) }>Уровень опасности</th>
+	</tr>
+	for _, item := range accidentTypes {
+		<tr>
+			<td>{ item.AccidentName }</td>
+			<td>{ item.DangerLevel }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidents(data any, page int) {
+	{{ accidents := data.([]db.Accidents) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=id_accident", page) }>ID аварии</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=id_object", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=accident_type", page) }>Тип аварии</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=begin_date_time", page) }>Дата начала</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=description", page) }>Описание</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=first_estimate", page) }>Первоначальная оценка</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents/%d?sortColumn=cause", page) }>Причина</th>
+	</tr>
+	for _, item := range accidents {
+		<tr>
+			<td>{ item.IdAccident }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.AccidentType }</td>
+			<td>{ TimestampToString(&item.BeginDateTime) }</td>
+			<td>{ item.Status }</td>
+			<td>{ item.Description }</td>
+			<td>{ item.FirstEstimate }</td>
+			<td>{ item.Cause }</td>
+		</tr>
+	}
+}
+
+templ TableListApplicationsForAdmission(data any, page int) {
+	{{ applicationsForAdmission := data.([]db.ApplicationsForAdmission) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=id_application", page) }>ID заявки</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=id_object", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=passport_number", page) }>Номер паспорта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=first_name", page) }>Имя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=last_name", page) }>Фамилия</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=surname", page) }>Отчество</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=issue_date", page) }>Дата выдачи</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=phone", page) }>Телефон</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=email", page) }>Email</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=birthday_date", page) }>Дата рождения</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/applications_for_admission/%d?sortColumn=home_address", page) }>Домашний адрес</th>
+	</tr>
+	for _, item := range applicationsForAdmission {
+		<tr>
+			<td>{ item.IdApplication }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.PassportNumber }</td>
+			<td>{ item.FirstName }</td>
+			<td>{ item.LastName }</td>
+			<td>{ item.Surname.String }</td>
+			<td>{ DateToString(&item.IssueDate) }</td>
+			<td>{ item.Phone }</td>
+			<td>{ item.Email }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.BirthdayDate) }</td>
+			<td>{ item.HomeAddress }</td>
+		</tr>
+	}
+}
+
+templ TableListCandidatesDocuments(data any, page int) {
+	{{ candidatesDocuments := data.([]db.CandidatesDocuments) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_documents/%d?sortColumn=document_type", page) }>Тип документа</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_documents/%d?sortColumn=id_application", page) }>ID заявки</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_documents/%d?sortColumn=document_url", page) }>Ссылка на документ</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_documents/%d?sortColumn=valid_until", page) }>Действителен до</th>
+	</tr>
+	for _, item := range candidatesDocuments {
+		<tr>
+			<td>{ item.DocumentType }</td>
+			<td>{ item.IdApplication }</td>
+			<td>{ item.DocumentUrl }</td>
+			<td>{ DateToString(&item.ValidUntil) }</td>
+		</tr>
+	}
+}
+
+templ TableListCandidatesMedicalParameters(data any, page int) {
+	{{ candidatesMedicalParameters := data.([]db.CandidatesMedicalParameters) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=id_application", page) }>ID заявки</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=date", page) }>Дата осмотра</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=expire_date", page) }>Дата окончания</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=health_group", page) }>Группа здоровья</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=height", page) }>Рост</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=weight", page) }>Вес</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/candidates_medical_parameters/%d?sortColumn=note", page) }>Примечание</th>
+	</tr>
+	for _, item := range candidatesMedicalParameters {
+		<tr>
+			<td>{ item.IdApplication }</td>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ DateToString(&item.ExpireDate) }</td>
+			<td>{ item.HealthGroup }</td>
+			<td>{ item.Height }</td>
+			<td>{ item.Weight }</td>
+			<td>{ item.Note }</td>
+		</tr>
+	}
+}
+
+templ TableListVgk(data any, page int) {
+	{{ vgk := data.([]db.Vgk) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk/%d?sortColumn=id_vgk", page) }>ID ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk/%d?sortColumn=id_object", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk/%d?sortColumn=formation_date", page) }>Дата формирования</th>
+	</tr>
+	for _, item := range vgk {
+		<tr>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdObject }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.FormationDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListPositions(data any, page int) {
+	{{ positions := data.([]db.Positions) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/positions/%d?sortColumn=position_name", page) }>Должность</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/positions/%d?sortColumn=salary", page) }>Зарплата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/positions/%d?sortColumn=min_experience_years", page) }>Минимальный опыт (лет)</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/positions/%d?sortColumn=responsibilities", page) }>Обязанности</th>
+	</tr>
+	for _, item := range positions {
+		<tr>
+			<td>{ item.PositionName }</td>
+			<td>{ item.Salary }</td>
+			<td>{ item.MinExperienceYears }</td>
+			<td>{ item.Responsibilities }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuers(data any, page int) {
+	{{ vgkRescuers := data.([]db.VgkRescuers) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=id_vgk", page) }>ID ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=position", page) }>Должность</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=first_name", page) }>Имя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=second_name", page) }>Фамилия</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=surname", page) }>Отчество</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=birth_date", page) }>Дата рождения</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=home_address", page) }>Домашний адрес</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers/%d?sortColumn=experience_years", page) }>Опыт (лет)</th>
+	</tr>
+	for _, item := range vgkRescuers {
+		<tr>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.IdVgk.Int64 }</td>
+			<td>{ item.Position.String }</td>
+			<td>{ item.FirstName }</td>
+			<td>{ item.SecondName }</td>
+			<td>{ item.Surname.String }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.BirthDate) }</td>
+			<td>{ item.HomeAddress }</td>
+			<td>{ item.ExperienceYears }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuersDocuments(data any, page int) {
+	{{ vgkRescuersDocuments := data.([]db.VgkRescuersDocuments) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_documents/%d?sortColumn=document_type", page) }>Тип документа</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_documents/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_documents/%d?sortColumn=document_url", page) }>Ссылка на документ</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_documents/%d?sortColumn=valid_until", page) }>Действителен до</th>
+	</tr>
+	for _, item := range vgkRescuersDocuments {
+		<tr>
+			<td>{ item.DocumentType }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.DocumentUrl }</td>
+			<td>{ DateToString(&item.ValidUntil) }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkLocations(data any, page int) {
+	{{ vgkLocations := data.([]db.VgkLocations) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_locations/%d?sortColumn=id_vgk_location", page) }>ID локации ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_locations/%d?sortColumn=id_responsible", page) }>ID ответственного</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_locations/%d?sortColumn=address", page) }>Адрес</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_locations/%d?sortColumn=status", page) }>Статус</th>
+	</tr>
+	for _, item := range vgkLocations {
+		<tr>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ item.IdResponsible.Int64 }</td>
+			<td>{ item.Address }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkShifts(data any, page int) {
+	{{ vgkShifts := data.([]db.VgkShifts) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_shifts/%d?sortColumn=shift_start", page) }>Начало смены</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_shifts/%d?sortColumn=id_vgk", page) }>ID ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_shifts/%d?sortColumn=id_vgk_location", page) }>ID локации</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_shifts/%d?sortColumn=shift_end", page) }>Конец смены</th>
+	</tr>
+	for _, item := range vgkShifts {
+		<tr>
+			<td>{ TimestampToString(&item.ShiftStart) }</td>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdVgkLocation }</td>
+			<td>{ TimestampToString(&item.ShiftEnd) }</td>
+		</tr>
+	}
+}
+
+templ TableListAccidentsResponseOperations(data any, page int) {
+	{{ accidentsResponseOperations := data.([]db.AccidentsResponseOperations) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents_response_operations/%d?sortColumn=id_operation", page) }>ID операции</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents_response_operations/%d?sortColumn=id_accident", page) }>ID аварии</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents_response_operations/%d?sortColumn=start_date_time", page) }>Дата начала</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents_response_operations/%d?sortColumn=end_date_time", page) }>Дата окончания</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/accidents_response_operations/%d?sortColumn=status", page) }>Статус</th>
+	</tr>
+	for _, item := range accidentsResponseOperations {
+		<tr>
+			<td>{ item.IdOperation }</td>
+			<td>{ item.IdAccident }</td>
+			<td>{ TimestampToString(&item.StartDateTime) }</td>
+			<td>
+				if item.EndDateTime.Valid {
+					TimestampToString(&item.EndDateTime.Time)
+				}
+			</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListOperationsParticipations(data any, page int) {
+	{{ operationsParticipations := data.([]db.OperationsParticipations) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_participations/%d?sortColumn=id_vgk", page) }>ID ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_participations/%d?sortColumn=id_operation", page) }>ID операции</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_participations/%d?sortColumn=assigned_task", page) }>Назначенная задача</th>
+	</tr>
+	for _, item := range operationsParticipations {
+		<tr>
+			<td>{ item.IdVgk }</td>
+			<td>{ item.IdOperation }</td>
+			<td>{ item.AssignedTask }</td>
+		</tr>
+	}
+}
+
+templ TableListOperationsReports(data any, page int) {
+	{{ operationsReports := data.([]db.OperationsReports) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_reports/%d?sortColumn=id_report", page) }>ID отчета</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_reports/%d?sortColumn=id_operation", page) }>ID операции</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_reports/%d?sortColumn=report_date_time", page) }>Дата отчета</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/operations_reports/%d?sortColumn=description", page) }>Описание</th>
+	</tr>
+	for _, item := range operationsReports {
+		<tr>
+			<td>{ item.IdReport }</td>
+			<td>{ item.IdOperation }</td>
+			<td>{ TimestampToString(&item.ReportDateTime) }</td>
+			<td>{ item.Description }</td>
+		</tr>
+	}
+}
+
+templ TableListTrainings(data any, page int) {
+	{{ trainings := data.([]db.Trainings) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings/%d?sortColumn=date", page) }>Дата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings/%d?sortColumn=id_object_location", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings/%d?sortColumn=id_instructor", page) }>ID инструктора</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings/%d?sortColumn=topic", page) }>Тема</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings/%d?sortColumn=description", page) }>Описание</th>
+	</tr>
+	for _, item := range trainings {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdObjectLocation }</td>
+			<td>{ item.IdInstructor }</td>
+			<td>{ item.Topic }</td>
+			<td>{ item.Description.String }</td>
+		</tr>
+	}
+}
+
+templ TableListTrainingsParticipations(data any, page int) {
+	{{ trainingsParticipations := data.([]db.TrainingsParticipations) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings_participations/%d?sortColumn=date", page) }>Дата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings_participations/%d?sortColumn=id_object_location", page) }>ID объекта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings_participations/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/trainings_participations/%d?sortColumn=notes", page) }>Примечания</th>
+	</tr>
+	for _, item := range trainingsParticipations {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdObjectLocation }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.Notes.String }</td>
+		</tr>
+	}
+}
+
+templ TableListCertificationsPassings(data any, page int) {
+	{{ certificationsPassings := data.([]db.CertificationsPassings) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/certifications_passings/%d?sortColumn=date", page) }>Дата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/certifications_passings/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/certifications_passings/%d?sortColumn=result", page) }>Результат</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/certifications_passings/%d?sortColumn=topic", page) }>Тема</th>
+	</tr>
+	for _, item := range certificationsPassings {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ item.Result }</td>
+			<td>{ item.Topic }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkRescuersMedicalParameters(data any, page int) {
+	{{ vgkRescuersMedicalParameters := data.([]db.VgkRescuersMedicalParameters) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=date", page) }>Дата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=expire_date", page) }>Действителен до</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=health_group", page) }>Группа здоровья</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=height", page) }>Рост</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=weight", page) }>Вес</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=conclusion", page) }>Заключение</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters/%d?sortColumn=note", page) }>Примечание</th>
+	</tr>
+	for _, item := range vgkRescuersMedicalParameters {
+		<tr>
+			<td>{ DateToString(&item.Date) }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.ExpireDate) }</td>
+			<td>{ item.HealthGroup }</td>
+			<td>{ item.Height }</td>
+			<td>{ item.Weight }</td>
+			<td>{ item.Conclusion }</td>
+			<td>{ item.Note.String }</td>
+		</tr>
+	}
+}
+
+templ TableListVgkServiceRoom(data any, page int) {
+	{{ vgkServiceRoom := data.([]db.VgkServiceRoom) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_service_room/%d?sortColumn=id_service_room", page) }>ID сервисного помещения</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_service_room/%d?sortColumn=id_responsible", page) }>ID ответственного</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_service_room/%d?sortColumn=purpose", page) }>Назначение</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/vgk_service_room/%d?sortColumn=address", page) }>Адрес</th>
+	</tr>
+	for _, item := range vgkServiceRoom {
+		<tr>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.IdResponsible.Int64 }</td>
+			<td>{ item.Purpose }</td>
+			<td>{ item.Address }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipment(data any, page int) {
+	{{ equipment := data.([]db.Equipment) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=inventory_number", page) }>Инвентарный номер</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=id_vgk_location", page) }>ID локации ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=equipment_type", page) }>Тип оборудования</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=name", page) }>Название</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment/%d?sortColumn=last_check_date", page) }>Дата последней проверки</th>
+	</tr>
+	for _, item := range equipment {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdVgkLocation.Int64 }</td>
+			<td>{ item.EquipmentType }</td>
+			<td>{ item.Name }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.LastCheckDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListTransport(data any, page int) {
+	{{ transport := data.([]db.Transport) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=transport_number", page) }>Номер транспорта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=id_vgk_location", page) }>ID локации ВГК</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=model", page) }>Модель</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=type", page) }>Тип</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=status", page) }>Статус</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=manufacture_date", page) }>Дата производства</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=mileage", page) }>Пробег</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport/%d?sortColumn=last_check_date", page) }>Дата последней проверки</th>
+	</tr>
+	for _, item := range transport {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdVgkLocation.Int64 }</td>
+			<td>{ item.Model }</td>
+			<td>{ item.Type }</td>
+			<td>{ item.Status }</td>
+			<td>{ DateToString(&item.ManufactureDate) }</td>
+			<td>{ item.Mileage }</td>
+			<td>{ DateToString(&item.LastCheckDate) }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentUsageHistory(data any, page int) {
+	{{ equipmentUsageHistory := data.([]db.EquipmentUsageHistory) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_usage_history/%d?sortColumn=inventory_number", page) }>Инвентарный номер</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_usage_history/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_usage_history/%d?sortColumn=issue_date", page) }>Дата выдачи</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_usage_history/%d?sortColumn=return_date", page) }>Дата возврата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_usage_history/%d?sortColumn=purpose", page) }>Цель использования</th>
+	</tr>
+	for _, item := range equipmentUsageHistory {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.IssueDate) }</td>
+			<td>{ DateToString(&item.ReturnDate) }</td>
+			<td>{ item.Purpose }</td>
+		</tr>
+	}
+}
+
+templ TableListTransportUsageHistory(data any, page int) {
+	{{ transportUsageHistory := data.([]db.TransportUsageHistory) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_usage_history/%d?sortColumn=transport_number", page) }>Номер транспорта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_usage_history/%d?sortColumn=id_rescuer", page) }>ID спасателя</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_usage_history/%d?sortColumn=departure_date", page) }>Дата отправления</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_usage_history/%d?sortColumn=return_date", page) }>Дата возврата</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_usage_history/%d?sortColumn=purpose", page) }>Цель использования</th>
+	</tr>
+	for _, item := range transportUsageHistory {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdRescuer }</td>
+			<td>{ DateToString(&item.DepartureDate) }</td>
+			<td>{ DateToString(&item.ReturnDate) }</td>
+			<td>{ item.Purpose }</td>
+		</tr>
+	}
+}
+
+templ TableListEquipmentServiceHistory(data any, page int) {
+	{{ equipmentServiceHistory := data.([]db.EquipmentServiceHistory) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_service_history/%d?sortColumn=inventory_number", page) }>Инвентарный номер</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_service_history/%d?sortColumn=id_service_room", page) }>ID сервисного помещения</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_service_history/%d?sortColumn=reason", page) }>Причина</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_service_history/%d?sortColumn=serve_date", page) }>Дата обслуживания</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/equipment_service_history/%d?sortColumn=status", page) }>Статус</th>
+	</tr>
+	for _, item := range equipmentServiceHistory {
+		<tr>
+			<td>{ item.InventoryNumber }</td>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.Reason }</td>
+			<td>{ DateToString(&item.ServeDate) }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}
+
+templ TableListTransportServiceHistory(data any, page int) {
+	{{ transportServiceHistory := data.([]db.TransportServiceHistory) }}
+	<tr hx-trigger="click" hx-target="#table-container" hx-inherit="*">
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_service_history/%d?sortColumn=transport_number", page) }>Номер транспорта</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_service_history/%d?sortColumn=id_service_room", page) }>ID сервисного помещения</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_service_history/%d?sortColumn=reason", page) }>Причина</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_service_history/%d?sortColumn=serve_date", page) }>Дата обслуживания</th>
+		<th hx-get={ fmt.Sprintf("/admin/api/transport_service_history/%d?sortColumn=status", page) }>Статус</th>
+	</tr>
+	for _, item := range transportServiceHistory {
+		<tr>
+			<td>{ item.TransportNumber }</td>
+			<td>{ item.IdServiceRoom }</td>
+			<td>{ item.Reason }</td>
+			<td>{ DateToString(&item.ServeDate) }</td>
+			<td>{ item.Status }</td>
+		</tr>
+	}
+}

@@ -1,164 +1,250 @@
 package views
 
 import (
-	"fmt"
-	"github.com/Timur1232/coursework_db/internal/db"
+"fmt"
+"github.com/Timur1232/coursework_db/internal/db"
 )
 
-templ HomePage(accidents []db.Accidents, hasNext bool) {
-	<div class="home-page">
-		<div class="home-header">
-			<h1>Горноспасательная служба</h1>
-			<p class="home-subtitle">Мониторинг аварий и объектов</p>
-		</div>
-		<div class="tabs-container">
-			<div class="tabs">
-				<button
-					class="tab-button active"
-					hx-get="/api/home/accidents?page=1"
-					hx-target="#data-container"
-					hx-swap="innerHTML"
-					_="on click add .active to me remove .active from .tab-button"
-				>
-					<span class="tab-text">Аварии</span>
-				</button>
-				<button
-					class="tab-button"
-					hx-get="/api/home/objects?page=1"
-					hx-target="#data-container"
-					hx-swap="innerHTML"
-					_="on click add .active to me remove .active from .tab-button"
-				>
-					<span class="tab-text">Объекты</span>
-				</button>
-			</div>
-		</div>
-		<div id="data-container">
-			@HomeAccidents(1, accidents, hasNext)
-		</div>
-	</div>
+templ HomePage(accidents []db.Accidents, hasNext bool, hxReq bool) {
+<div class="home-page">
+    <div class="home-header">
+        <h1>Горноспасательная служба</h1>
+        <p class="home-subtitle">Мониторинг аварий и объектов</p>
+    </div>
+    <div id="home-tabs">
+        if hxReq {
+        @Tabs(true)
+        }
+    </div>
+    <div id="data-container">
+        @HomeAccidents(1, accidents, hasNext)
+        <div id="load-more" class="load-more">
+            <div class="loading-indicator" id="loading-indicator">
+                <div class="spinner"></div>
+                <span>Загрузка...</span>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+func tabsAccidentsActive(accidents bool) string {
+if accidents {
+return "tab-button active"
+}
+return "tab-button"
+}
+
+func tabsObjectsActive(accidents bool) string {
+if !accidents {
+return "tab-button active"
+}
+return "tab-button"
+}
+
+templ HxOob(oob bool, id string, cmp templ.Component) {
+if oob {
+<div id={ id } hx-swap-oob="true">
+    @cmp
+</div>
+} else {
+@cmp
+}
+}
+
+templ Tabs(accidents bool) {
+<div class="tabs-container">
+    <div class="tabs">
+        <button class={ tabsAccidentsActive(accidents) } hx-get="/api/home/accidents?page=1" hx-target="#data-container"
+            hx-swap="innerHTML">
+            <span class="tab-text">Аварии</span>
+        </button>
+        <button class={ tabsObjectsActive(accidents) } hx-get="/api/home/objects?page=1" hx-target="#data-container"
+            hx-swap="innerHTML">
+            <span class="tab-text">Объекты</span>
+        </button>
+    </div>
+</div>
 }
 
 templ HomeAccidents(page int, accidents []db.Accidents, hasNext bool) {
-	<div id="accidents-container" class="data-container">
-		<div class="table-header">
-			<h2>Список аварий</h2>
-		</div>
-		<div class="table-responsive">
-			<table class="data-table">
-				<thead>
-					<tr>
-						<th>Тип</th>
-						<th>Объект</th>
-						<th>Дата начала</th>
-						<th>Статус</th>
-						<th>Причина</th>
-					</tr>
-				</thead>
-				<tbody id="accidents-table-body">
-					@AccidentsRows(accidents)
-				</tbody>
-			</table>
-		</div>
-		if hasNext {
-			<div
-				class="load-more"
-				hx-get={ fmt.Sprintf("/api/home/accidents?page=%d", page+1) }
-				hx-trigger="intersect once"
-				hx-swap="beforeend"
-				hx-target="#accidents-table-body"
-				hx-indicator="#loading-indicator"
-			>
-				<div class="loading-indicator" id="loading-indicator">
-					<div class="spinner"></div>
-					<span>Загрузка...</span>
-				</div>
-			</div>
-		}
-	</div>
+@HxOob(true, "home-tabs", Tabs(true))
+<div class="data-container">
+    <div class="table-header">
+        <h2>Список аварий</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Объект</th>
+                    <th>Дата начала</th>
+                    <th>Статус</th>
+                    <th>Причина</th>
+                </tr>
+            </thead>
+            <tbody id="accidents-table-body">
+                @AccidentsRows(accidents, page, hasNext)
+            </tbody>
+        </table>
+    </div>
+</div>
 }
 
 templ HomeObjects(page int, objects []db.Objects, hasNext bool) {
-	<div id="objects-container" class="data-container">
-		<div class="table-header">
-			<h2>Список объектов</h2>
-		</div>
-		<div class="table-responsive">
-			<table class="data-table">
-				<thead>
-					<tr>
-						<th>Название</th>
-						<th>Тип</th>
-						<th>Адрес</th>
-						<th>Телефон</th>
-						<th>Директор</th>
-					</tr>
-				</thead>
-				<tbody id="objects-table-body">
-					@ObjectsRows(objects)
-				</tbody>
-			</table>
-		</div>
-		if hasNext {
-			<div
-				class="load-more"
-				hx-get={ fmt.Sprintf("/api/home/objects?page=%d", page+1) }
-				hx-trigger="intersect once"
-				hx-swap="beforeend"
-				hx-target="#objects-table-body"
-				hx-indicator="#loading-indicator"
-			>
-				<div class="loading-indicator" id="loading-indicator">
-					<div class="spinner"></div>
-					<span>Загрузка...</span>
-				</div>
-			</div>
-		}
-	</div>
+@HxOob(true, "home-tabs", Tabs(false))
+<div class="data-container">
+    <div class="table-header">
+        <h2>Список объектов</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Тип</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Директор</th>
+                </tr>
+            </thead>
+            <tbody id="objects-table-body">
+                @ObjectsRows(objects, page, hasNext)
+            </tbody>
+        </table>
+        <div id="load-more"></div>
+    </div>
+</div>
 }
 
-templ AccidentsRows(accidents []db.Accidents) {
-	for _, accident := range accidents {
-		<tr class="data-row">
-			<td>
-				<div class="cell-main">{ accident.AccidentType }</div>
-			</td>
-			<td>
-				<div class="cell-secondary">Объект #{ accident.IdObject }</div>
-			</td>
-			<td>
-				<div class="cell-date">{ TimestampToString(&accident.BeginDateTime) }</div>
-			</td>
-			<td>
-				<span class={ fmt.Sprintf("status-badge status-%s", accident.Status) }>
-					{ string(accident.Status) }
-				</span>
-			</td>
-			<td>
-				<div class="cell-text">{ accident.Cause }</div>
-			</td>
-		</tr>
-	}
+templ AccidentsRows(accidents []db.Accidents, page int, hasNext bool) {
+    {{ l := len(accidents) }}
+    for i := 0; i < l-1; i+=1 {
+        {{ accident := accidents[i] }}
+        <tr class="data-row">
+            <td>
+                <div class="cell-main">{ accident.AccidentType }</div>
+            </td>
+            <td>
+                <div class="cell-secondary">Объект #{ accident.IdObject }</div>
+            </td>
+            <td>
+                <div class="cell-date">{ TimestampToString(&accident.BeginDateTime) }</div>
+            </td>
+            <td>
+                <span class={ fmt.Sprintf("status-badge status-%s", accident.Status) }>
+                    { string(accident.Status) }
+                </span>
+            </td>
+            <td>
+                <div class="cell-text">{ accident.Cause }</div>
+            </td>
+        </tr>
+    }
+    {{ last := accidents[l-1] }}
+    if hasNext {
+        <tr class="data-row" hx-get={ fmt.Sprintf("/api/home/objects?page=%d", page+1) } hx-trigger="intersect once"
+            hx-swap="beforeend" hx-target="#objects-table-body" hx-indicator="#loading-indicator">
+            <td>
+                <div class="cell-main">{ last.AccidentType }</div>
+            </td>
+            <td>
+                <div class="cell-secondary">Объект #{ last.IdObject }</div>
+            </td>
+            <td>
+                <div class="cell-date">{ TimestampToString(&last.BeginDateTime) }</div>
+            </td>
+            <td>
+                <span class={ fmt.Sprintf("status-badge status-%s", last.Status) }>
+                    { string(last.Status) }
+                </span>
+            </td>
+            <td>
+                <div class="cell-text">{ last.Cause }</div>
+            </td>
+        </tr>
+    } else {
+        <tr class="data-row">
+            <td>
+                <div class="cell-main">{ last.AccidentType }</div>
+            </td>
+            <td>
+                <div class="cell-secondary">Объект #{ last.IdObject }</div>
+            </td>
+            <td>
+                <div class="cell-date">{ TimestampToString(&last.BeginDateTime) }</div>
+            </td>
+            <td>
+                <span class={ fmt.Sprintf("status-badge status-%s", last.Status) }>
+                    { string(last.Status) }
+                </span>
+            </td>
+            <td>
+                <div class="cell-text">{ last.Cause }</div>
+            </td>
+        </tr>
+    }
 }
 
-templ ObjectsRows(objects []db.Objects) {
-	for _, object := range objects {
-		<tr class="data-row">
-			<td>
-				<div class="cell-main">{ object.Name }</div>
-			</td>
-			<td>
-				<span class="type-badge">{ string(object.ObjectType) }</span>
-			</td>
-			<td>
-				<div class="cell-secondary">{ object.Address }</div>
-			</td>
-			<td>
-				<div class="cell-text">{ object.Phone }</div>
-			</td>
-			<td>
-				<div class="cell-text">{ object.DirectorFullName }</div>
-			</td>
-		</tr>
-	}
+templ ObjectsRows(objects []db.Objects, page int, hasNext bool) {
+    {{ l := len(objects) }}
+    for i := 0; i < l-1; i+=1 {
+        {{ object :=objects[i] }} <tr class="data-row">
+        <td>
+            <div class="cell-main">{ object.Name }</div>
+        </td>
+        <td>
+            <span class="type-badge">{ string(object.ObjectType) }</span>
+        </td>
+        <td>
+            <div class="cell-secondary">{ object.Address }</div>
+        </td>
+        <td>
+            <div class="cell-text">{ object.Phone }</div>
+        </td>
+        <td>
+            <div class="cell-text">{ object.DirectorFullName }</div>
+        </td>
+        </tr>
+    }
+    {{ last := objects[l-1] }}
+    if hasNext {
+        <tr class="data-row" hx-get={ fmt.Sprintf("/api/home/objects?page=%d", page+1) } hx-trigger="intersect once"
+            hx-swap="beforeend" hx-target="#objects-table-body" hx-indicator="#loading-indicator">
+            <td>
+                <div class="cell-main">{ last.Name }</div>
+            </td>
+            <td>
+                <span class="type-badge">{ string(last.ObjectType) }</span>
+            </td>
+            <td>
+                <div class="cell-secondary">{ last.Address }</div>
+            </td>
+            <td>
+                <div class="cell-text">{ last.Phone }</div>
+            </td>
+            <td>
+                <div class="cell-text">{ last.DirectorFullName }</div>
+            </td>
+        </tr>
+    } else {
+        <tr class="data-row">
+            <td>
+                <div class="cell-main">{ last.Name }</div>
+            </td>
+            <td>
+                <span class="type-badge">{ string(last.ObjectType) }</span>
+            </td>
+            <td>
+                <div class="cell-secondary">{ last.Address }</div>
+            </td>
+            <td>
+                <div class="cell-text">{ last.Phone }</div>
+            </td>
+            <td>
+                <div class="cell-text">{ last.DirectorFullName }</div>
+            </td>
+        </tr>
+    }
 }

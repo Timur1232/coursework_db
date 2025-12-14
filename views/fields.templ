@@ -1,0 +1,232 @@
+package views
+
+templ FieldsUsers() {
+	<option value="id_user" checked>ID пользователя</option>
+	<option value="login">Логин</option>
+	<option value="password">Пароль</option>
+	<option value="role">Роль</option>
+}
+
+templ FieldsEquipmentTypes() {
+	<option value="type_name" checked>Тип оборудования</option>
+	<option value="equipment_standards_url">Ссылка на стандарты</option>
+}
+
+templ FieldsObjects() {
+	<option value="id_object" checked>ID объекта</option>
+	<option value="object_type">Тип объекта</option>
+	<option value="name">Название</option>
+	<option value="address">Адрес</option>
+	<option value="phone">Телефон</option>
+	<option value="email">Email</option>
+	<option value="director_full_name">ФИО директора</option>
+}
+
+templ FieldsAccidentTypes() {
+	<option value="accident_name" checked>Тип аварии</option>
+	<option value="danger_level">Уровень опасности</option>
+}
+
+templ FieldsAccidents() {
+	<option value="id_accident" checked>ID аварии</option>
+	<option value="id_object">ID объекта</option>
+	<option value="accident_type">Тип аварии</option>
+	<option value="begin_date_time">Дата начала</option>
+	<option value="status">Статус</option>
+	<option value="description">Описание</option>
+	<option value="first_estimate">Первоначальная оценка</option>
+	<option value="cause">Причина</option>
+}
+
+templ FieldsApplicationsForAdmission() {
+	<option value="id_application" checked>ID заявки</option>
+	<option value="id_object">ID объекта</option>
+	<option value="passport_number">Номер паспорта</option>
+	<option value="first_name">Имя</option>
+	<option value="last_name">Фамилия</option>
+	<option value="surname">Отчество</option>
+	<option value="issue_date">Дата выдачи</option>
+	<option value="phone">Телефон</option>
+	<option value="email">Email</option>
+	<option value="status">Статус</option>
+	<option value="birthday_date">Дата рождения</option>
+	<option value="home_address">Домашний адрес</option>
+}
+
+templ FieldsCandidatesDocuments() {
+	<option value="document_type" checked>Тип документа</option>
+	<option value="id_application">ID заявки</option>
+	<option value="document_url">Ссылка на документ</option>
+	<option value="valid_until">Действителен до</option>
+}
+
+templ FieldsCandidatesMedicalParameters() {
+	<option value="id_application" checked>ID заявки</option>
+	<option value="date">Дата осмотра</option>
+	<option value="expire_date">Дата окончания</option>
+	<option value="health_group">Группа здоровья</option>
+	<option value="height">Рост</option>
+	<option value="weight">Вес</option>
+	<option value="note">Примечание</option>
+}
+
+templ FieldsVgk() {
+	<option value="id_vgk" checked>ID ВГК</option>
+	<option value="id_object">ID объекта</option>
+	<option value="status">Статус</option>
+	<option value="formation_date">Дата формирования</option>
+}
+
+templ FieldsPositions() {
+	<option value="position_name" checked>Должность</option>
+	<option value="salary">Зарплата</option>
+	<option value="min_experience_years">Минимальный опыт (лет)</option>
+	<option value="responsibilities">Обязанности</option>
+}
+
+templ FieldsVgkRescuers() {
+	<option value="id_rescuer" checked>ID спасателя</option>
+	<option value="id_vgk">ID ВГК</option>
+	<option value="position">Должность</option>
+	<option value="first_name">Имя</option>
+	<option value="second_name">Фамилия</option>
+	<option value="surname">Отчество</option>
+	<option value="status">Статус</option>
+	<option value="birth_date">Дата рождения</option>
+	<option value="home_address">Домашний адрес</option>
+	<option value="experience_years">Опыт (лет)</option>
+}
+
+templ FieldsVgkRescuersDocuments() {
+	<option value="document_type" checked>Тип документа</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="document_url">Ссылка на документ</option>
+	<option value="valid_until">Действителен до</option>
+}
+
+templ FieldsVgkLocations() {
+	<option value="id_vgk_location" checked>ID локации ВГК</option>
+	<option value="id_responsible">ID ответственного</option>
+	<option value="address">Адрес</option>
+	<option value="status">Статус</option>
+}
+
+templ FieldsVgkShifts() {
+	<option value="shift_start" checked>Начало смены</option>
+	<option value="id_vgk">ID ВГК</option>
+	<option value="id_vgk_location">ID локации</option>
+	<option value="shift_end">Конец смены</option>
+}
+
+templ FieldsAccidentsResponseOperations() {
+	<option value="id_operation" checked>ID операции</option>
+	<option value="id_accident">ID аварии</option>
+	<option value="start_date_time">Дата начала</option>
+	<option value="end_date_time">Дата окончания</option>
+	<option value="status">Статус</option>
+}
+
+templ FieldsOperationsParticipations() {
+	<option value="id_vgk" checked>ID ВГК</option>
+	<option value="id_operation">ID операции</option>
+	<option value="assigned_task">Назначенная задача</option>
+}
+
+templ FieldsOperationsReports() {
+	<option value="id_report" checked>ID отчета</option>
+	<option value="id_operation">ID операции</option>
+	<option value="report_date_time">Дата отчета</option>
+	<option value="description">Описание</option>
+}
+
+templ FieldsTrainings() {
+	<option value="date" checked>Дата</option>
+	<option value="id_object_location">ID объекта</option>
+	<option value="id_instructor">ID инструктора</option>
+	<option value="topic">Тема</option>
+	<option value="description">Описание</option>
+}
+
+templ FieldsTrainingsParticipations() {
+	<option value="date" checked>Дата</option>
+	<option value="id_object_location">ID объекта</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="notes">Примечания</option>
+}
+
+templ FieldsCertificationsPassings() {
+	<option value="date" checked>Дата</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="result">Результат</option>
+	<option value="topic">Тема</option>
+}
+
+templ FieldsVgkRescuersMedicalParameters() {
+	<option value="date" checked>Дата</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="expire_date">Действителен до</option>
+	<option value="health_group">Группа здоровья</option>
+	<option value="height">Рост</option>
+	<option value="weight">Вес</option>
+	<option value="conclusion">Заключение</option>
+	<option value="note">Примечание</option>
+}
+
+templ FieldsVgkServiceRoom() {
+	<option value="id_service_room" checked>ID сервисного помещения</option>
+	<option value="id_responsible">ID ответственного</option>
+	<option value="purpose">Назначение</option>
+	<option value="address">Адрес</option>
+}
+
+templ FieldsEquipment() {
+	<option value="inventory_number" checked>Инвентарный номер</option>
+	<option value="id_vgk_location">ID локации ВГК</option>
+	<option value="equipment_type">Тип оборудования</option>
+	<option value="name">Название</option>
+	<option value="status">Статус</option>
+	<option value="last_check_date">Дата последней проверки</option>
+}
+
+templ FieldsTransport() {
+	<option value="transport_number" checked>Номер транспорта</option>
+	<option value="id_vgk_location">ID локации ВГК</option>
+	<option value="model">Модель</option>
+	<option value="type">Тип</option>
+	<option value="status">Статус</option>
+	<option value="manufacture_date">Дата производства</option>
+	<option value="mileage">Пробег</option>
+	<option value="last_check_date">Дата последней проверки</option>
+}
+
+templ FieldsEquipmentUsageHistory() {
+	<option value="inventory_number" checked>Инвентарный номер</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="issue_date">Дата выдачи</option>
+	<option value="return_date">Дата возврата</option>
+	<option value="purpose">Цель использования</option>
+}
+
+templ FieldsTransportUsageHistory() {
+	<option value="transport_number" checked>Номер транспорта</option>
+	<option value="id_rescuer">ID спасателя</option>
+	<option value="departure_date">Дата отправления</option>
+	<option value="return_date">Дата возврата</option>
+	<option value="purpose">Цель использования</option>
+}
+
+templ FieldsEquipmentServiceHistory() {
+	<option value="inventory_number" checked>Инвентарный номер</option>
+	<option value="id_service_room">ID сервисного помещения</option>
+	<option value="reason">Причина</option>
+	<option value="serve_date">Дата обслуживания</option>
+	<option value="status">Статус</option>
+}
+
+templ FieldsTransportServiceHistory() {
+	<option value="transport_number" checked>Номер транспорта</option>
+	<option value="id_service_room">ID сервисного помещения</option>
+	<option value="reason">Причина</option>
+	<option value="serve_date">Дата обслуживания</option>
+	<option value="status">Статус</option>
+}

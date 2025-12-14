@@ -131,7 +131,9 @@ func main() {
 		return c.Redirect(http.StatusSeeOther, "/admin/vgk")
 	})
 	adminGroup.GET("/:tableName", handlers.AdminPanel)
-	adminGroup.GET("/api/admin/:tableName/:page", handlers.AdminPanelPage)
+	adminGroup.GET("/api/:tableName/:page", handlers.AdminPanelPage)
+	adminGroup.DELETE("/api/:tableName", handlers.AdminPanelDeleteRow)
+	// adminGroup.PATCH("/api/:tableName", handlers.AdminPanelEditRow)
 
 	e.GET("/no_permission", func(c echo.Context) error {
 		msg := views.NotAuthorizedNotification()

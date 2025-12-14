@@ -29,8 +29,9 @@ func HomePage(c echo.Context) error {
 
 	hasNext := pageSize < count
 
-	home := views.HomePage(accidentsList, hasNext)
-	if c.Request().Header.Get("HX-Request") == "true" {
+	hxReq := c.Request().Header.Get("HX-Request") == "true"
+	home := views.HomePage(accidentsList, hasNext, hxReq)
+	if hxReq {
 		return RenderPage(c, home)
 	}
 	page := views.Layout("Горноспасательная служба", home, user)
@@ -66,7 +67,7 @@ func GetAccidents(c echo.Context) error {
 		return RenderPage(c, views.HomeAccidents(page, accidentsList, hasNext))
 	}
 
-	return RenderPage(c, views.AccidentsRows(accidentsList))
+	return RenderPage(c, views.AccidentsRows(accidentsList, page, hasNext))
 }
 
 func GetObjects(c echo.Context) error {
@@ -98,5 +99,5 @@ func GetObjects(c echo.Context) error {
 		return RenderPage(c, views.HomeObjects(page, objectsList, hasNext))
 	}
 
-	return RenderPage(c, views.ObjectsRows(objectsList))
+	return RenderPage(c, views.ObjectsRows(objectsList, page, hasNext))
 }

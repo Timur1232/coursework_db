@@ -42,7 +42,7 @@ func PostLogin(c echo.Context) error {
 	cookie.Value = strconv.FormatUint(user.IdUser, 10)
 	cookie.Path = "/"
 	cookie.HttpOnly = true
-	cookie.MaxAge = 86400 // 24 часа
+	cookie.MaxAge = 86400
 	c.SetCookie(cookie)
 
 	c.Response().Header().Set("HX-Redirect", "/")

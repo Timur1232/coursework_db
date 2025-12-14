@@ -1,8 +1,6 @@
 package views
 
-import (
-    "github.com/Timur1232/coursework_db/internal/db"
-)
+import "github.com/Timur1232/coursework_db/internal/db"
 
 templ Layout(title string, content templ.Component, user *db.Users) {
 	<!DOCTYPE html>
@@ -14,7 +12,6 @@ templ Layout(title string, content templ.Component, user *db.Users) {
 			<link rel="stylesheet" href="/static/styles/style.css"/>
 			<link rel="icon" href="/static/favicon.ico"/>
 			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
-			<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 		</head>
 		<body>
 			@Header(user)
@@ -29,7 +26,7 @@ templ Header(user *db.Users) {
 	<header class="header">
 		<div class="header-container">
 			<div class="header-brand">
-				<a href="/" class="logo-link" hx-get="/" hx-push-url="true" hx-target="body" hx-swap="outerHTML">
+				<a href="/" class="logo-link" hx-get="/" hx-push-url="true" hx-target="main" hx-swap="innerHTML">
 					<div class="logo">
 						<span class="logo-text">Спасательная Служба</span>
 					</div>
@@ -38,15 +35,7 @@ templ Header(user *db.Users) {
 			<nav class="header-nav">
 				<ul class="nav-list">
 					<li class="nav-item">
-						<a
-							href="/"
-							class="nav-link"
-							hx-get="/"
-							hx-push-url="true"
-							hx-target=".main-content"
-							hx-swap="innerHTML"
-							:class="{'active': window.location.pathname === '/'}"
-						>
+						<a href="/" class="nav-link" hx-get="/" hx-push-url="true" hx-target="main" hx-swap="innerHTML">
 							<span>Главная</span>
 						</a>
 					</li>
@@ -58,7 +47,6 @@ templ Header(user *db.Users) {
 							hx-push-url="true"
 							hx-target=".main-content"
 							hx-swap="innerHTML"
-							:class="{'active': window.location.pathname.startsWith('/profile')}"
 						>
 							<span>Личный кабинет</span>
 						</a>
@@ -71,35 +59,34 @@ templ Header(user *db.Users) {
 							hx-push-url="true"
 							hx-target="main"
 							hx-swap="innerHTML"
-							:class="{'active': window.location.pathname.startsWith('/admin')}"
 						>
 							<span>Панель администратора</span>
 						</a>
 					</li>
 				</ul>
 			</nav>
-            if user != nil {
-			<div id="header-user" class="header-user">
-				<div class="user-info">
-					<div class="user-details">
-						<span class="user-name">{ user.Login }</span>
-						<span class="user-role">{ user.TranslateRole() }</span>
+			if user != nil {
+				<div id="header-user" class="header-user">
+					<div class="user-info">
+						<div class="user-details">
+							<span class="user-name">{ user.Login }</span>
+							<span class="user-role">{ user.TranslateRole() }</span>
+						</div>
 					</div>
+					<button
+						class="logout-btn"
+						hx-post="/logout"
+						hx-confirm="Вы уверены, что хотите выйти?"
+						hx-target="main"
+						hx-swap="innerHTML"
+						hx-push-url="/login"
+					>
+						<span>Выйти</span>
+					</button>
 				</div>
-				<button
-					class="logout-btn"
-					hx-post="/logout"
-					hx-confirm="Вы уверены, что хотите выйти?"
-					hx-target="main"
-					hx-swap="innerHTML"
-					hx-push-url="/login"
-				>
-					<span>Выйти</span>
-				</button>
-			</div>
-            } else {
-                @NotAuthorized(false)
-            }
+			} else {
+				@NotAuthorized(false)
+			}
 		</div>
 	</header>
 }

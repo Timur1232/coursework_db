@@ -31,6 +31,14 @@ templ TableListUsers(data any) {
 			<td>{ item.Login }</td>
 			<td>{ item.Password }</td>
 			<td>{ item.Role }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/users?col=id_user&val=%v", item.IdUser) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -45,6 +53,14 @@ templ TableListEquipmentTypes(data any) {
 		<tr>
 			<td>{ item.TypeName }</td>
 			<td>{ item.EquipmentStandardsUrl }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/equipment_types?col=type_name&val=%v", item.TypeName) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -69,6 +85,14 @@ templ TableListObjects(data any) {
 			<td>{ item.Phone }</td>
 			<td>{ item.Email }</td>
 			<td>{ item.DirectorFullName }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/objects?col=id_object&val=%v", item.IdObject) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -83,6 +107,14 @@ templ TableListAccidentTypes(data any) {
 		<tr>
 			<td>{ item.AccidentName }</td>
 			<td>{ item.DangerLevel }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/accident_types?col=accident_name&val=%v", item.AccidentName) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -109,6 +141,14 @@ templ TableListAccidents(data any) {
 			<td>{ item.Description }</td>
 			<td>{ item.FirstEstimate }</td>
 			<td>{ item.Cause }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/accidents?col=id_accident&val=%v", item.IdAccident) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -143,6 +183,15 @@ templ TableListApplicationsForAdmission(data any) {
 			<td>{ item.Status }</td>
 			<td>{ DateToString(&item.BirthdayDate) }</td>
 			<td>{ item.HomeAddress }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/applications_for_admission?col=id_application&val=%v",
+            item.IdApplication) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -161,6 +210,14 @@ templ TableListCandidatesDocuments(data any) {
 			<td>{ item.IdApplication }</td>
 			<td>{ item.DocumentUrl }</td>
 			<td>{ DateToString(&item.ValidUntil) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/candidates_documents?col=document_type&val=%v", item.DocumentType) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -185,6 +242,15 @@ templ TableListCandidatesMedicalParameters(data any) {
 			<td>{ item.Height }</td>
 			<td>{ item.Weight }</td>
 			<td>{ item.Note }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/candidates_medical_parameters?col=id_application&val=%v",
+            item.IdApplication) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -203,6 +269,14 @@ templ TableListVgk(data any) {
 			<td>{ item.IdObject }</td>
 			<td>{ item.Status }</td>
 			<td>{ DateToString(&item.FormationDate) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk?col=id_vgk&val=%v", item.IdVgk) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -221,6 +295,14 @@ templ TableListPositions(data any) {
 			<td>{ item.Salary }</td>
 			<td>{ item.MinExperienceYears }</td>
 			<td>{ item.Responsibilities }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/positions?col=position_name&val=%v", item.PositionName) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -251,6 +333,14 @@ templ TableListVgkRescuers(data any) {
 			<td>{ DateToString(&item.BirthDate) }</td>
 			<td>{ item.HomeAddress }</td>
 			<td>{ item.ExperienceYears }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_rescuers?col=id_rescuer&val=%v", item.IdRescuer) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -269,6 +359,14 @@ templ TableListVgkRescuersDocuments(data any) {
 			<td>{ item.IdRescuer }</td>
 			<td>{ item.DocumentUrl }</td>
 			<td>{ DateToString(&item.ValidUntil) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_rescuers_documents?col=document_type&val=%v", item.DocumentType) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -287,6 +385,14 @@ templ TableListVgkLocations(data any) {
 			<td>{ item.IdResponsible.Int64 }</td>
 			<td>{ item.Address }</td>
 			<td>{ item.Status }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_locations?col=id_vgk_location&val=%v", item.IdVgkLocation) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -305,6 +411,15 @@ templ TableListVgkShifts(data any) {
 			<td>{ item.IdVgk }</td>
 			<td>{ item.IdVgkLocation }</td>
 			<td>{ TimestampToString(&item.ShiftEnd) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_shifts?col=shift_start&val=%v",
+            TimestampToString(&item.ShiftStart)) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -329,6 +444,15 @@ templ TableListAccidentsResponseOperations(data any) {
 				}
 			</td>
 			<td>{ item.Status }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/accidents_response_operations?col=id_operation&val=%v",
+            item.IdOperation) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -345,6 +469,14 @@ templ TableListOperationsParticipations(data any) {
 			<td>{ item.IdVgk }</td>
 			<td>{ item.IdOperation }</td>
 			<td>{ item.AssignedTask }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/operations_participations?col=id_vgk&val=%v", item.IdVgk) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -363,6 +495,14 @@ templ TableListOperationsReports(data any) {
 			<td>{ item.IdOperation }</td>
 			<td>{ TimestampToString(&item.ReportDateTime) }</td>
 			<td>{ item.Description }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/operations_reports?col=id_report&val=%v", item.IdReport) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -383,6 +523,14 @@ templ TableListTrainings(data any) {
 			<td>{ item.IdInstructor }</td>
 			<td>{ item.Topic }</td>
 			<td>{ item.Description.String }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/trainings?col=date&val=%v", DateToString(&item.Date)) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -401,6 +549,14 @@ templ TableListTrainingsParticipations(data any) {
 			<td>{ item.IdObjectLocation }</td>
 			<td>{ item.IdRescuer }</td>
 			<td>{ item.Notes.String }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/trainings_participations?col=date&val=%v", DateToString(&item.Date)) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -419,6 +575,14 @@ templ TableListCertificationsPassings(data any) {
 			<td>{ item.IdRescuer }</td>
 			<td>{ item.Result }</td>
 			<td>{ item.Topic }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/certifications_passings?col=date&val=%v", DateToString(&item.Date)) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -445,6 +609,14 @@ templ TableListVgkRescuersMedicalParameters(data any) {
 			<td>{ item.Weight }</td>
 			<td>{ item.Conclusion }</td>
 			<td>{ item.Note.String }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_rescuers_medical_parameters?col=date&val=%v", DateToString(&item.Date)) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -463,6 +635,14 @@ templ TableListVgkServiceRoom(data any) {
 			<td>{ item.IdResponsible.Int64 }</td>
 			<td>{ item.Purpose }</td>
 			<td>{ item.Address }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/vgk_service_room?col=id_service_room&val=%v", item.IdServiceRoom) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -485,6 +665,14 @@ templ TableListEquipment(data any) {
 			<td>{ item.Name }</td>
 			<td>{ item.Status }</td>
 			<td>{ DateToString(&item.LastCheckDate) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/equipment?col=inventory_number&val=%v", item.InventoryNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -511,6 +699,14 @@ templ TableListTransport(data any) {
 			<td>{ DateToString(&item.ManufactureDate) }</td>
 			<td>{ item.Mileage }</td>
 			<td>{ DateToString(&item.LastCheckDate) }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/transport?col=transport_number&val=%v", item.TransportNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -531,6 +727,14 @@ templ TableListEquipmentUsageHistory(data any) {
 			<td>{ DateToString(&item.IssueDate) }</td>
 			<td>{ DateToString(&item.ReturnDate) }</td>
 			<td>{ item.Purpose }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/equipment_usage_history?col=inventory_number&val=%v", item.InventoryNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -551,6 +755,14 @@ templ TableListTransportUsageHistory(data any) {
 			<td>{ DateToString(&item.DepartureDate) }</td>
 			<td>{ DateToString(&item.ReturnDate) }</td>
 			<td>{ item.Purpose }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/transport_usage_history?col=transport_number&val=%v", item.TransportNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -571,6 +783,14 @@ templ TableListEquipmentServiceHistory(data any) {
 			<td>{ item.Reason }</td>
 			<td>{ DateToString(&item.ServeDate) }</td>
 			<td>{ item.Status }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/equipment_service_history?col=inventory_number&val=%v", item.InventoryNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }
@@ -591,6 +811,14 @@ templ TableListTransportServiceHistory(data any) {
 			<td>{ item.Reason }</td>
 			<td>{ DateToString(&item.ServeDate) }</td>
 			<td>{ item.Status }</td>
+			<td>
+				<button
+					hx-delete={ fmt.Sprintf("/admin/api/transport_service_history?col=transport_number&val=%v", item.TransportNumber) }
+					hx-confirm="true"
+					hx-target="#table-container"
+					hx-swap="innerHTML"
+				>Удалить</button>
+			</td>
 		</tr>
 	}
 }

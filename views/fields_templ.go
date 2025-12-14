@@ -8,7 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func SortUsers() templ.Component {
+func FieldsUsers() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +29,7 @@ func SortUsers() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_user\" checked> ID пользователя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"login\"> Логин</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"password\"> Пароль</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"role\"> Роль</label><br></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<option value=\"id_user\" checked>ID пользователя</option> <option value=\"login\">Логин</option> <option value=\"password\">Пароль</option> <option value=\"role\">Роль</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -37,7 +37,7 @@ func SortUsers() templ.Component {
 	})
 }
 
-func SortEquipmentTypes() templ.Component {
+func FieldsEquipmentTypes() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -58,7 +58,7 @@ func SortEquipmentTypes() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"type_name\" checked> Тип оборудования</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"equipment_standards_url\"> Ссылка на стандарты</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<option value=\"type_name\" checked>Тип оборудования</option> <option value=\"equipment_standards_url\">Ссылка на стандарты</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -66,7 +66,7 @@ func SortEquipmentTypes() templ.Component {
 	})
 }
 
-func SortObjects() templ.Component {
+func FieldsObjects() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -87,7 +87,7 @@ func SortObjects() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\" checked> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"object_type\"> Тип объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"director_full_name\"> ФИО директора</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<option value=\"id_object\" checked>ID объекта</option> <option value=\"object_type\">Тип объекта</option> <option value=\"name\">Название</option> <option value=\"address\">Адрес</option> <option value=\"phone\">Телефон</option> <option value=\"email\">Email</option> <option value=\"director_full_name\">ФИО директора</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -95,7 +95,7 @@ func SortObjects() templ.Component {
 	})
 }
 
-func SortAccidentTypes() templ.Component {
+func FieldsAccidentTypes() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -116,7 +116,7 @@ func SortAccidentTypes() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"accident_name\" checked> Тип аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"danger_level\"> Уровень опасности</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<option value=\"accident_name\" checked>Тип аварии</option> <option value=\"danger_level\">Уровень опасности</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -124,7 +124,7 @@ func SortAccidentTypes() templ.Component {
 	})
 }
 
-func SortAccidents() templ.Component {
+func FieldsAccidents() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -145,7 +145,7 @@ func SortAccidents() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_accident\" checked> ID аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"accident_type\"> Тип аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"begin_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_estimate\"> Первоначальная оценка</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"cause\"> Причина</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<option value=\"id_accident\" checked>ID аварии</option> <option value=\"id_object\">ID объекта</option> <option value=\"accident_type\">Тип аварии</option> <option value=\"begin_date_time\">Дата начала</option> <option value=\"status\">Статус</option> <option value=\"description\">Описание</option> <option value=\"first_estimate\">Первоначальная оценка</option> <option value=\"cause\">Причина</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -153,7 +153,7 @@ func SortAccidents() templ.Component {
 	})
 }
 
-func SortApplicationsForAdmission() templ.Component {
+func FieldsApplicationsForAdmission() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -174,7 +174,7 @@ func SortApplicationsForAdmission() templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"passport_number\"> Номер паспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"phone\"> Телефон</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"email\"> Email</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"birthday_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"home_address\"> Домашний адрес</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<option value=\"id_application\" checked>ID заявки</option> <option value=\"id_object\">ID объекта</option> <option value=\"passport_number\">Номер паспорта</option> <option value=\"first_name\">Имя</option> <option value=\"last_name\">Фамилия</option> <option value=\"surname\">Отчество</option> <option value=\"issue_date\">Дата выдачи</option> <option value=\"phone\">Телефон</option> <option value=\"email\">Email</option> <option value=\"status\">Статус</option> <option value=\"birthday_date\">Дата рождения</option> <option value=\"home_address\">Домашний адрес</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -182,7 +182,7 @@ func SortApplicationsForAdmission() templ.Component {
 	})
 }
 
-func SortCandidatesDocuments() templ.Component {
+func FieldsCandidatesDocuments() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -203,7 +203,7 @@ func SortCandidatesDocuments() templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\"> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"valid_until\"> Действителен до</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<option value=\"document_type\" checked>Тип документа</option> <option value=\"id_application\">ID заявки</option> <option value=\"document_url\">Ссылка на документ</option> <option value=\"valid_until\">Действителен до</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -211,7 +211,7 @@ func SortCandidatesDocuments() templ.Component {
 	})
 }
 
-func SortCandidatesMedicalParameters() templ.Component {
+func FieldsCandidatesMedicalParameters() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -232,7 +232,7 @@ func SortCandidatesMedicalParameters() templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_application\" checked> ID заявки</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"date\"> Дата осмотра</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"expire_date\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"note\"> Примечание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<option value=\"id_application\" checked>ID заявки</option> <option value=\"date\">Дата осмотра</option> <option value=\"expire_date\">Дата окончания</option> <option value=\"health_group\">Группа здоровья</option> <option value=\"height\">Рост</option> <option value=\"weight\">Вес</option> <option value=\"note\">Примечание</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -240,7 +240,7 @@ func SortCandidatesMedicalParameters() templ.Component {
 	})
 }
 
-func SortVgk() templ.Component {
+func FieldsVgk() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -261,7 +261,7 @@ func SortVgk() templ.Component {
 			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"formation_date\"> Дата формирования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<option value=\"id_vgk\" checked>ID ВГК</option> <option value=\"id_object\">ID объекта</option> <option value=\"status\">Статус</option> <option value=\"formation_date\">Дата формирования</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -269,7 +269,7 @@ func SortVgk() templ.Component {
 	})
 }
 
-func SortPositions() templ.Component {
+func FieldsPositions() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -290,7 +290,7 @@ func SortPositions() templ.Component {
 			templ_7745c5c3_Var10 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"position_name\" checked> Должность</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"salary\"> Зарплата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"min_experience_years\"> Минимальный опыт (лет)</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"responsibilities\"> Обязанности</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<option value=\"position_name\" checked>Должность</option> <option value=\"salary\">Зарплата</option> <option value=\"min_experience_years\">Минимальный опыт (лет)</option> <option value=\"responsibilities\">Обязанности</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -298,7 +298,7 @@ func SortPositions() templ.Component {
 	})
 }
 
-func SortVgkRescuers() templ.Component {
+func FieldsVgkRescuers() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -319,7 +319,7 @@ func SortVgkRescuers() templ.Component {
 			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\" checked> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"position\"> Должность</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"first_name\"> Имя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"second_name\"> Фамилия</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"surname\"> Отчество</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"birth_date\"> Дата рождения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"home_address\"> Домашний адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"experience_years\"> Опыт (лет)</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<option value=\"id_rescuer\" checked>ID спасателя</option> <option value=\"id_vgk\">ID ВГК</option> <option value=\"position\">Должность</option> <option value=\"first_name\">Имя</option> <option value=\"second_name\">Фамилия</option> <option value=\"surname\">Отчество</option> <option value=\"status\">Статус</option> <option value=\"birth_date\">Дата рождения</option> <option value=\"home_address\">Домашний адрес</option> <option value=\"experience_years\">Опыт (лет)</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -327,7 +327,7 @@ func SortVgkRescuers() templ.Component {
 	})
 }
 
-func SortVgkRescuersDocuments() templ.Component {
+func FieldsVgkRescuersDocuments() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -348,7 +348,7 @@ func SortVgkRescuersDocuments() templ.Component {
 			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"document_type\" checked> Тип документа</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"document_url\"> Ссылка на документ</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"valid_until\"> Действителен до</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<option value=\"document_type\" checked>Тип документа</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"document_url\">Ссылка на документ</option> <option value=\"valid_until\">Действителен до</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -356,7 +356,7 @@ func SortVgkRescuersDocuments() templ.Component {
 	})
 }
 
-func SortVgkLocations() templ.Component {
+func FieldsVgkLocations() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -377,7 +377,7 @@ func SortVgkLocations() templ.Component {
 			templ_7745c5c3_Var13 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\" checked> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<option value=\"id_vgk_location\" checked>ID локации ВГК</option> <option value=\"id_responsible\">ID ответственного</option> <option value=\"address\">Адрес</option> <option value=\"status\">Статус</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -385,7 +385,7 @@ func SortVgkLocations() templ.Component {
 	})
 }
 
-func SortVgkShifts() templ.Component {
+func FieldsVgkShifts() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -406,7 +406,7 @@ func SortVgkShifts() templ.Component {
 			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"shift_start\" checked> Начало смены</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\"> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"shift_end\"> Конец смены</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<option value=\"shift_start\" checked>Начало смены</option> <option value=\"id_vgk\">ID ВГК</option> <option value=\"id_vgk_location\">ID локации</option> <option value=\"shift_end\">Конец смены</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -414,7 +414,7 @@ func SortVgkShifts() templ.Component {
 	})
 }
 
-func SortAccidentsResponseOperations() templ.Component {
+func FieldsAccidentsResponseOperations() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -435,7 +435,7 @@ func SortAccidentsResponseOperations() templ.Component {
 			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\" checked> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_accident\"> ID аварии</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"start_date_time\"> Дата начала</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"end_date_time\"> Дата окончания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<option value=\"id_operation\" checked>ID операции</option> <option value=\"id_accident\">ID аварии</option> <option value=\"start_date_time\">Дата начала</option> <option value=\"end_date_time\">Дата окончания</option> <option value=\"status\">Статус</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -443,7 +443,7 @@ func SortAccidentsResponseOperations() templ.Component {
 	})
 }
 
-func SortOperationsParticipations() templ.Component {
+func FieldsOperationsParticipations() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -464,7 +464,7 @@ func SortOperationsParticipations() templ.Component {
 			templ_7745c5c3_Var16 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk\" checked> ID ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"assigned_task\"> Назначенная задача</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<option value=\"id_vgk\" checked>ID ВГК</option> <option value=\"id_operation\">ID операции</option> <option value=\"assigned_task\">Назначенная задача</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -472,7 +472,7 @@ func SortOperationsParticipations() templ.Component {
 	})
 }
 
-func SortOperationsReports() templ.Component {
+func FieldsOperationsReports() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -493,7 +493,7 @@ func SortOperationsReports() templ.Component {
 			templ_7745c5c3_Var17 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_report\" checked> ID отчета</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_operation\"> ID операции</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"report_date_time\"> Дата отчета</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<option value=\"id_report\" checked>ID отчета</option> <option value=\"id_operation\">ID операции</option> <option value=\"report_date_time\">Дата отчета</option> <option value=\"description\">Описание</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -501,7 +501,7 @@ func SortOperationsReports() templ.Component {
 	})
 }
 
-func SortTrainings() templ.Component {
+func FieldsTrainings() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -522,7 +522,7 @@ func SortTrainings() templ.Component {
 			templ_7745c5c3_Var18 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_instructor\"> ID инструктора</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"topic\"> Тема</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"description\"> Описание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<option value=\"date\" checked>Дата</option> <option value=\"id_object_location\">ID объекта</option> <option value=\"id_instructor\">ID инструктора</option> <option value=\"topic\">Тема</option> <option value=\"description\">Описание</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -530,7 +530,7 @@ func SortTrainings() templ.Component {
 	})
 }
 
-func SortTrainingsParticipations() templ.Component {
+func FieldsTrainingsParticipations() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -551,7 +551,7 @@ func SortTrainingsParticipations() templ.Component {
 			templ_7745c5c3_Var19 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_object_location\"> ID объекта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"notes\"> Примечания</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<option value=\"date\" checked>Дата</option> <option value=\"id_object_location\">ID объекта</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"notes\">Примечания</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -559,7 +559,7 @@ func SortTrainingsParticipations() templ.Component {
 	})
 }
 
-func SortCertificationsPassings() templ.Component {
+func FieldsCertificationsPassings() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -580,7 +580,7 @@ func SortCertificationsPassings() templ.Component {
 			templ_7745c5c3_Var20 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"result\"> Результат</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"topic\"> Тема</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<option value=\"date\" checked>Дата</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"result\">Результат</option> <option value=\"topic\">Тема</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -588,7 +588,7 @@ func SortCertificationsPassings() templ.Component {
 	})
 }
 
-func SortVgkRescuersMedicalParameters() templ.Component {
+func FieldsVgkRescuersMedicalParameters() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -609,7 +609,7 @@ func SortVgkRescuersMedicalParameters() templ.Component {
 			templ_7745c5c3_Var21 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"date\" checked> Дата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"expire_date\"> Действителен до</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"health_group\"> Группа здоровья</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"height\"> Рост</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"weight\"> Вес</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"conclusion\"> Заключение</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"note\"> Примечание</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<option value=\"date\" checked>Дата</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"expire_date\">Действителен до</option> <option value=\"health_group\">Группа здоровья</option> <option value=\"height\">Рост</option> <option value=\"weight\">Вес</option> <option value=\"conclusion\">Заключение</option> <option value=\"note\">Примечание</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -617,7 +617,7 @@ func SortVgkRescuersMedicalParameters() templ.Component {
 	})
 }
 
-func SortVgkServiceRoom() templ.Component {
+func FieldsVgkServiceRoom() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -638,7 +638,7 @@ func SortVgkServiceRoom() templ.Component {
 			templ_7745c5c3_Var22 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\" checked> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_responsible\"> ID ответственного</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Назначение</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"address\"> Адрес</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<option value=\"id_service_room\" checked>ID сервисного помещения</option> <option value=\"id_responsible\">ID ответственного</option> <option value=\"purpose\">Назначение</option> <option value=\"address\">Адрес</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -646,7 +646,7 @@ func SortVgkServiceRoom() templ.Component {
 	})
 }
 
-func SortEquipment() templ.Component {
+func FieldsEquipment() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -667,7 +667,7 @@ func SortEquipment() templ.Component {
 			templ_7745c5c3_Var23 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"equipment_type\"> Тип оборудования</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"name\"> Название</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_check_date\"> Дата последней проверки</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<option value=\"inventory_number\" checked>Инвентарный номер</option> <option value=\"id_vgk_location\">ID локации ВГК</option> <option value=\"equipment_type\">Тип оборудования</option> <option value=\"name\">Название</option> <option value=\"status\">Статус</option> <option value=\"last_check_date\">Дата последней проверки</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -675,7 +675,7 @@ func SortEquipment() templ.Component {
 	})
 }
 
-func SortTransport() templ.Component {
+func FieldsTransport() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -696,7 +696,7 @@ func SortTransport() templ.Component {
 			templ_7745c5c3_Var24 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_vgk_location\"> ID локации ВГК</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"model\"> Модель</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"type\"> Тип</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"manufacture_date\"> Дата производства</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"mileage\"> Пробег</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"last_check_date\"> Дата последней проверки</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<option value=\"transport_number\" checked>Номер транспорта</option> <option value=\"id_vgk_location\">ID локации ВГК</option> <option value=\"model\">Модель</option> <option value=\"type\">Тип</option> <option value=\"status\">Статус</option> <option value=\"manufacture_date\">Дата производства</option> <option value=\"mileage\">Пробег</option> <option value=\"last_check_date\">Дата последней проверки</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -704,7 +704,7 @@ func SortTransport() templ.Component {
 	})
 }
 
-func SortEquipmentUsageHistory() templ.Component {
+func FieldsEquipmentUsageHistory() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -725,7 +725,7 @@ func SortEquipmentUsageHistory() templ.Component {
 			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"issue_date\"> Дата выдачи</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Цель использования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<option value=\"inventory_number\" checked>Инвентарный номер</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"issue_date\">Дата выдачи</option> <option value=\"return_date\">Дата возврата</option> <option value=\"purpose\">Цель использования</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -733,7 +733,7 @@ func SortEquipmentUsageHistory() templ.Component {
 	})
 }
 
-func SortTransportUsageHistory() templ.Component {
+func FieldsTransportUsageHistory() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -754,7 +754,7 @@ func SortTransportUsageHistory() templ.Component {
 			templ_7745c5c3_Var26 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_rescuer\"> ID спасателя</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"departure_date\"> Дата отправления</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"return_date\"> Дата возврата</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"purpose\"> Цель использования</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<option value=\"transport_number\" checked>Номер транспорта</option> <option value=\"id_rescuer\">ID спасателя</option> <option value=\"departure_date\">Дата отправления</option> <option value=\"return_date\">Дата возврата</option> <option value=\"purpose\">Цель использования</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -762,7 +762,7 @@ func SortTransportUsageHistory() templ.Component {
 	})
 }
 
-func SortEquipmentServiceHistory() templ.Component {
+func FieldsEquipmentServiceHistory() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -783,7 +783,7 @@ func SortEquipmentServiceHistory() templ.Component {
 			templ_7745c5c3_Var27 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"inventory_number\" checked> Инвентарный номер</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<option value=\"inventory_number\" checked>Инвентарный номер</option> <option value=\"id_service_room\">ID сервисного помещения</option> <option value=\"reason\">Причина</option> <option value=\"serve_date\">Дата обслуживания</option> <option value=\"status\">Статус</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -791,7 +791,7 @@ func SortEquipmentServiceHistory() templ.Component {
 	})
 }
 
-func SortTransportServiceHistory() templ.Component {
+func FieldsTransportServiceHistory() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -812,7 +812,7 @@ func SortTransportServiceHistory() templ.Component {
 			templ_7745c5c3_Var28 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<div><label><input type=\"radio\" name=\"sortColumn\" value=\"transport_number\" checked> Номер транспорта</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"id_service_room\"> ID сервисного помещения</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"reason\"> Причина</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"serve_date\"> Дата обслуживания</label><br><label><input type=\"radio\" name=\"sortColumn\" value=\"status\"> Статус</label></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<option value=\"transport_number\" checked>Номер транспорта</option> <option value=\"id_service_room\">ID сервисного помещения</option> <option value=\"reason\">Причина</option> <option value=\"serve_date\">Дата обслуживания</option> <option value=\"status\">Статус</option>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

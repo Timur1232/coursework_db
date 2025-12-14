@@ -210,7 +210,7 @@ templ RegisterForm() {
 }
 
 templ NotAuthorized(oob bool) {
-	<div id="header-user" class="header-user" hx-swap-oob={ oob }>
+	<div id="header-user" class="header-user" hx-swap-oob?={ oob }>
 		<div class="user-info">
 			<div class="user-details">
 				<span class="user-name">Не авторизован</span>
