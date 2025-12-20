@@ -257,6 +257,8 @@ INSERT INTO vgk_rescuers (id_vgk, position, first_name, second_name, surname, st
 (20, 'спасатель', 'Петр', 'Олегов', 'Романович', 'on_duty', '1985-06-04', 'ш. Байкальское, 11, г. Иркутск', 10),
 (20, 'диспетчер', 'Роман', 'Петров', 'Сергеевич', 'on_duty', '1990-09-17', 'ул. Диспетчерская, 6, г. Иркутск', 6);
 
+SELECT update_vgk_rescuers_status();
+
 -- 11. vgk_rescuers_documents (по 3 документа на каждого спасателя из первых 10)
 INSERT INTO vgk_rescuers_documents (document_type, id_rescuer, document_url, valid_until) VALUES
 ('medical_certificate', 1, '/docs/rescuer1/medical.pdf', '2099-12-31'),
@@ -347,7 +349,6 @@ INSERT INTO operations_participations (id_vgk, id_operation, assigned_task) VALU
 (4, 4, 'Охлаждение конструкций, разведка'),
 (9, 9, 'Медицинская помощь при отравлении'),
 (11, 11, 'Ремонт комбайна, обеспечение безопасности'),
-(16, 16, 'Откачка воды, разведка'),
 (20, 20, 'Разбор завала, поиск заблокированных');
 
 -- 16. operations_reports (отчеты по операциям)
@@ -604,8 +605,6 @@ INSERT INTO transport_service_history (transport_number, id_service_room, reason
 (18, 19, 'Ремонт выхлопной системы', '2024-01-13', 'repaired'),
 (20, 20, 'Компьютерная диагностика', '2024-01-16', 'repaired');
 
-
-SELECT update_vgk_rescuers_status();
 
 INSERT INTO users (login, password, role) values
 ('admin', 'admin', 'admin'),

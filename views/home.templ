@@ -133,7 +133,7 @@ templ AccidentsRows(accidents []db.Accidents, page int, hasNext bool) {
                 <div class="cell-date">{ TimestampToString(&accident.BeginDateTime) }</div>
             </td>
             <td>
-                <span class={ fmt.Sprintf("status-badge status-%s", accident.Status) }>
+                <span class="type-badge red">
                     { string(accident.Status) }
                 </span>
             </td>
@@ -156,7 +156,7 @@ templ AccidentsRows(accidents []db.Accidents, page int, hasNext bool) {
                 <div class="cell-date">{ TimestampToString(&last.BeginDateTime) }</div>
             </td>
             <td>
-                <span class={ fmt.Sprintf("status-badge status-%s", last.Status) }>
+                <span class="type-badge red">
                     { string(last.Status) }
                 </span>
             </td>
@@ -176,7 +176,7 @@ templ AccidentsRows(accidents []db.Accidents, page int, hasNext bool) {
                 <div class="cell-date">{ TimestampToString(&last.BeginDateTime) }</div>
             </td>
             <td>
-                <span class={ fmt.Sprintf("status-badge status-%s", last.Status) }>
+                <span class="type-badge red">
                     { string(last.Status) }
                 </span>
             </td>

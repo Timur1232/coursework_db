@@ -1152,7 +1152,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: cornflowerblue;
 	color: white;
 }
 
@@ -1289,6 +1289,15 @@ body {
 	padding: 0.25rem 0.75rem;
 	background-color: #e0f2fe;
 	color: #0369a1;
+	border-radius: 20px;
+	font-size: 0.75rem;
+	font-weight: 500;
+}
+
+.type-badge.red {
+    padding: 0.25rem 0.75rem;
+	background-color: #fee0e0;
+	color: #a11003;
 	border-radius: 20px;
 	font-size: 0.75rem;
 	font-weight: 500;
