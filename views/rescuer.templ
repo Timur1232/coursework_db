@@ -1,0 +1,344 @@
+package views
+
+import (
+	"fmt"
+	"github.com/Timur1232/coursework_db/internal/db"
+)
+
+templ ProfileRescuer(user *db.Users, rescuer *db.VgkRescuers, documents []db.VgkRescuersDocuments,
+	medicalParams []db.VgkRescuersMedicalParameters, vgk *db.Vgk, team []db.VgkRescuers,
+	operationsHistory []db.OperationsParticipations, shiftsHistory []db.VgkShifts,
+	currentOperations []db.OperationsParticipations, currentShifts []db.VgkShifts,
+	vgkLocations []db.VgkLocations, serviceRooms []db.VgkServiceRoom) {
+	<div class="profile-page">
+		<h1>Личный кабинет спасателя</h1>
+		<div class="rescuer-tabs">
+			<button class="tab-button active" onclick="showTab('personal')">Личная информация</button>
+			<button class="tab-button" onclick="showTab('activities')">Моя деятельность</button>
+			<button class="tab-button" onclick="showTab('team')">Моя команда</button>
+			<button class="tab-button" onclick="showTab('locations')">Пункты и помещения</button>
+		</div>
+		<div id="personal-tab" class="tab-content active">
+			<div class="profile-section">
+				<div class="section-header">
+					<h2>Личная информация</h2>
+					<span class={ fmt.Sprintf("status-badge status-%s", rescuer.Status) }>
+						{ string(rescuer.Status) }
+					</span>
+				</div>
+				<div class="info-grid">
+					<div class="info-item">
+						<span class="label">ФИО:</span>
+						<span class="value">{ rescuer.SecondName } { rescuer.FirstName } { rescuer.Surname.String }</span>
+					</div>
+					<div class="info-item">
+						<span class="label">Должность:</span>
+						<span class="value">{ rescuer.Position.String }</span>
+					</div>
+					<div class="info-item">
+						<span class="label">Дата рождения:</span>
+						<span class="value">{ DateToString(&rescuer.BirthDate) }</span>
+					</div>
+					<div class="info-item">
+						<span class="label">Опыт:</span>
+						<span class="value">{ rescuer.ExperienceYears } лет</span>
+					</div>
+					<div class="info-item full-width">
+						<span class="label">Адрес:</span>
+						<span class="value">{ rescuer.HomeAddress }</span>
+					</div>
+				</div>
+			</div>
+			if len(medicalParams) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Последние медосмотры</h2>
+					</div>
+					<table class="medical-table">
+						<thead>
+							<tr>
+								<th>Дата</th>
+								<th>Действителен до</th>
+								<th>Группа здоровья</th>
+								<th>Рост/Вес</th>
+								<th>Заключение</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, param := range medicalParams {
+								<tr>
+									<td>{ DateToString(&param.Date) }</td>
+									<td>{ DateToString(&param.ExpireDate) }</td>
+									<td><span class="badge">{ param.HealthGroup }</span></td>
+									<td>{ fmt.Sprintf("%.1f см / %.1f кг", param.Height, param.Weight) }</td>
+									<td>{ param.Conclusion }</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+			if len(documents) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Документы</h2>
+					</div>
+					<table class="documents-table">
+						<thead>
+							<tr>
+								<th>Тип документа</th>
+								<th>Действителен до</th>
+								<th>Ссылка</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, doc := range documents {
+								<tr>
+									<td>{ doc.DocumentType }</td>
+									<td>{ DateToString(&doc.ValidUntil) }</td>
+									<td>
+										<a href={ doc.DocumentUrl } target="_blank" class="doc-link">
+											Просмотреть
+										</a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+		<div id="activities-tab" class="tab-content">
+			if len(currentOperations) > 0 || len(currentShifts) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Текущая деятельность</h2>
+					</div>
+					if len(currentOperations) > 0 {
+						<h3>Текущие операции</h3>
+						<table class="activities-table">
+							<thead>
+								<tr>
+									<th>ID операции</th>
+									<th>Назначенная задача</th>
+									<th>ID ВГК</th>
+								</tr>
+							</thead>
+							<tbody>
+								for _, op := range currentOperations {
+									<tr>
+										<td>{ op.IdOperation }</td>
+										<td>{ op.AssignedTask }</td>
+										<td>{ op.IdVgk }</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+					if len(currentShifts) > 0 {
+						<h3>Текущие смены</h3>
+						<table class="activities-table">
+							<thead>
+								<tr>
+									<th>Начало смены</th>
+									<th>Конец смены</th>
+									<th>ID локации</th>
+									<th>ID ВГК</th>
+								</tr>
+							</thead>
+							<tbody>
+								for _, shift := range currentShifts {
+									<tr>
+										<td>{ TimestampToString(&shift.ShiftStart) }</td>
+										<td>{ TimestampToString(&shift.ShiftEnd) }</td>
+										<td>{ shift.IdVgkLocation }</td>
+										<td>{ shift.IdVgk }</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					}
+				</div>
+			}
+			if len(operationsHistory) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>История выездов на операции</h2>
+					</div>
+					<table class="activities-table">
+						<thead>
+							<tr>
+								<th>ID операции</th>
+								<th>Назначенная задача</th>
+								<th>ID ВГК</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, op := range operationsHistory {
+								<tr>
+									<td>{ op.IdOperation }</td>
+									<td>{ op.AssignedTask }</td>
+									<td>{ op.IdVgk }</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+			if len(shiftsHistory) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>История смен</h2>
+					</div>
+					<table class="activities-table">
+						<thead>
+							<tr>
+								<th>Начало смены</th>
+								<th>Конец смены</th>
+								<th>ID локации</th>
+								<th>ID ВГК</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, shift := range shiftsHistory {
+								<tr>
+									<td>{ TimestampToString(&shift.ShiftStart) }</td>
+									<td>{ TimestampToString(&shift.ShiftEnd) }</td>
+									<td>{ shift.IdVgkLocation }</td>
+									<td>{ shift.IdVgk }</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+		<div id="team-tab" class="tab-content">
+			if vgk != nil && len(team) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Моя команда (ВГК #{ vgk.IdVgk })</h2>
+						<span class="date-badge">Сформирована: { DateToString(&vgk.FormationDate) }</span>
+					</div>
+					<table class="team-table">
+						<thead>
+							<tr>
+								<th>ФИО</th>
+								<th>Должность</th>
+								<th>Статус</th>
+								<th>Опыт</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, member := range team {
+								<tr class={ userClass(member, rescuer) }>
+									<td>{ member.SecondName } { member.FirstName } { member.Surname.String }</td>
+									<td>{ member.Position.String }</td>
+									<td>
+										<span class={ fmt.Sprintf("badge status-%s", member.Status) }>
+											{ string(member.Status) }
+										</span>
+									</td>
+									<td>{ member.ExperienceYears } лет</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+		<div id="locations-tab" class="tab-content">
+			if len(vgkLocations) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Пункты ВГК команды</h2>
+					</div>
+					<table class="locations-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Адрес</th>
+								<th>Статус</th>
+								<th>Ответственный</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, location := range vgkLocations {
+								<tr>
+									<td>{ location.IdVgkLocation }</td>
+									<td>{ location.Address }</td>
+									<td>
+										<span class={ fmt.Sprintf("badge status-%s", location.Status) }>
+											{ string(location.Status) }
+										</span>
+									</td>
+									<td>
+										if location.IdResponsible.Valid {
+											{ location.IdResponsible.Int64 }
+										} else {
+											<span class="no-data">Не назначен</span>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+			if len(serviceRooms) > 0 {
+				<div class="profile-section">
+					<div class="section-header">
+						<h2>Сервисные помещения команды</h2>
+					</div>
+					<table class="locations-table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Назначение</th>
+								<th>Адрес</th>
+								<th>Ответственный</th>
+							</tr>
+						</thead>
+						<tbody>
+							for _, room := range serviceRooms {
+								<tr>
+									<td>{ room.IdServiceRoom }</td>
+									<td>{ room.Purpose }</td>
+									<td>{ room.Address }</td>
+									<td>
+										if room.IdResponsible.Valid {
+											{ room.IdResponsible.Int64 }
+										} else {
+											<span class="no-data">Не назначен</span>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+		<script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+	</div>
+}
+
+func userClass(member db.VgkRescuers, rescuer *db.VgkRescuers) string {
+	if member.IdRescuer == rescuer.IdRescuer {
+		return "current-user"
+	}
+    return ""
+}

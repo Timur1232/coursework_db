@@ -1,0 +1,117 @@
+package views
+
+import (
+"fmt"
+"github.com/Timur1232/coursework_db/internal/db"
+)
+
+templ ApplicationForm(objects []db.Objects) {
+<div class="application-page">
+    <h1>Подача заявления на вступление</h1>
+    <div class="form-card">
+        <form id="application-form" hx-post="/application/new" hx-target="#form-messages" hx-swap="innerHTML">
+            <div class="form-section">
+                <h3>1. Личная информация</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="last_name">Фамилия</label>
+                        <input type="text" id="last_name" name="last_name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">Имя</label>
+                        <input type="text" id="first_name" name="first_name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Отчество</label>
+                        <input type="text" id="surname" name="surname" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="passport_number">Серия и номер паспорта</label>
+                        <input type="text" id="passport_number" name="passport_number" required pattern="\d{10}"
+                            placeholder="1234 567890" />
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday_date">Дата рождения</label>
+                        <input type="date" id="birthday_date" name="birthday_date" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+7(999)123-45-67" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="home_address">Домашний адрес</label>
+                    <input type="text" id="home_address" name="home_address" required />
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>2. Выбор объекта</h3>
+                <div class="form-group">
+                    <label for="id_object">Объект для работы</label>
+                    <select id="id_object" name="id_object" required>
+                        <option value="">Выберите объект...</option>
+                        for _, object := range objects {
+                        <option value={ fmt.Sprintf("%d", object.IdObject) }>
+                            { object.Name } ({ object.Address })
+                        </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>3. Медицинские параметры</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="health_group">Группа здоровья (1-5)</label>
+                        <input type="number" id="health_group" name="health_group" required min="1" max="5" step="1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Рост (см)</label>
+                        <input type="number" id="height" name="height" required min="100" max="250" step="0.1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Вес (кг)</label>
+                        <input type="number" id="weight" name="weight" required min="30" max="200" step="0.1" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medical_date">Дата медосмотра</label>
+                        <input type="date" id="medical_date" name="medical_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expire_date">Действителен до</label>
+                        <input type="date" id="expire_date" name="expire_date" required>
+                    </div>
+                </div>
+            </div>
+            <div id="form-messages" class="form-messages"></div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">Подать заявление</button>
+                <a href="/profile" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+}
+
+templ ApplicationSuccess() {
+<div class="success-page">
+    <div class="success-icon">✓</div>
+    <h1>Заявление успешно подано!</h1>
+    <p>Ваше заявление было принято в обработку. Теперь вы кандидат на вступление в горноспасательную службу.</p>
+    <p>Вы можете отслеживать статус заявления в личном кабинете.</p>
+    <div class="success-actions">
+        <a href="/profile" class="btn btn-primary">Перейти в личный кабинет</a>
+        <a href="/" class="btn btn-secondary">На главную</a>
+    </div>
+</div>
+}

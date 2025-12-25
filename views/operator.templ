@@ -1,0 +1,218 @@
+package views
+
+import (
+"fmt"
+"github.com/Timur1232/coursework_db/internal/db"
+)
+
+templ OperatorApplicationsList(applications []db.ApplicationsForAdmission) {
+<div class="operator-page">
+    <h1>Заявления кандидатов</h1>
+    <div class="applications-table-container">
+        <div class="table-header">
+            <h2>Ожидающие рассмотрения</h2>
+            <div class="table-stats">
+                <span class="stat-item">Всего: { len(applications) }</span>
+            </div>
+        </div>
+        if len(applications) == 0 {
+        <div class="empty-state">
+            <h3>Нет заявлений для рассмотрения</h3>
+            <p>Все заявления обработаны.</p>
+        </div>
+        } else {
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Объект</th>
+                    <th>Дата подачи</th>
+                    <th>Телефон</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                for _, app := range applications {
+                <tr>
+                    <td class="cell-id">{ app.IdApplication }</td>
+                    <td>
+                        <div class="cell-main">{ app.LastName } { app.FirstName } { app.Surname.String }</div>
+                    </td>
+                    <td>
+                        <div class="cell-secondary">{ app.IdObject }</div>
+                    </td>
+                    <td>
+                        <div class="cell-date">{ DateToString(&app.IssueDate) }</div>
+                    </td>
+                    <td>
+                        <div class="cell-text">{ app.Phone }</div>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href={ "/operator/applications/" + fmt.Sprintf("%d", app.IdApplication) }
+                                class="btn btn-small btn-primary" hx-get={ "/operator/applications/" + fmt.Sprintf("%d",
+                                app.IdApplication) } hx-target=".operator-page" hx-swap="outerHTML">
+                                Просмотреть
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+</div>
+}
+
+templ OperatorApplicationDetail(application *db.ApplicationsForAdmission, documents []db.CandidatesDocuments,
+medicalParams *db.CandidatesMedicalParameters) {
+<div class="operator-page">
+    <div class="detail-header">
+        <button class="btn btn-back" hx-get="/operator/applications" hx-target=".operator-page" hx-swap="outerHTML">
+            ← Назад к списку
+        </button>
+        <h1>Заявление #{ application.IdApplication }</h1>
+        <span class="status-badge">{ application.Status }</span>
+    </div>
+    <div class="detail-grid">
+        <div class="detail-section">
+            <h2>Личная информация</h2>
+            <div class="detail-info">
+                <div class="info-item">
+                    <span class="label">ФИО:</span>
+                    <span class="value">
+                        { application.LastName } { application.FirstName } { application.Surname.String }
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Паспорт:</span>
+                    <span class="value">{ application.PassportNumber }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Дата рождения:</span>
+                    <span class="value">{ DateToString(&application.BirthdayDate) }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Телефон:</span>
+                    <span class="value">{ application.Phone }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="value">{ application.Email }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Адрес:</span>
+                    <span class="value">{ application.HomeAddress }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Объект:</span>
+                    <span class="value">#{ application.IdObject }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Дата подачи:</span>
+                    <span class="value">{ DateToString(&application.IssueDate) }</span>
+                </div>
+            </div>
+        </div>
+        if medicalParams != nil {
+        <div class="detail-section">
+            <h2>Медицинские параметры</h2>
+            <div class="detail-info">
+                <div class="info-item">
+                    <span class="label">Дата осмотра:</span>
+                    <span class="value">{ DateToString(&medicalParams.Date) }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Действителен до:</span>
+                    <span class="value">{ DateToString(&medicalParams.ExpireDate) }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Группа здоровья:</span>
+                    <span class="value">{ medicalParams.HealthGroup }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Рост:</span>
+                    <span class="value">{ fmt.Sprintf("%.1f см", medicalParams.Height) }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Вес:</span>
+                    <span class="value">{ fmt.Sprintf("%.1f кг", medicalParams.Weight) }</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Примечание:</span>
+                    <span class="value">{ medicalParams.Note }</span>
+                </div>
+            </div>
+        </div>
+        }
+        if len(documents) > 0 {
+        <div class="detail-section full-width">
+            <h2>Документы</h2>
+            <table class="documents-table">
+                <thead>
+                    <tr>
+                        <th>Тип документа</th>
+                        <th>Действителен до</th>
+                        <th>Ссылка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    for _, doc := range documents {
+                    <tr>
+                        <td>{ doc.DocumentType }</td>
+                        <td>{ DateToString(&doc.ValidUntil) }</td>
+                        <td>
+                            <a href={ doc.DocumentUrl } target="_blank" class="doc-link">
+                                Просмотреть
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
+    </div>
+    if medicalParams == nil {
+    <div class="decision-panel">
+        <h2>Статус заявления</h2>
+        <p>Нет медицинских параметров</p>
+    </div>
+    } else if len(documents) == 0 {
+    <div class="decision-panel">
+        <h2>Статус заявления</h2>
+        <p>Нет прикрепленных документов</p>
+    </div>
+    } else if application.Status == "рассмотрение" {
+    <div class="decision-panel">
+        <h2>Решение по заявлению</h2>
+        <p>Выберите действие для данного заявления:</p>
+        <div class="decision-buttons">
+            <form hx-post={ "/operator/applications/" + fmt.Sprintf("%d", application.IdApplication) + "/process" }
+                hx-target=".operator-page" hx-swap="outerHTML"
+                hx-confirm="Вы уверены, что хотите принять этого кандидата в спасатели?">
+                <input type="hidden" name="action" value="approve" />
+                <button type="submit" class="btn btn-success btn-large">
+                    ✓ Принять в спасатели
+                </button>
+            </form>
+            <form hx-post={ "/operator/applications/" + fmt.Sprintf("%d", application.IdApplication) + "/process" }
+                hx-target=".operator-page" hx-swap="outerHTML"
+                hx-confirm="Вы уверены, что хотите отклонить это заявление?">
+                <input type="hidden" name="action" value="reject" />
+                <button type="submit" class="btn btn-danger btn-large">
+                    ✗ Отклонить заявление
+                </button>
+            </form>
+        </div>
+    </div>
+    } else {
+    <div class="decision-panel">
+        <h2>Статус заявления</h2>
+        <p>Заявление уже обработано. Статус: <strong>{ application.Status }</strong></p>
+    </div>
+    }
+</div>
+}

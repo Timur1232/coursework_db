@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/Timur1232/coursework_db/internal/db"
@@ -107,6 +108,8 @@ func AuthRequiredCandidate(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func main() {
+	os.MkdirAll("static/documents", 0755)
+
 	DB, err := pgx.Connect(context.Background(), getConnString())
 	if err != nil {
 		fmt.Println(err.Error())
@@ -133,7 +136,12 @@ func main() {
 	adminGroup.GET("/:tableName", handlers.AdminPanel)
 	adminGroup.GET("/api/:tableName/:page", handlers.AdminPanelPage)
 	adminGroup.DELETE("/api/:tableName", handlers.AdminPanelDeleteRow)
-	// adminGroup.PATCH("/api/:tableName", handlers.AdminPanelEditRow)
+
+	adminGroup.GET("/users", handlers.AdminUserManagement)
+	adminGroup.GET("/linking", handlers.AdminAccountLinking)
+	adminGroup.POST("/update-role", handlers.UpdateUserRoleHandler)
+	adminGroup.POST("/link-application", handlers.LinkApplicationHandler)
+	adminGroup.POST("/link-rescuer", handlers.LinkRescuerHandler)
 
 	e.GET("/no_permission", func(c echo.Context) error {
 		msg := views.NotAuthorizedNotification()
@@ -155,9 +163,18 @@ func main() {
 	e.GET("/api/home/objects", handlers.GetObjects)
 
 	e.GET("/profile", handlers.Profile, AuthRequired)
-
 	e.POST("/profile/cancel-application", handlers.CancelApplication, AuthRequiredCandidate)
+	e.GET("/profile/documents/new", handlers.ShowDocumentUploadForm, AuthRequired)
+	e.GET("/profile/documents/cancel", handlers.CancelDocumentUpload, AuthRequired)
+	e.POST("/profile/documents/upload", handlers.UploadDocument, AuthRequired)
+	e.DELETE("/profile/documents/:application_id/:doc_type", handlers.DeleteDocument, AuthRequired)
+
+	e.GET("/application/new", handlers.ShowApplicationForm, AuthRequired)
+	e.POST("/application/new", handlers.SubmitApplication, AuthRequired)
+
+	e.GET("/operator/applications", handlers.OperatorApplications)
+	e.GET("/operator/applications/:id", handlers.OperatorApplicationDetail)
+	e.POST("/operator/applications/:id/process", handlers.ProcessApplication)
 
 	e.Logger.Fatal(e.Start(":42069"))
-
 }

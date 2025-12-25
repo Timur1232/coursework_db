@@ -60,7 +60,7 @@ GRANT vgk_rescuer TO operator;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO operator;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO operator;
 
-GRANT EXECUTE ON FUNCTION transfer_application_to_rescuer(integer) TO operator;
+GRANT EXECUTE ON FUNCTION transfer_application_to_rescuer(integer, integer) TO operator;
 
 -- администратор
 GRANT CONNECT ON DATABASE coursework TO admin;

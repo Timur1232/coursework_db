@@ -1,0 +1,272 @@
+package views
+
+import (
+	"fmt"
+	"github.com/Timur1232/coursework_db/internal/db"
+)
+
+templ ProfileAdmin(user *db.Users) {
+	<div class="profile-page">
+		<h1>Личный кабинет администратора</h1>
+		<div class="admin-tabs">
+			<button class="tab-button active" onclick="showAdminTab('info')">Информация</button>
+			<button class="tab-button" onclick="showAdminTab('users')">Управление пользователями</button>
+			<button class="tab-button" onclick="showAdminTab('linking')">Привязка аккаунтов</button>
+		</div>
+		<div id="admin-info-tab" class="tab-content active">
+			<div class="profile-card">
+				<div class="profile-header">
+					<h2>Административная панель</h2>
+				</div>
+				<div class="profile-content">
+					<p>Вы вошли как администратор системы. У вас есть полный доступ ко всем функциям.</p>
+					<div class="info-row">
+						<span class="label">Логин:</span>
+						<span class="value">{ user.Login }</span>
+					</div>
+					<div class="info-row">
+						<span class="label">Роль:</span>
+						<span class="value">{ user.TranslateRole() }</span>
+					</div>
+					<div class="profile-actions">
+						<a href="/admin" class="btn btn-primary">Перейти в панель админа</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="admin-users-tab" class="tab-content">
+			<div id="users-management-container"></div>
+		</div>
+		<div id="admin-linking-tab" class="tab-content">
+			<div id="account-linking-container"></div>
+		</div>
+		<script>
+        function showAdminTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById('admin-' + tabName + '-tab').classList.add('active');
+
+            event.currentTarget.classList.add('active');
+
+            if (tabName === 'users') {
+                loadUsersManagement();
+            } else if (tabName === 'linking') {
+                loadAccountLinking();
+            }
+        }
+
+        function loadUsersManagement() {
+            htmx.ajax('GET', '/admin/users', {target: '#users-management-container', swap: 'innerHTML'});
+        }
+
+        function loadAccountLinking() {
+            htmx.ajax('GET', '/admin/linking', {target: '#account-linking-container', swap: 'innerHTML'});
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUsersManagement();
+        });
+    </script>
+	</div>
+}
+
+templ AdminUserManagement(users []db.Users) {
+	<div class="admin-user-management">
+		<h2>Управление ролями пользователей</h2>
+		<div class="table-responsive">
+			<table class="users-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Логин</th>
+						<th>Текущая роль</th>
+						<th>Новая роль</th>
+						<th>Действие</th>
+					</tr>
+				</thead>
+				<tbody id="users-table-body">
+					for _, user := range users {
+						@UserTableRow(&user)
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+}
+
+templ UserTableRow(user *db.Users) {
+	<tr id={ "user-row-" + fmt.Sprintf("%d", user.IdUser) }>
+		<td>{ user.IdUser }</td>
+		<td>{ user.Login }</td>
+		<td>
+			<span class="role-badge role-{ user.Role }">
+				{ user.TranslateRole() }
+			</span>
+		</td>
+		<td>
+			<select class="role-select" name="new_role" id={ "role-select-" + fmt.Sprintf("%d", user.IdUser) }>
+				<option value="guest" selected?={ user.Role==db.Role_Guest }>Гость</option>
+				<option value="candidate" selected?={ user.Role==db.Role_Candidate }>Кандидат</option>
+				<option value="rescuer" selected?={ user.Role==db.Role_Rescuer }>Спасатель</option>
+				<option value="operator" selected?={ user.Role==db.Role_Operator }>Оператор</option>
+				<option value="admin" selected?={ user.Role==db.Role_Admin }>Администратор</option>
+			</select>
+		</td>
+		<td>
+			<button
+				class="btn btn-small btn-primary"
+				hx-post="/admin/update-role"
+				hx-include={ "#role-select-" +
+            fmt.Sprintf("%d", user.IdUser) }
+				hx-vals={ `{"user_id": "` + fmt.Sprintf("%d", user.IdUser) + `"}` }
+				hx-target={ "#user-row-" + fmt.Sprintf("%d", user.IdUser) }
+				hx-swap="outerHTML"
+			>
+				Обновить
+			</button>
+		</td>
+	</tr>
+}
+
+templ AdminAccountLinking(unlinkedApplications []db.ApplicationsForAdmission, unlinkedRescuers []db.VgkRescuers,
+	allUsers []db.Users) {
+	<div class="admin-account-linking">
+		<h2>Привязка аккаунтов</h2>
+		<div class="linking-section">
+			<h3>Заявления без привязки</h3>
+			@UnlinkedApplicationsTable(unlinkedApplications, allUsers)
+		</div>
+		<div class="linking-section">
+			<h3>Спасатели без привязки</h3>
+			@UnlinkedRescuersTable(unlinkedRescuers, allUsers)
+		</div>
+	</div>
+}
+
+templ UnlinkedApplicationsTable(applications []db.ApplicationsForAdmission, users []db.Users) {
+	if len(applications) == 0 {
+		<p class="no-data">Нет заявлений без привязки</p>
+	} else {
+		<div class="table-responsive">
+			<table class="linking-table">
+				<thead>
+					<tr>
+						<th>ID заявления</th>
+						<th>ФИО</th>
+						<th>Паспорт</th>
+						<th>Телефон</th>
+						<th>Привязать к пользователю</th>
+						<th>Действие</th>
+					</tr>
+				</thead>
+				<tbody id="applications-table-body">
+					for _, app := range applications {
+						<tr id={ "application-row-" + fmt.Sprintf("%d", app.IdApplication) }>
+							<td>{ app.IdApplication }</td>
+							<td>{ app.LastName } { app.FirstName } { app.Surname.String }</td>
+							<td>{ app.PassportNumber }</td>
+							<td>{ app.Phone }</td>
+							<td>
+								<select
+									class="user-select"
+									name="user_id"
+									id={ "app-user-select-" + fmt.Sprintf("%d",
+                        app.IdApplication) }
+								>
+									<option value="">Выберите пользователя</option>
+									for _, user := range users {
+										<option value={ fmt.Sprintf("%d", user.IdUser) }>
+											{ user.Login } (ID: { user.IdUser })
+										</option>
+									}
+								</select>
+							</td>
+							<td>
+								<button
+									class="btn btn-small btn-primary"
+									hx-post="/admin/link-application"
+									hx-include={ "#app-user-select-" + fmt.Sprintf("%d", app.IdApplication) }
+									hx-vals={ `{"application_id": "` + fmt.Sprintf("%d", app.IdApplication) + `"}` }
+									hx-target="#applications-table-body"
+                                    hx-select="tbody"
+									hx-swap="outerHTML"
+								>
+									Привязать
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+}
+
+templ UnlinkedRescuersTable(rescuers []db.VgkRescuers, users []db.Users) {
+	if len(rescuers) == 0 {
+		<p class="no-data">Нет спасателей без привязки</p>
+	} else {
+		<div class="table-responsive">
+			<table class="linking-table">
+				<thead>
+					<tr>
+						<th>ID спасателя</th>
+						<th>ФИО</th>
+						<th>Должность</th>
+						<th>Статус</th>
+						<th>Привязать к пользователю</th>
+						<th>Действие</th>
+					</tr>
+				</thead>
+				<tbody id="rescuers-table-body">
+					for _, rescuer := range rescuers {
+						<tr id={ "rescuer-row-" + fmt.Sprintf("%d", rescuer.IdRescuer) }>
+							<td>{ rescuer.IdRescuer }</td>
+							<td>{ rescuer.SecondName } { rescuer.FirstName } { rescuer.Surname.String }</td>
+							<td>{ rescuer.Position.String }</td>
+							<td>
+								<span class={ "status-badge status-" + string(rescuer.Status) }>
+									{ string(rescuer.Status) }
+								</span>
+							</td>
+							<td>
+								<select
+									class="user-select"
+									name="user_id"
+									id={ "rescuer-user-select-" + fmt.Sprintf("%d",
+                        rescuer.IdRescuer) }
+								>
+									<option value="">Выберите пользователя</option>
+									for _, user := range users {
+										<option value={ fmt.Sprintf("%d", user.IdUser) }>
+											{ user.Login } (ID: { user.IdUser })
+										</option>
+									}
+								</select>
+							</td>
+							<td>
+								<button
+									class="btn btn-small btn-primary"
+									hx-post="/admin/link-rescuer"
+									hx-include={ "#rescuer-user-select-" + fmt.Sprintf("%d", rescuer.IdRescuer) }
+									hx-vals={ `{"rescuer_id": "` + fmt.Sprintf("%d", rescuer.IdRescuer) + `"}` }
+									hx-target="#rescuers-table-body"
+                                    hx-select="tbody"
+									hx-swap="outerHTML"
+								>
+									Привязать
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+}

@@ -40,8 +40,6 @@ templ LoginForm() {
 						name="username"
 						class="form-input"
 						required
-						hx-post="/login/validate"
-						hx-trigger="keyup changed delay:500ms, blur"
 						hx-target="#login-username-error"
 						hx-swap="innerHTML"
 						placeholder="Введите логин"
@@ -57,8 +55,6 @@ templ LoginForm() {
 							name="password"
 							class="form-input"
 							required
-							hx-post="/login/validate"
-							hx-trigger="keyup changed delay:500ms, blur"
 							hx-target="#login-password-error"
 							hx-swap="innerHTML"
 							hx-include="[name='username']"
@@ -133,8 +129,6 @@ templ RegisterForm() {
 						name="username"
 						class="form-input"
 						required
-						hx-post="/register/validate"
-						hx-trigger="keyup changed delay:500ms, blur"
 						hx-target="#register-username-error"
 						hx-swap="innerHTML"
 						placeholder="Придумайте логин"
@@ -151,8 +145,6 @@ templ RegisterForm() {
 							class="form-input"
 							required
 							minlength="6"
-							hx-post="/register/validate"
-							hx-trigger="keyup changed delay:500ms, blur"
 							hx-target="#register-password-error"
 							hx-swap="innerHTML"
 							hx-include="[name='username']"
@@ -174,8 +166,6 @@ templ RegisterForm() {
 							class="form-input"
 							required
 							minlength="6"
-							hx-post="/register/validate"
-							hx-trigger="keyup changed delay:500ms, blur"
 							hx-target="#register-password-confirm-error"
 							hx-swap="innerHTML"
 							hx-include="[name='username'],[name='password']"

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Timur1232/coursework_db/internal/db"
 	"github.com/Timur1232/coursework_db/views"
@@ -32,27 +33,72 @@ func Profile(c echo.Context) error {
 		case db.Role_Rescuer:
 			rescuer, err := db.GetRescuerByUserID(c.(*db.DBContext).DB, user.IdUser)
 			if err != nil {
+
 				profileContent = views.ProfileBasic(user)
 				break
 			}
 
 			documents, _ := db.GetRescuerDocuments(c.(*db.DBContext).DB, rescuer.IdRescuer)
+
 			medicalParams, _ := db.GetRescuerMedicalParameters(c.(*db.DBContext).DB, rescuer.IdRescuer)
 
 			var teamMembers []db.VgkRescuers
 			var vgkDetails *db.Vgk
+			var operationsHistory []db.OperationsParticipations
+			var shiftsHistory []db.VgkShifts
+			var currentOperations []db.OperationsParticipations
+			var currentShifts []db.VgkShifts
+			var vgkLocations []db.VgkLocations
+			var serviceRooms []db.VgkServiceRoom
 
 			if rescuer.IdVgk.Valid {
 				teamMembers, _ = db.GetTeamMembers(c.(*db.DBContext).DB, uint64(rescuer.IdVgk.Int64))
 				vgkDetails, _ = db.GetVGKDetails(c.(*db.DBContext).DB, uint64(rescuer.IdVgk.Int64))
-			}
-			profileContent = views.ProfileRescuer(user, rescuer, documents, medicalParams, vgkDetails, teamMembers)
 
+				operationsHistory, err = db.GetRescuerOperationsHistory(c.(*db.DBContext).DB, rescuer.IdRescuer)
+				if err != nil {
+					fmt.Println("operations: ", err)
+				}
+				fmt.Println(operationsHistory)
+				shiftsHistory, err = db.GetRescuerShiftsHistory(c.(*db.DBContext).DB, rescuer.IdRescuer)
+				if err != nil {
+					fmt.Println("shifts: ", err)
+				}
+				fmt.Println(shiftsHistory)
+				currentOperations, err = db.GetRescuerCurrentOperations(c.(*db.DBContext).DB, rescuer.IdRescuer)
+				if err != nil {
+					fmt.Println("current operation: ", err)
+				}
+				fmt.Println(currentOperations)
+				currentShifts, err = db.GetRescuerCurrentShifts(c.(*db.DBContext).DB, rescuer.IdRescuer)
+				if err != nil {
+					fmt.Println("current shift: ", err)
+				}
+				fmt.Println(currentShifts)
+				vgkLocations, err = db.GetTeamVGKLocations(c.(*db.DBContext).DB, uint64(rescuer.IdVgk.Int64))
+				if err != nil {
+					fmt.Println("vgk locations: ", err)
+				}
+				fmt.Println(vgkLocations)
+				serviceRooms, err = db.GetTeamServiceRooms(c.(*db.DBContext).DB, uint64(rescuer.IdVgk.Int64))
+				if err != nil {
+					fmt.Println("sercice rooms: ", err)
+				}
+				fmt.Println(serviceRooms)
+
+			}
+
+			profileContent = views.ProfileRescuer(user, rescuer, documents, medicalParams,
+				vgkDetails, teamMembers, operationsHistory, shiftsHistory,
+				currentOperations, currentShifts, vgkLocations, serviceRooms)
 		case db.Role_Operator:
 			profileContent = views.ProfileOperator(user)
 
 		case db.Role_Admin:
 			profileContent = views.ProfileAdmin(user)
+
+		case db.Role_Guest:
+			profileContent = views.ProfileGuest(user)
 
 		default:
 			profileContent = views.ProfileBasic(user)

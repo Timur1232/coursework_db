@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS objects (
     director_full_name varchar(255) NOT NULL,
 
     CONSTRAINT phone_format_check CHECK (
-        phone ~ '^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$'
+        phone ~ '^\+7\d{10}$'
     ),
 
     CONSTRAINT email_format_check CHECK (
@@ -70,6 +70,12 @@ CREATE TABLE IF NOT EXISTS accidents (
         ON DELETE RESTRICT
 );
 
+CREATE TYPE applications_status AS ENUM (
+    'рассмотрение',
+    'одобрено',
+    'отклонено'
+);
+
 CREATE TABLE IF NOT EXISTS applications_for_admission (
     id_application integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     id_object integer NOT NULL,
@@ -80,7 +86,7 @@ CREATE TABLE IF NOT EXISTS applications_for_admission (
     issue_date date NOT NULL DEFAULT CURRENT_DATE,
     phone varchar(20) NOT NULL UNIQUE,
     email varchar(255) UNIQUE,
-    status varchar(255) NOT NULL,
+    status applications_status NOT NULL,
     birthday_date date NOT NULL,
     home_address varchar(255) NOT NULL,
     id_user integer DEFAULT NULL,
@@ -94,7 +100,7 @@ CREATE TABLE IF NOT EXISTS applications_for_admission (
         ON DELETE RESTRICT,
 
     CONSTRAINT phone_format_check CHECK (
-        phone ~ '^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$'
+        phone ~ '^\+7\d{10}$'
     ),
 
     CONSTRAINT email_format_check CHECK (

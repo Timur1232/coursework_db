@@ -76,7 +76,6 @@ templ Header(user *db.Users) {
 					<button
 						class="logout-btn"
 						hx-post="/logout"
-						hx-confirm="Вы уверены, что хотите выйти?"
 						hx-target="main"
 						hx-swap="innerHTML"
 						hx-push-url="/login"

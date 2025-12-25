@@ -120,7 +120,7 @@ func Header(user *db.Users) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-confirm=\"Вы уверены, что хотите выйти?\" hx-target=\"main\" hx-swap=\"innerHTML\" hx-push-url=\"/login\"><span>Выйти</span></button></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</span></div></div><button class=\"logout-btn\" hx-post=\"/logout\" hx-target=\"main\" hx-swap=\"innerHTML\" hx-push-url=\"/login\"><span>Выйти</span></button></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

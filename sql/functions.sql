@@ -23,8 +23,8 @@ $$ LANGUAGE plpgsql;
 
 -- =====================[Перенос]===================== --
 
-CREATE OR REPLACE FUNCTION transfer_application_to_rescuer(app_id integer)
-RETURNS void AS $$
+CREATE OR REPLACE FUNCTION transfer_application_to_rescuer(app_id integer, user_id integer)
+RETURNS integer AS $$
 DECLARE
     app_record record;
     med_record record;
@@ -46,14 +46,16 @@ BEGIN
         surname,
         status,
         birth_date,
-        home_address
+        home_address,
+        id_user
     ) VALUES (
         app_record.first_name,
         app_record.last_name,
         app_record.surname,
         'inactive',
         app_record.birthday_date,
-        app_record.home_address
+        app_record.home_address,
+        user_id
     ) RETURNING id_rescuer INTO new_rescuer_id;
 
     INSERT INTO vgk_rescuers_documents (
@@ -93,6 +95,8 @@ BEGIN
     DELETE FROM candidates_documents WHERE id_application = app_id;
     DELETE FROM candidates_medical_parameters WHERE id_application = app_id;
     DELETE FROM applications_for_admission WHERE id_application = app_id;
+
+    RETURN new_rescuer_id;
 END;
 $$ LANGUAGE plpgsql;
 
